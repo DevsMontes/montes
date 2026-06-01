@@ -1,1 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logomontes.png">
+    <title>Demonstrações de Sistemas | Montes Developers</title>
+    <style>
+        :root {
+            --bg-dark: #050b14;
+            --bg-card: #0f1626;
+            --primary-cyan: #00d4ff;
+            --primary-blue: #3b82f6;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- HEADER (Idêntico ao Guia de Sistemas) --- */
+        header {
+            background-color: rgba(5, 11, 20, 0.95);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--primary-cyan);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-cyan);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-cyan);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        main {
+            margin-top: 80px;
+            padding: 4rem 5%;
+            min-height: 80vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title span {
+            color: var(--primary-cyan);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        /* --- GRID DE DEMONSTRAÇÕES --- */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .demo-card:hover {
+            border-color: var(--primary-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.15);
+        }
+
+        /* Espaço para a miniatura/print do site */
+        .demo-thumb {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1e293b, #0f1626);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .demo-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .demo-card:hover .demo-thumb img {
+            transform: scale(1.05);
+        }
+
+        .demo-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .demo-body h3 {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-body p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .demo-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-cyan);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Botão de Ação do Card */
+        .btn-acessar {
+            display: block;
+            text-align: center;
+            background-color: transparent;
+            border: 2px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .demo-card:hover .btn-acessar {
+            background-color: var(--primary-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--primary-cyan);
+        }
+
+        /* Card de "Em Breve" */
+        .demo-card.placeholder {
+            opacity: 0.6;
+            border-style: dashed;
+            border-width: 2px;
+        }
+        
+        .demo-card.placeholder:hover {
+            opacity: 1;
+            border-color: var(--text-muted);
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* --- FOOTER (Idêntico ao Guia de Sistemas) --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(5, 11, 20, 0.98);
+                padding: 1rem 0;
+                text-align: center;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logomontes.png" alt="Logo Montes Developers" class="logo-img" onerror="this.style.display='none'">
+            <div class="logo-text">Montes<span>DEV</span></div>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li><a href="index.html#sistemas">Sistemas</a></li>
+                <li><a href="#" style="color: var(--primary-cyan);">Demonstrações</a></li>
+                <li><a href="index.html#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2 class="section-title">Showcase de <span>Demonstrações</span></h2>
+        <p class="section-subtitle">Explore conceitos de alta fidelidade e interfaces premium criadas pela nossa equipe</p>
+
+        <div class="demo-grid">
+            
+            <div class="demo-card">
+                <div class="demo-thumb">
+                    <img src="thumb-monster.jpg" alt="Preview Monster Energy" onerror="this.style.display='none';">
+                    <span style="position: absolute; color: var(--text-muted); font-size: 2.5rem;">⚡</span>
+                </div>
+                <div class="demo-body">
+                    <div class="demo-tags">
+                        <span class="tag">Landing Page</span>
+                        <span class="tag">Scroll-Driven</span>
+                        <span class="tag">Animação</span>
+                    </div>
+                    <h3>Monster Energy Concept</h3>
+                    <p>Interface interativa premium com transição de cores dinâmica baseada em rolagem e efeito de objetos flutuantes.</p>
+                    <a href="monster.html" class="btn-acessar">Acessar Demonstração</a>
+                </div>
+            </div>
+
+            <div class="demo-card placeholder">
+                <div class="demo-thumb">
+                    <span>🚀</span>
+                </div>
+                <div class="demo-body">
+                    <div class="demo-tags">
+                        <span class="tag">Em Breve</span>
+                    </div>
+                    <h3>Nova Demonstração</h3>
+                    <p>Estamos preparando uma nova experiência interativa para expor as capacidades de desenvolvimento da Montes.</p>
+                    <button class="btn-acessar" style="opacity: 0.5; cursor: not-allowed;" disabled>Aguardando</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Montes Developers. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            if(window.innerWidth <= 768) {
+                const menu = document.getElementById('nav-menu');
+                menu.classList.toggle('active');
+            }
+        }
+    </script>
+</body>
+</html>
