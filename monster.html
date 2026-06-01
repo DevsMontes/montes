@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demonstração - Monster Energy | Montes</title>
+    <title>Demonstração Premium - Monster Energy | Montes Dev</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cor-destaque: #90C53F; /* Verde padrão Monster */
-            --bg-color: #0a0a0a;
-            --text-light: #ffffff;
+            --cor-atual: #90C53F;
+            --bg-base: #050505;
         }
 
         * {
@@ -17,273 +16,432 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
+            background-color: var(--bg-base);
+            color: #ffffff;
             overflow-x: hidden;
-            transition: background-color 0.5s ease;
+            transition: background 0.8s ease;
         }
 
-        /* Efeito de brilho radial no fundo baseado na cor de destaque */
-        .background-glow {
+        /* Indicador de carregamento/progresso no topo */
+        .barra-progresso {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vw;
-            max-width: 800px;
-            max-height: 800px;
-            background: radial-gradient(circle, var(--cor-destaque) 0%, transparent 60%);
-            opacity: 0.15;
-            z-index: -1;
-            transition: background 0.5s ease;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--cor-atual);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s ease, background 0.8s ease;
         }
 
+        /* Header Fixo e Sofisticado */
         header {
+            position: fixed;
+            top: 0;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 50px;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 5%;
+            background: rgba(5, 5, 5, 0.75);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 100;
         }
 
         header .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             letter-spacing: 2px;
-            color: var(--text-light);
+            color: #fff;
             text-decoration: none;
         }
 
         header .logo span {
-            color: var(--cor-destaque);
-            transition: color 0.5s ease;
+            color: var(--cor-atual);
+            transition: color 0.8s ease;
         }
 
         .btn-voltar {
             color: #fff;
             text-decoration: none;
-            font-size: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 16px;
-            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
             transition: 0.3s;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .btn-voltar:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #fff;
+            color: #000;
         }
 
-        main {
+        /* Background Glow Dinâmico */
+        .glow-ambiente {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, var(--cor-atual) 0%, transparent 70%);
+            opacity: 0.12;
+            z-index: -1;
+            pointer-events: none;
+            transition: background 0.8s ease;
+        }
+
+        /* Hero/Intro Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #888;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .scroll-insignia {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--cor-atual);
+            animation: piscar 2s infinite;
+            transition: color 0.8s ease;
+        }
+
+        /* Seções de Sabores (Zigue-Zague) */
+        .secao-sabor {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            min-height: 70vh;
-            padding: 0 10%;
+            padding: 100px 10%;
+            position: relative;
         }
 
-        .info-produto {
-            max-width: 500px;
+        /* Alternância de lados no PC */
+        .secao-sabor.lado-esquerdo { flex-direction: row; }
+        .secao-sabor.lado-direito { flex-direction: row-reverse; }
+
+        .container-texto {
+            flex: 1;
+            max-width: 550px;
             z-index: 2;
         }
 
-        .info-produto h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1.1;
+        .tag-sabor {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .sabor-nome {
-            font-size: 2rem;
-            color: var(--cor-destaque);
+            padding: 6px 16px;
+            border-radius: 20px;
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.5s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .info-produto p {
+        .container-texto h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+
+        .container-texto .slogan {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .container-texto p {
             font-size: 1rem;
-            line-height: 1.6;
-            color: #cccccc;
+            line-height: 1.7;
+            color: #b3b3b3;
             margin-bottom: 30px;
         }
 
-        .btn-comprar {
-            padding: 15px 40px;
-            background-color: var(--cor-destaque);
-            color: #000;
+        /* Tabela Nutricional Interativa */
+        .tabela-nutricional {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+        }
+
+        .linha-nutri {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        .linha-nutri:last-child { border-bottom: none; }
+
+        .btn-interativo {
+            padding: 14px 35px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--cor-atual);
             font-weight: 700;
-            font-size: 1.1rem;
-            border: none;
             border-radius: 30px;
             cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.5s ease;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
         }
 
-        .btn-comprar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.5);
-            filter: brightness(1.2);
+        .btn-interativo:hover {
+            background: var(--cor-atual);
+            color: #000;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .display-produto {
-            position: relative;
-            width: 400px;
-            height: 500px;
+        /* Container da Imagem com Animação Incrível */
+        .container-imagem {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2;
+            position: relative;
+            height: 600px;
         }
 
-        /* ANIMAÇÃO FLUTUANTE DA LATA */
-        @keyframes flutuar {
+        .lata-img {
+            max-width: 280px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 25px 25px rgba(0,0,0,0.8));
+            animation: flutuarSuave 4s ease-in-out infinite;
+            transition: transform 0.5s ease;
+        }
+
+        /* Variação do tempo de flutuação para que não fiquem iguais */
+        .lado-direito .lata-img { animation-delay: 1s; }
+
+        /* Animações */
+        @keyframes flutuarSuave {
             0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-25px) rotate(2deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
 
-        .lata-principal {
-            width: 100%;
-            max-width: 250px;
-            object-fit: contain;
-            filter: drop-shadow(0px 30px 20px rgba(0, 0, 0, 0.7));
-            animation: flutuar 4s ease-in-out infinite;
-            transition: opacity 0.3s ease;
+        @keyframes piscar {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
-        /* CARROSSEL DE ESCOLHA DE SABORES */
-        .seletor-sabores {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 40px 20px;
-            background: linear-gradient(to top, #000 0%, transparent 100%);
-            z-index: 10;
-            position: relative;
+        /* Rodapé de Encerramento da Demonstração */
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            background: #020202;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        .miniatura {
-            width: 60px;
-            height: 120px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            filter: grayscale(80%) brightness(0.6);
-            border-radius: 10px;
-            padding: 5px;
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
         }
 
-        .miniatura:hover, .miniatura.ativo {
-            filter: grayscale(0%) brightness(1);
-            transform: scale(1.15) translateY(-10px);
+        footer .marca-montes {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
         }
 
-        .miniatura img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* RESPONSIVIDADE */
-        @media (max-width: 900px) {
-            main {
-                flex-direction: column;
+        /* RESPONSIVIDADE ULTRA PARA CELULARES */
+        @media (max-width: 968px) {
+            header { padding: 15px 5%; }
+            .hero h1 { font-size: 3rem; }
+            
+            .secao-sabor {
+                flex-direction: column !important;
+                padding: 80px 20px;
                 text-align: center;
-                padding: 40px 5%;
+                min-height: auto;
             }
-            .info-produto h1 { font-size: 3rem; }
-            .info-produto { margin-bottom: 40px; }
-            .display-produto { height: 400px; }
-            header { padding: 15px 20px; }
+
+            .container-texto {
+                max-width: 100%;
+                margin-bottom: 40px;
+            }
+
+            .container-imagem {
+                height: 400px;
+                width: 100%;
+            }
+
+            .lata-img {
+                max-width: 200px;
+            }
+
+            .container-texto h2 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="background-glow"></div>
+    <div class="barra-progresso" id="progresso"></div>
+    <div class="glow-ambiente" id="glow"></div>
 
     <header>
-        <a href="#" class="logo">MONTES <span>DEMO</span></a>
+        <a href="#" class="logo">MONTES <span>LABS</span></a>
         <a href="#" class="btn-voltar">← Voltar ao Guia</a>
     </header>
 
-    <main>
-        <div class="info-produto">
-            <h1>Libere a<br>Besta</h1>
-            <h2 class="sabor-nome" id="titulo-sabor">Original Green</h2>
-            <p id="desc-sabor">A combinação ideal de ingredientes na proporção certa para entregar o grande impacto que só a Monster tem. Monster tem um sabor intenso, mas suave. Atletas, músicos, anarquistas, estudantes, guerreiros da estrada, metaleiros, geeks, hipsters e motoqueiros adoram.</p>
-            <button class="btn-comprar" id="btn-acao">Explorar</button>
-        </div>
+    <section class="hero">
+        <h1>SURPREENDA<br>SEUS SENTIDOS</h1>
+        <p>Explore esta demonstração interativa de alta performance criada pela Montes. Role a página para viver a experiência de transição dinâmica de elementos.</p>
+        <div class="scroll-insignia">ROLE PARA EXPLORAR ↓</div>
+    </section>
 
-        <div class="display-produto">
-            <img src="lata-verde.png" alt="Lata Monster" class="lata-principal" id="lata-destaque">
+    <section class="secao-sabor lado-esquerdo" data-color="#90C53F">
+        <div class="container-texto">
+            <span class="tag-sabor" style="color: #90C53F;">Energia Clássica</span>
+            <h2>Original Green</h2>
+            <p class="slogan" style="color: #90C53F;">Libere a Besta!</p>
+            <p>A combinação ideal de ingredientes na proporção certa para entregar o grande impacto que só a Monster tem. Sabor intenso, marcante e perfeito para os momentos mais extremos do seu dia.</p>
+            
+            <div class="tabela-nutricional">
+                <div class="linha-nutri"><span>Taurina</span><span>2000mg</span></div>
+                <div class="linha-nutri"><span>Cafeína</span><span>160mg</span></div>
+                <div class="linha-nutri"><span>Açúcares</span><span>Disponível</span></div>
+            </div>
+            <button class="btn-interativo">Experimentar Força</button>
         </div>
-    </main>
+        <div class="container-imagem">
+            <img src="lata-verde.png" alt="Monster Original" class="lata-img">
+        </div>
+    </section>
 
-    <div class="seletor-sabores">
-        <div class="miniatura ativo" onclick="mudarLata(this, '#90C53F', 'Original Green', 'A clássica energia Monster com sabor intenso e marcante.', 'lata-verde.png')">
-            <img src="lata-verde.png" alt="Original">
+    <section class="secao-sabor lado-direito" data-color="#369BD7">
+        <div class="container-texto">
+            <span class="tag-sabor" style="color: #369BD7;">Juice Blend</span>
+            <h2>Mango Loco</h2>
+            <p class="slogan" style="color: #369BD7;">Sabor Celestial de Sucos Exóticos</p>
+            <p>Uma mistura inacreditável de sucos exóticos que vai atrair até os espíritos mais teimosos. Um sabor absurdamente bom com aquele toque mágico e energético da nossa receita secreta.</p>
+            
+            <div class="tabela-nutricional">
+                <div class="linha-nutri"><span>Suco de Frutas</span><span>15%</span></div>
+                <div class="linha-nutri"><span>Cafeína</span><span>160mg</span></div>
+                <div class="linha-nutri"><span>Sabor</span><span>Manga e Especiarias</span></div>
+            </div>
+            <button class="btn-interativo">Descobrir Sabor</button>
         </div>
-        
-        <div class="miniatura" onclick="mudarLata(this, '#369BD7', 'Mango Loco', 'Uma mistura celestial de sucos exóticos que vai atrair até os espíritos mais teimosos.', 'lata-azul.png')">
-            <img src="lata-azul.png" alt="Mango Loco">
+        <div class="container-imagem">
+            <img src="lata-azul.png" alt="Monster Mango Loco" class="lata-img">
         </div>
+    </section>
 
-        <div class="miniatura" onclick="mudarLata(this, '#FFB5C5', 'Strawberry Dreams', 'Sabor apaixonante de morango com zero açúcar para te manter leve e com energia total.', 'lata-rosa.png')">
-            <img src="lata-rosa.png" alt="Strawberry Dreams">
+    <section class="secao-sabor lado-esquerdo" data-color="#FFB5C5">
+        <div class="container-texto">
+            <span class="tag-sabor" style="color: #FFB5C5;">Ultra Line</span>
+            <h2>Strawberry Dreams</h2>
+            <p class="slogan" style="color: #FFB5C5;">Zero Açúcar, Puro Sonho</p>
+            <p>Leve, refrescante e completamente apaixonante. O sabor do morango doce com o equilíbrio ideal de energia, projetado para quem quer o máximo de foco sem abrir mão da leveza.</p>
+            
+            <div class="tabela-nutricional">
+                <div class="linha-nutri"><span>Calorias</span><span>Zero</span></div>
+                <div class="linha-nutri"><span>Açúcar</span><span>0%</span></div>
+                <div class="linha-nutri"><span>Vitamina B</span><span>100% IDR</span></div>
+            </div>
+            <button class="btn-interativo">Viver o Sonho</button>
         </div>
+        <div class="container-imagem">
+            <img src="lata-rosa.png" alt="Monster Strawberry Dreams" class="lata-img">
+        </div>
+    </section>
 
-        <div class="miniatura" onclick="mudarLata(this, '#E34446', 'Ultra Watermelon', 'Verão na lata! Sem açúcar, sabor refrescante de melancia com toda a energia que você precisa.', 'lata-vermelha.png')">
-            <img src="lata-vermelha.png" alt="Ultra Watermelon">
+    <section class="secao-sabor lado-direito" data-color="#E34446">
+        <div class="container-texto">
+            <span class="tag-sabor" style="color: #E34446;">Summer Splash</span>
+            <h2>Ultra Watermelon</h2>
+            <p class="slogan" style="color: #E34446;">Energia Refrescante de Melancia</p>
+            <p>O sabor icônico do verão concentrado em uma lata ultra potente. Sabor refrescante e doce de melancia, perfeito para recarregar as suas baterias sob qualquer temperatura.</p>
+            
+            <div class="tabela-nutricional">
+                <div class="linha-nutri"><span>Sabor Principal</span><span>Melancia</span></div>
+                <div class="linha-nutri"><span>Açúcar</span><span>Zero</span></div>
+                <div class="linha-nutri"><span>Foco Ativo</span><span>Avançado</span></div>
+            </div>
+            <button class="btn-interativo">Ativar Modo Verão</button>
         </div>
-    </div>
+        <div class="container-imagem">
+            <img src="lata-vermelha.png" alt="Monster Watermelon" class="lata-img">
+        </div>
+    </section>
+
+    <footer>
+        <p>Esta é uma página demonstrativa de alta fidelidade criada para fins de portfólio.</p>
+        <div class="marca-montes">DESENVOLVIDO POR MONTES</div>
+    </footer>
 
     <script>
-        function mudarLata(elemento, cor, nome, descricao, imgPath) {
-            // Remove a classe 'ativo' de todas as miniaturas
-            document.querySelectorAll('.miniatura').forEach(thumb => {
-                thumb.classList.remove('ativo');
+        // 1. Barra de progresso de leitura/rolagem superior
+        window.addEventListener('scroll', () => {
+            const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollAtual = window.scrollY;
+            const porcentagem = (scrollAtual / totalScroll) * 100;
+            document.getElementById('progresso').style.width = porcentagem + '%';
+        });
+
+        // 2. Sistema Inteligente de mudança de cores baseado no Scroll (Intersection Observer)
+        const secoes = document.querySelectorAll('.secao-sabor');
+        const raizCss = document.documentElement;
+
+        const opcoesObserver = {
+            root: null, // usa a viewport do navegador
+            threshold: 0.45 // Ativa quando 45% da seção está visível na tela
+        };
+
+        const observerCores = new IntersectionObserver((entradas, observer) => {
+            entradas.forEach(entrada => {
+                if (entrada.isIntersecting) {
+                    // Pega a cor guardada no atributo 'data-color' da seção atual
+                    const novaCor = entrada.target.getAttribute('data-color');
+                    // Altera a variável global CSS para mudar o tema inteiro fluidamente
+                    raizCss.style.setProperty('--cor-atual', novaCor);
+                }
             });
-            
-            // Adiciona a classe 'ativo' na miniatura clicada
-            elemento.classList.add('ativo');
+        }, opcoesObserver);
 
-            // Muda a cor principal do tema no CSS Root
-            document.documentElement.style.setProperty('--cor-destaque', cor);
-
-            // Animação de transição do texto e imagem
-            const lataDestaque = document.getElementById('lata-destaque');
-            const tituloSabor = document.getElementById('titulo-sabor');
-            const descSabor = document.getElementById('desc-sabor');
-
-            // Esconde rapidamente
-            lataDestaque.style.opacity = '0';
-            tituloSabor.style.opacity = '0';
-            descSabor.style.opacity = '0';
-
-            setTimeout(() => {
-                // Troca os valores
-                lataDestaque.src = imgPath;
-                tituloSabor.innerText = nome;
-                descSabor.innerText = descricao;
-
-                // Mostra novamente
-                lataDestaque.style.opacity = '1';
-                tituloSabor.style.opacity = '1';
-                descSabor.style.opacity = '1';
-            }, 300); // 300ms de delay para suavidade
-        }
+        secoes.forEach(secao => {
+            observerCores.observe(secao);
+        });
     </script>
 </body>
 </html>
