@@ -105,7 +105,7 @@
         section.hero-banner {
             margin-top: 72px;
             padding: 0;
-            width: 100%; /* Corrigido para ocupar a tela inteira */
+            width: 100%; 
             position: relative;
             display: flex;
             flex-direction: column;
@@ -113,15 +113,15 @@
         }
 
         .hero-img {
-            width: 100%; /* Corrigido para 100% da largura */
-            max-width: 100%; /* Removido o limite de 1400px para fluir em monitores grandes */
+            width: 100%; 
+            max-width: 100%; 
             margin: 0 auto; 
-            height: auto; /* Mantém a proporção real sem cortar */
+            height: auto; 
             display: block;
         }
 
         .hero-overlay {
-            width: 100%; /* Corrigido para acompanhar a seção */
+            width: 100%; 
             padding: 2rem 0;
             display: flex;
             justify-content: center;
@@ -162,13 +162,22 @@
             100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
         }
 
+        /* CONTAINER DE BOTÕES AJUSTADO */
+        .systems-action {
+            text-align: center;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
         .btn {
             display: inline-block;
-            max-width: 100%;
             background-color: transparent;
             border: 2px solid var(--primary-cyan);
             color: var(--primary-cyan);
-            padding: 0.8rem 1.2rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 5px;
             font-size: 0.9rem;
             font-weight: bold;
@@ -176,9 +185,21 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             cursor: pointer;
-            margin-top: 1rem;
             text-align: center;
             box-sizing: border-box;
+        }
+
+        /* Variação secundária para o botão de demonstração */
+        .btn.btn-secondary {
+            border-color: var(--primary-blue);
+            color: #ffffff;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .btn.btn-secondary:hover {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--primary-blue);
         }
 
         @media (min-width: 768px) {
@@ -261,11 +282,6 @@
         .system-info p {
             color: var(--text-muted);
             font-size: 0.9rem;
-        }
-
-        .systems-action {
-            text-align: center;
-            margin-top: 3rem;
         }
 
         .services-grid {
@@ -438,6 +454,16 @@
                 padding: 2rem 0 3rem;
                 margin-top: -5px;
             }
+
+            .systems-action {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .systems-action .btn {
+                width: 90%;
+            }
         }
     </style>
 </head>
@@ -454,6 +480,7 @@
                 <li><a href="#inicio" onclick="toggleMenu()">Início</a></li>
                 <li><a href="#sobre" onclick="toggleMenu()">Sobre</a></li>
                 <li><a href="#sistemas" onclick="toggleMenu()">Sistemas</a></li>
+                <li><a href="demonstracao.html" onclick="toggleMenu()">Demonstrações</a></li>
                 <li><a href="#contato" onclick="toggleMenu()">Contato</a></li>
             </ul>
         </nav>
@@ -522,6 +549,7 @@
 
         <div class="systems-action">
             <a href="sistemas.html" class="btn">Acessar Plataforma de Testes</a>
+            <a href="demonstracao.html" class="btn btn-secondary">Ver Sites de Demonstração</a>
         </div>
     </section>
 
