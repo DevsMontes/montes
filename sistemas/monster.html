@@ -319,7 +319,7 @@
     <div class="glow-ambiente" id="glow"></div>
 
     <header>
-        <a href="#" class="logo">MONTES <span>LABS</span></a>
+        <a href="../index.html" class="logo">MONTES <span>LABS</span></a>
         <a href="sistemas.html" class="btn-voltar">← Voltar ao Guia</a>
     </header>
 
@@ -344,7 +344,7 @@
             <button class="btn-interativo">Experimentar Força</button>
         </div>
         <div class="container-imagem">
-            <img src="imagens/original.png" alt="Monster Original" class="lata-img">
+            <img src="../imagens/original.png" alt="Monster Original" class="lata-img">
         </div>
     </section>
 
@@ -363,7 +363,7 @@
             <button class="btn-interativo">Descobrir Sabor</button>
         </div>
         <div class="container-imagem">
-            <img src="lata-azul.png" alt="Monster Mango Loco" class="lata-img">
+            <img src="../lata-azul.png" alt="Monster Mango Loco" class="lata-img">
         </div>
     </section>
 
@@ -382,7 +382,7 @@
             <button class="btn-interativo">Viver o Sonho</button>
         </div>
         <div class="container-imagem">
-            <img src="lata-rosa.png" alt="Monster Strawberry Dreams" class="lata-img">
+            <img src="../lata-rosa.png" alt="Monster Strawberry Dreams" class="lata-img">
         </div>
     </section>
 
@@ -401,7 +401,7 @@
             <button class="btn-interativo">Ativar Modo Verão</button>
         </div>
         <div class="container-imagem">
-            <img src="lata-vermelha.png" alt="Monster Watermelon" class="lata-img">
+            <img src="../lata-vermelha.png" alt="Monster Watermelon" class="lata-img">
         </div>
     </section>
 
@@ -424,16 +424,14 @@
         const raizCss = document.documentElement;
 
         const opcoesObserver = {
-            root: null, // usa a viewport do navegador
-            threshold: 0.45 // Ativa quando 45% da seção está visível na tela
+            root: null, 
+            threshold: 0.45 
         };
 
         const observerCores = new IntersectionObserver((entradas, observer) => {
             entradas.forEach(entrada => {
                 if (entrada.isIntersecting) {
-                    // Pega a cor guardada no atributo 'data-color' da seção atual
                     const novaCor = entrada.target.getAttribute('data-color');
-                    // Altera a variável global CSS para mudar o tema inteiro fluidamente
                     raizCss.style.setProperty('--cor-atual', novaCor);
                 }
             });
