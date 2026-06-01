@@ -1,1 +1,593 @@
-<h1>olá mundo</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" type="image/png" href="logomontes.png">
+    <title>Montes Developers | Soluções Digitais</title>
+    <style>
+        :root {
+            --bg-dark: #050b14;
+            --bg-card: #0f1626;
+            --primary-cyan: #00d4ff;
+            --primary-blue: #3b82f6;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        header {
+            background-color: rgba(5, 11, 20, 0.95);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--primary-cyan);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-cyan);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-cyan);
+        }
+
+        section {
+            padding: 5rem 5%;
+        }
+
+        /* --- HERO BANNER --- */
+        section.hero-banner {
+            margin-top: 72px;
+            padding: 0;
+            width: 100%; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-dark);
+        }
+
+        .hero-img {
+            width: 100%; 
+            max-width: 100%; 
+            margin: 0 auto; 
+            height: auto; 
+            display: block;
+        }
+
+        .hero-overlay {
+            width: 100%; 
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-dark);
+        }
+
+        .btn-chamativo {
+            display: inline-block;
+            width: 90%;
+            max-width: 450px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-cyan));
+            color: #ffffff;
+            padding: 1.2rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+
+        .btn-chamativo:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.7);
+            animation: none;
+            color: #ffffff;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 212, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+        }
+
+        /* CONTAINER DE BOTÕES AJUSTADO */
+        .systems-action {
+            text-align: center;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: transparent;
+            border: 2px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* Variação secundária para o botão de demonstração */
+        .btn.btn-secondary {
+            border-color: var(--primary-blue);
+            color: #ffffff;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .btn.btn-secondary:hover {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--primary-blue);
+        }
+
+        @media (min-width: 768px) {
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        .btn:hover {
+            background-color: var(--primary-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--primary-cyan);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title span {
+            color: var(--primary-cyan);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1rem;
+        }
+
+        .systems-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .system-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .system-card:hover {
+            border-color: var(--primary-cyan);
+            transform: translateX(5px);
+            box-shadow: -5px 0 15px rgba(0, 212, 255, 0.1);
+        }
+
+        .system-icon {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .system-info h3 {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .system-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--primary-cyan);
+        }
+
+        .service-card h3 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .contact-container {
+            text-align: center;
+            background-color: var(--bg-card);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-container > p {
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+
+        /* --- ATENDENTES WHATSAPP --- */
+        .whatsapp-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .attendant-card {
+            background-color: rgba(5, 11, 20, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            width: 100%;
+            max-width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .attendant-card:hover {
+            border-color: #25D366; 
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.1);
+        }
+
+        .avatar-placeholder {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e293b, #0f1626);
+            border: 2px dashed var(--primary-cyan);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .attendant-card h3 {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .attendant-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Botão saltitante do WhatsApp */
+        .btn-whatsapp {
+            display: inline-block;
+            background-color: #25D366;
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            border: none;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            animation: bounce 2s infinite; 
+            transition: all 0.3s ease;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            animation: none; 
+            transform: scale(1.05);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-12px); }
+            60% { transform: translateY(-6px); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(5, 11, 20, 0.98);
+                padding: 1rem 0;
+                text-align: center;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .system-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .hero-overlay {
+                position: relative;
+                background: var(--bg-dark);
+                padding: 2rem 0 3rem;
+                margin-top: -5px;
+            }
+
+            .systems-action {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .systems-action .btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logomontes.png" alt="Logo Montes Developers" class="logo-img" onerror="this.style.display='none'">
+            <div class="logo-text">Montes<span>DEV</span></div>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#inicio" onclick="toggleMenu()">Início</a></li>
+                <li><a href="#sobre" onclick="toggleMenu()">Sobre</a></li>
+                <li><a href="#sistemas" onclick="toggleMenu()">Sistemas</a></li>
+                <li><a href="demonstracao.html" onclick="toggleMenu()">Demonstrações</a></li>
+                <li><a href="#contato" onclick="toggleMenu()">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero-banner">
+        <picture>
+            <source srcset="pes.jpeg" media="(max-width: 768px)">
+            <img src="pe.jpeg" alt="Montes Developers Divulgação" class="hero-img">
+        </picture>
+        
+        <div class="hero-overlay">
+            <a href="#sistemas" class="btn-chamativo">Conhecer Sistemas</a>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <h2 class="section-title">Soluções <span>Digitais</span></h2>
+        <p class="section-subtitle">Web design & desenvolvimento profissional</p>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Criação de Sites e Sistemas</h3>
+                <p>Desenvolvemos interfaces sob medida para o seu negócio, garantindo uma presença digital forte e profissional.</p>
+            </div>
+            <div class="service-card">
+                <h3>Foco em Performance</h3>
+                <p>Código otimizado e fluido. Entregamos resultados rápidos para a melhor experiência do seu usuário.</p>
+            </div>
+            <div class="service-card">
+                <h3>Design Moderno</h3>
+                <p>Interfaces atraentes, responsivas (celular e PC) e alinhadas com as tendências atuais de UX/UI.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="sistemas">
+        <h2 class="section-title">Guia de <span>Sistemas</span></h2>
+        <p class="section-subtitle">Painel Administrativo e de Testes</p>
+        
+        <div class="systems-container">
+            <div class="system-card">
+                <div class="system-icon">🔒</div>
+                <div class="system-info">
+                    <h3>Sistema de Login & Cadastro</h3>
+                    <p>Acesso seguro de contas, validação de usuários e registro de novos clientes na plataforma.</p>
+                </div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-icon">⚙️</div>
+                <div class="system-info">
+                    <h3>Painel de Mecânica</h3>
+                    <p>Sistema focado para gestão automotiva, otimizando o controle interno de clientes e serviços.</p>
+                </div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-icon">🔍</div>
+                <div class="system-info">
+                    <h3>Sistema de Consulta</h3>
+                    <p>Mecanismo eficiente para busca e manipulação de dados já integrados ao banco.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="systems-action">
+            <a href="sistemas.html" class="btn">Acessar Plataforma de Testes</a>
+            <a href="demonstracao.html" class="btn btn-secondary">Ver Sites de Demonstração</a>
+        </div>
+    </section>
+
+    <section id="contato">
+        <h2 class="section-title">Faça um <span>Orçamento</span></h2>
+        <div class="contact-container">
+            <p>Excelência em desenvolvimento web. Escolha abaixo com quem deseja falar e entre em contato para um orçamento personalizado.</p>
+            
+            <div class="whatsapp-options">
+                <div class="attendant-card">
+                    <div class="avatar-placeholder">👨‍💻</div>
+                    <h3>Saulo</h3>
+                    <p>Desenvolvedor 1</p>
+                    <a href="https://wa.me/5561996273004?text=Olá,%20tenho%20interesse%20em%20criar%20um%20Projeto!" target="_blank" class="btn-whatsapp">Falar com Saulo</a>
+                </div>
+
+                <div class="attendant-card">
+                    <div class="avatar-placeholder">👨‍💻</div>
+                    <h3>Arthur</h3>
+                    <p>Desenvolvedor 2</p>
+                    <a href="https://wa.me/5561992809225?text=Olá,%20tenho%20interesse%20em%20criar%20um%20Projeto!" target="_blank" class="btn-whatsapp">Falar com Arthur</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Montes Developers. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            if(window.innerWidth <= 768) {
+                const menu = document.getElementById('nav-menu');
+                menu.classList.toggle('active');
+            }
+        }
+    </script>
+</body>
+</html>
