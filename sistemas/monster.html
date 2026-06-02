@@ -6,9 +6,35 @@
     <title>Demonstração Premium - Monster Energy | Montes Dev</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        /* Arquitetura de Design Tokens e Temas Dinâmicos */
         :root {
             --cor-atual: #90C53F;
+            
+            /* Paleta Tema Black (Padrão) */
             --bg-base: #050505;
+            --bg-header: rgba(5, 5, 5, 0.75);
+            --bg-footer: #020202;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-card: rgba(255, 255, 255, 0.08);
+            --border-line: rgba(255, 255, 255, 0.05);
+            --text-base: #ffffff;
+            --text-muted: #b3b3b3;
+            --glow-opacity: 0.15;
+            --shadow-lata: drop-shadow(0px 25px 25px rgba(0, 0, 0, 0.9));
+        }
+
+        body.light-theme {
+            /* Paleta Tema White */
+            --bg-base: #f9f9f9;
+            --bg-header: rgba(249, 249, 249, 0.8);
+            --bg-footer: #f0f0f0;
+            --bg-card: rgba(0, 0, 0, 0.03);
+            --border-card: rgba(0, 0, 0, 0.08);
+            --border-line: rgba(0, 0, 0, 0.06);
+            --text-base: #111111;
+            --text-muted: #4e4e4e;
+            --glow-opacity: 0.12;
+            --shadow-lata: drop-shadow(0px 20px 20px rgba(0, 0, 0, 0.3));
         }
 
         * {
@@ -21,9 +47,9 @@
 
         body {
             background-color: var(--bg-base);
-            color: #ffffff;
+            color: var(--text-base);
             overflow-x: hidden;
-            transition: background 0.8s ease;
+            transition: background 1.2s cubic-bezier(0.25, 1, 0.5, 1), color 0.5s ease;
         }
 
         /* Indicador de carregamento/progresso no topo */
@@ -35,7 +61,7 @@
             background: var(--cor-atual);
             width: 0%;
             z-index: 1000;
-            transition: width 0.1s ease, background 0.8s ease;
+            transition: width 0.1s ease, background 1.2s ease;
         }
 
         /* Header Fixo e Sofisticado */
@@ -47,41 +73,105 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 5%;
-            background: rgba(5, 5, 5, 0.75);
+            background: var(--bg-header);
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-line);
             z-index: 100;
+            transition: background 0.5s ease, border-color 0.5s ease;
         }
 
         header .logo {
             font-size: 22px;
             font-weight: 900;
             letter-spacing: 2px;
-            color: #fff;
+            color: var(--text-base);
             text-decoration: none;
+            transition: color 0.5s ease;
         }
 
         header .logo span {
             color: var(--cor-atual);
-            transition: color 0.8s ease;
+            transition: color 1.2s ease;
+        }
+
+        .header-acoes {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .btn-voltar {
-            color: #fff;
+            color: var(--text-base);
             text-decoration: none;
             font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-card);
             padding: 10px 20px;
             border-radius: 30px;
-            transition: 0.3s;
-            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s ease;
+            background: var(--bg-card);
         }
 
         .btn-voltar:hover {
-            background: #fff;
-            color: #000;
+            background: var(--text-base);
+            color: var(--bg-base);
+            border-color: var(--text-base);
+        }
+
+        /* Botão Alternador de Tema Executivo (Sol / Lua) */
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-base);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--cor-atual);
+            transform: scale(1.05);
+        }
+
+        .theme-toggle-btn svg {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+        }
+
+        /* Estado Padrão (Dark): Mostra Sol para mudar para Light */
+        .theme-toggle-btn .sun-icon {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+        .theme-toggle-btn .moon-icon {
+            opacity: 0;
+            transform: translateY(30px) rotate(90deg);
+        }
+
+        /* Estado Light: Oculta Sol e revela Lua */
+        body.light-theme .theme-toggle-btn .sun-icon {
+            opacity: 0;
+            transform: translateY(-30px) rotate(-90deg);
+        }
+        body.light-theme .theme-toggle-btn .moon-icon {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
         }
 
         /* Background Glow Dinâmico */
@@ -93,10 +183,29 @@
             width: 70vw;
             height: 70vw;
             background: radial-gradient(circle, var(--cor-atual) 0%, transparent 70%);
-            opacity: 0.12;
+            opacity: var(--glow-opacity);
             z-index: -1;
             pointer-events: none;
-            transition: background 0.8s ease;
+            transition: background 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
+        }
+
+        /* Efeito de Onda/Impacto de energia ao clicar */
+        .shockwave-pulsar {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 100vw;
+            height: 100vw;
+            background: radial-gradient(circle, transparent 30%, var(--cor-atual) 60%, transparent 70%);
+            opacity: 0;
+            z-index: 90;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+        
+        .shockwave-pulsar.disparar {
+            animation: explosaoEnergia 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
 
         /* Hero/Intro Section */
@@ -122,9 +231,10 @@
 
         .hero p {
             font-size: 1.2rem;
-            color: #888;
+            color: var(--text-muted);
             max-width: 600px;
             margin-bottom: 40px;
+            transition: color 0.5s ease;
         }
 
         .scroll-insignia {
@@ -133,10 +243,10 @@
             letter-spacing: 3px;
             color: var(--cor-atual);
             animation: piscar 2s infinite;
-            transition: color 0.8s ease;
+            transition: color 1.2s ease;
         }
 
-        /* Seções de Sabores (Zigue-Zague) */
+        /* Seções de Sabores (Zigue-Zague Seguro) */
         .secao-sabor {
             min-height: 100vh;
             display: flex;
@@ -145,14 +255,20 @@
             position: relative;
         }
 
-        /* Alternância de lados no PC */
         .secao-sabor.lado-esquerdo { flex-direction: row; }
         .secao-sabor.lado-direito { flex-direction: row-reverse; }
 
-        .container-texto {
+        /* Wrappers para criar o efeito fluido de "atraso" individual */
+        .atraso-scroll-texto {
             flex: 1;
             max-width: 550px;
             z-index: 2;
+            will-change: transform;
+            transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+
+        .container-texto {
+            width: 100%;
         }
 
         .tag-sabor {
@@ -163,8 +279,9 @@
             padding: 6px 16px;
             border-radius: 20px;
             margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            transition: background 0.5s ease, border-color 0.5s ease;
         }
 
         .container-texto h2 {
@@ -185,33 +302,37 @@
         .container-texto p {
             font-size: 1rem;
             line-height: 1.7;
-            color: #b3b3b3;
+            color: var(--text-muted);
             margin-bottom: 30px;
+            transition: color 0.5s ease;
         }
 
-        /* Tabela Nutricional Interativa */
+        /* Tabela Nutricional */
         .tabela-nutricional {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 35px;
+            transition: background 0.5s ease, border-color 0.5s ease;
         }
 
         .linha-nutri {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-line);
             font-size: 0.9rem;
+            transition: border-color 0.5s ease;
         }
         .linha-nutri:last-child { border-bottom: none; }
 
         .btn-interativo {
             padding: 14px 35px;
             background: transparent;
-            color: #fff;
+            color: var(--text-base);
             border: 2px solid var(--cor-atual);
             font-weight: 700;
             border-radius: 30px;
@@ -225,34 +346,45 @@
         .btn-interativo:hover {
             background: var(--cor-atual);
             color: #000;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        /* Container da Imagem com Animação Incrível */
-        .container-imagem {
+        /* Container da Imagem com Aatraso de scroll estruturado */
+        .atraso-scroll-imagem {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             height: 600px;
+            will-change: transform;
+            transition: transform 0.5s cubic-bezier(0.1, 0.9, 0.2, 1);
         }
 
-        /* CORRIGIDO: Proporção única, travada e segura para PC */
+        .container-imagem {
+            position: relative;
+        }
+
         .lata-img {
             width: 100%;
-            max-width: 280px;     /* Largura máxima padrão para todas no PC */
-            height: 440px;        /* Altura idêntica para todas no PC */
-            object-fit: contain;  /* Garante o redimensionamento sem distorcer ou cortar a lata */
-            filter: drop-shadow(0px 25px 25px rgba(0,0,0,0.8));
+            max-width: 280px;     
+            height: 440px;        
+            object-fit: contain;  
+            filter: var(--shadow-lata);
             animation: flutuarSuave 4s ease-in-out infinite;
-            transition: transform 0.5s ease;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.5s ease;
         }
 
-        /* Variação do tempo de flutuação para que não fiquem iguais */
+        /* Efeito ativo do click pesado na lata */
+        .lata-img.ativada-efeito {
+            animation: none !important;
+            transform: scale(1.25) rotate(360deg) !important;
+            filter: drop-shadow(0px 0px 40px var(--cor-atual)) !important;
+        }
+
         .lado-direito .lata-img { animation-delay: 1s; }
 
-        /* Animações */
+        /* Animações nativas */
         @keyframes flutuarSuave {
             0% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(3deg); }
@@ -264,56 +396,154 @@
             50% { opacity: 1; }
         }
 
-        /* Rodapé de Encerramento da Demonstração */
+        @keyframes explosaoEnergia {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+
+        /* Rodapé de Encerramento Customizado Montes Developers */
         footer {
-            padding: 60px 20px;
+            padding: 80px 20px;
             text-align: center;
-            background: #020202;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            background: var(--bg-footer);
+            border-top: 1px solid var(--border-line);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            transition: background 0.5s ease, border-color 0.5s ease;
         }
 
         footer p {
-            color: #666;
+            color: var(--text-muted);
             font-size: 0.9rem;
-            margin-bottom: 15px;
+            max-width: 500px;
+            line-height: 1.5;
+            transition: color 0.5s ease;
         }
 
-        footer .marca-montes {
-            font-size: 1.1rem;
+        /* Branding Montes Developers Estilizado */
+        .montes-developers-corner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            font-size: 1.4rem;
             font-weight: 900;
-            color: #fff;
-            letter-spacing: 2px;
+            color: var(--text-base);
+            letter-spacing: 1px;
+            transition: color 0.5s ease;
         }
 
-        /* RESPONSIVIDADE ULTRA PARA CELULARES */
+        /* Slot de Imagem da Logo com Fallback em Código */
+        .logo-montes-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 36px;
+            height: 36px;
+        }
+
+        .logo-montes-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Ícone CSS Nativo acionado caso o usuário não configure um caminho src de imagem válido */
+        .logo-montes-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--text-base) 0%, #333 100%);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--bg-base);
+            font-weight: 900;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: all 0.5s ease;
+        }
+
+        /* Grupo de botões emparelhados e responsivos */
+        .footer-buttons-wrapper {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Botão Externo Premium Estruturado */
+        .btn-link-externo {
+            display: inline-block;
+            padding: 14px 35px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+        }
+
+        .btn-link-externo span {
+            animation: rgbEscritaPulso 8s infinite linear;
+        }
+
+        .btn-link-externo:hover {
+            background: var(--bg-card);
+            border-color: var(--cor-atual);
+            transform: translateY(-3px);
+        }
+
+        /* Animação RGB sutil e leve focada no texto do Sabor Ativo */
+        @keyframes rgbEscritaPulso {
+            0%, 100% { color: var(--cor-atual); text-shadow: 0 0 12px var(--cor-atual); }
+            25% { color: #369BD7; text-shadow: 0 0 12px rgba(54,155,215,0.4); }
+            50% { color: #FFB5C5; text-shadow: 0 0 12px rgba(255,181,197,0.4); }
+            75% { color: #E34446; text-shadow: 0 0 12px rgba(227,68,70,0.4); }
+        }
+
+        /* RESPONSIVIDADE PARA SMARTPHONES */
         @media (max-width: 968px) {
             header { padding: 15px 5%; }
             .hero h1 { font-size: 3rem; }
             
             .secao-sabor {
                 flex-direction: column !important;
-                padding: 80px 20px;
+                padding: 60px 24px;
                 text-align: center;
                 min-height: auto;
             }
 
-            .container-texto {
+            .atraso-scroll-texto {
                 max-width: 100%;
-                margin-bottom: 40px;
+                margin-bottom: 20px;
+                transform: none !important; /* Desativa delay vertical agressivo no mobile */
             }
 
-            .container-imagem {
-                height: 320px;
+            .atraso-scroll-imagem {
+                height: 300px;
                 width: 100%;
+                transform: none !important;
             }
 
-            /* CORRIGIDO: Tamanho unificado, proporcional e seguro para Celular */
             .lata-img {
-                max-width: 160px;  /* Impede que a lata fique gigante em telas menores */
-                height: 260px;     /* Força a mesma altura para todas no Mobile */
+                max-width: 160px;  
+                height: 260px;     
             }
 
-            .container-texto h2 { font-size: 2.5rem; }
+            .container-texto h2 { font-size: 2.3rem; }
+            .footer-buttons-wrapper { flex-direction: column; width: 100%; }
+            .btn-link-externo { width: 100%; text-align: center; }
+            footer { padding: 60px 20px; }
         }
     </style>
 </head>
@@ -321,10 +551,29 @@
 
     <div class="barra-progresso" id="progresso"></div>
     <div class="glow-ambiente" id="glow"></div>
+    <div class="shockwave-pulsar" id="shockwave"></div>
 
     <header>
         <a href="../index.html" class="logo">MONTES <span>LABS</span></a>
-        <a href="../index.html#sistemas" class="btn-voltar">← Voltar ao Guia</a>
+        <div class="header-acoes">
+            <button class="theme-toggle-btn" id="themeToggle" aria-label="Alternar Tema">
+                <svg class="sun-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon-icon" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <a href="../index.html#sistemas" class="btn-voltar">← Voltar</a>
+        </div>
     </header>
 
     <section class="hero">
@@ -334,105 +583,138 @@
     </section>
 
     <section class="secao-sabor lado-esquerdo" data-color="#90C53F">
-        <div class="container-texto">
-            <span class="tag-sabor" style="color: #90C53F;">Energia Clássica</span>
-            <h2>Original Green</h2>
-            <p class="slogan" style="color: #90C53F;">Libere a Besta!</p>
-            <p>A combinação ideal de ingredientes na proporção certa para entregar o grande impacto que só a Monster tem. Sabor intenso, marcante e perfeito para os momentos mais extremos do seu dia.</p>
-            
-            <div class="tabela-nutricional">
-                <div class="linha-nutri"><span>Taurina</span><span>2000mg</span></div>
-                <div class="linha-nutri"><span>Cafeína</span><span>160mg</span></div>
-                <div class="linha-nutri"><span>Açúcares</span><span>Disponível</span></div>
+        <div class="atraso-scroll-texto" data-speed="-2">
+            <div class="container-texto">
+                <span class="tag-sabor" style="color: #90C53F;">Energia Clássica</span>
+                <h2>Original Green</h2>
+                <p class="slogan" style="color: #90C53F;">Libere a Besta!</p>
+                <p>A combinação ideal de ingredients na proporção certa para entregar o grande impacto que só a Monster tem. Sabor intenso, marcante e perfeito para os momentos mais extremos do seu dia.</p>
+                
+                <div class="tabela-nutricional">
+                    <div class="linha-nutri"><span>Taurina</span><span>2000mg</span></div>
+                    <div class="linha-nutri"><span>Cafeína</span><span>160mg</span></div>
+                    <div class="linha-nutri"><span>Açúcares</span><span>Disponível</span></div>
+                </div>
+                <button class="btn-interativo">Experimentar Força</button>
             </div>
-            <button class="btn-interativo">Experimentar Força</button>
         </div>
-        <div class="container-imagem">
-            <img src="../imagens/original.png" alt="Monster Original" class="lata-img">
+        <div class="atraso-scroll-imagem" data-speed="4">
+            <div class="container-imagem">
+                <img src="../imagens/original.png" alt="Monster Original" class="lata-img">
+            </div>
         </div>
     </section>
 
     <section class="secao-sabor lado-direito" data-color="#369BD7">
-        <div class="container-texto">
-            <span class="tag-sabor" style="color: #369BD7;">Juice Blend</span>
-            <h2>Mango Loco</h2>
-            <p class="slogan" style="color: #369BD7;">Sabor Celestial de Sucos Exóticos</p>
-            <p>Uma mistura inacreditável de sucos exóticos que vai atrair até os espíritos mais teimosos. Um sabor absurdamente bom com aquele toque mágico e energético da nossa receita secreta.</p>
-            
-            <div class="tabela-nutricional">
-                <div class="linha-nutri"><span>Suco de Frutas</span><span>15%</span></div>
-                <div class="linha-nutri"><span>Cafeína</span><span>160mg</span></div>
-                <div class="linha-nutri"><span>Sabor</span><span>Manga e Especiarias</span></div>
+        <div class="atraso-scroll-texto" data-speed="-2">
+            <div class="container-texto">
+                <span class="tag-sabor" style="color: #369BD7;">Juice Blend</span>
+                <h2>Mango Loco</h2>
+                <p class="slogan" style="color: #369BD7;">Sabor Celestial de Sucos Exóticos</p>
+                <p>Uma mistura inacreditável de sucos exóticos que vai atrair até os espíritos mais teimosos. Um sabor absurdamente bom com aquele toque mágico e energético da nossa receita secreta.</p>
+                
+                <div class="tabela-nutricional">
+                    <div class="linha-nutri"><span>Suco de Frutas</span><span>15%</span></div>
+                    <div class="linha-nutri"><span>Cafeína</span><span>160mg</span></div>
+                    <div class="linha-nutri"><span>Sabor</span><span>Manga e Especiarias</span></div>
+                </div>
+                <button class="btn-interativo">Descobrir Sabor</button>
             </div>
-            <button class="btn-interativo">Descobrir Sabor</button>
         </div>
-        <div class="container-imagem">
-            <img src="../imagens/mango.png" alt="Monster Mango Loco" class="lata-img">
+        <div class="atraso-scroll-imagem" data-speed="4">
+            <div class="container-imagem">
+                <img src="../imagens/mango.png" alt="Monster Mango Loco" class="lata-img">
+            </div>
         </div>
     </section>
 
     <section class="secao-sabor lado-esquerdo" data-color="#FFB5C5">
-        <div class="container-texto">
-            <span class="tag-sabor" style="color: #FFB5C5;">Ultra Line</span>
-            <h2>Strawberry Dreams</h2>
-            <p class="slogan" style="color: #FFB5C5;">Zero Açúcar, Puro Sonho</p>
-            <p>Leve, refrescante e completamente apaixonante. O sabor do morango doce com o equilíbrio ideal de energia, projetado para quem quer o máximo de foco sem abrir mão da leveza.</p>
-            
-            <div class="tabela-nutricional">
-                <div class="linha-nutri"><span>Calorias</span><span>Zero</span></div>
-                <div class="linha-nutri"><span>Açúcar</span><span>0%</span></div>
-                <div class="linha-nutri"><span>Vitamina B</span><span>100% IDR</span></div>
+        <div class="atraso-scroll-texto" data-speed="-2">
+            <div class="container-texto">
+                <span class="tag-sabor" style="color: #FFB5C5;">Ultra Line</span>
+                <h2>Strawberry Dreams</h2>
+                <p class="slogan" style="color: #FFB5C5;">Zero Açúcar, Puro Sonho</p>
+                <p>Leve, refrescante e completamente apaixonante. O sabor do morango doce com o equilíbrio ideal de energia, projetado para quem quer o máximo de foco sem abrir mão da leveza.</p>
+                
+                <div class="tabela-nutricional">
+                    <div class="linha-nutri"><span>Calorias</span><span>Zero</span></div>
+                    <div class="linha-nutri"><span>Açúcar</span><span>0%</span></div>
+                    <div class="linha-nutri"><span>Vitamina B</span><span>100% IDR</span></div>
+                </div>
+                <button class="btn-interativo">Viver o Sonho</button>
             </div>
-            <button class="btn-interativo">Viver o Sonho</button>
         </div>
-        <div class="container-imagem">
-            <img src="../imagens/strawberry.png" alt="Monster Strawberry Dreams" class="lata-img">
+        <div class="atraso-scroll-imagem" data-speed="4">
+            <div class="container-imagem">
+                <img src="../imagens/strawberry.png" alt="Monster Strawberry Dreams" class="lata-img">
+            </div>
         </div>
     </section>
 
     <section class="secao-sabor lado-direito" data-color="#E34446">
-        <div class="container-texto">
-            <span class="tag-sabor" style="color: #E34446;">Summer Splash</span>
-            <h2>Ultra Watermelon</h2>
-            <p class="slogan" style="color: #E34446;">Energia Refrescante de Melancia</p>
-            <p>O sabor icônico do verão concentrado em uma lata ultra potente. Sabor refrescante e doce de melancia, perfeito para recarregar as suas baterias sob qualquer temperatura.</p>
-            
-            <div class="tabela-nutricional">
-                <div class="linha-nutri"><span>Sabor Principal</span><span>Melancia</span></div>
-                <div class="linha-nutri"><span>Açúcar</span><span>Zero</span></div>
-                <div class="linha-nutri"><span>Foco Ativo</span><span>Avançado</span></div>
+        <div class="atraso-scroll-texto" data-speed="-2">
+            <div class="container-texto">
+                <span class="tag-sabor" style="color: #E34446;">Summer Splash</span>
+                <h2>Ultra Watermelon</h2>
+                <p class="slogan" style="color: #E34446;">Energia Refrescante de Melancia</p>
+                <p>O sabor icônico do verão concentrado em uma lata ultra potente. Sabor refrescante e doce de melancia, perfeito para recarregar as suas baterias sob qualquer temperatura.</p>
+                
+                <div class="tabela-nutricional">
+                    <div class="linha-nutri"><span>Sabor Principal</span><span>Melancia</span></div>
+                    <div class="linha-nutri"><span>Açúcar</span><span>Zero</span></div>
+                    <div class="linha-nutri"><span>Foco Ativo</span><span>Avançado</span></div>
+                </div>
+                <button class="btn-interativo">Ativar Modo Verão</button>
             </div>
-            <button class="btn-interativo">Ativar Modo Verão</button>
         </div>
-        <div class="container-imagem">
-            <img src="../imagens/monster-ultra-watermelon.png" alt="Monster Watermelon" class="lata-img">
+        <div class="atraso-scroll-imagem" data-speed="4">
+            <div class="container-imagem">
+                <img src="../imagens/monster-ultra-watermelon.png" alt="Monster Watermelon" class="lata-img">
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>Esta é uma página demonstrativa de alta fidelidade criada para fins de portfólio.</p>
-        <div class="marca-montes">DESENVOLVIDO POR MONTES</div>
+        <div class="montes-developers-corner">
+            <div class="logo-montes-container">
+                <img src="../imagens/logo-montes.png" alt="" class="logo-montes-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="logo-montes-fallback">&lt;/&gt;</div>
+            </div>
+            <span>Montes Developers</span>
+        </div>
+        
+        <div class="footer-buttons-wrapper">
+            <a href="https://www.instagram.com/montesdevelopers" target="_blank" class="btn-link-externo">
+                <span>Seguir no Instagram</span>
+            </a>
+            
+            <a href="https://github.com" target="_blank" class="btn-link-externo">
+                <span>Acessar Portfólio Oficial</span>
+            </a>
+        </div>
+
+        <p>Esta é uma página demonstrativa de alta fidelidade desenvolvida com foco em interatividade e UI/UX avançados para averiguação de clientes.</p>
     </footer>
 
     <script>
-        // 1. Barra de progresso de leitura/rolagem superior
+        // 1. Barra de progresso de leitura superior
         window.addEventListener('scroll', () => {
             const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
             const scrollAtual = window.scrollY;
-            const porcentagem = (scrollAtual / totalScroll) * 100;
+            const porcentagem = totalScroll > 0 ? (scrollAtual / totalScroll) * 100 : 0;
             document.getElementById('progresso').style.width = porcentagem + '%';
         });
 
-        // 2. Sistema Inteligente de mudança de cores baseado no Scroll (Intersection Observer)
+        // 2. Sistema Inteligente de mudança de cores com Intersecção Amortecida
         const secoes = document.querySelectorAll('.secao-sabor');
         const raizCss = document.documentElement;
 
         const opcoesObserver = {
             root: null, 
-            threshold: 0.45 
+            threshold: 0.4
         };
 
-        const observerCores = new IntersectionObserver((entradas, observer) => {
+        const observerCores = new IntersectionObserver((entradas) => {
             entradas.forEach(entrada => {
                 if (entrada.isIntersecting) {
                     const novaCor = entrada.target.getAttribute('data-color');
@@ -444,6 +726,97 @@
         secoes.forEach(secao => {
             observerCores.observe(secao);
         });
+
+        // 3. Efeito de Atraso e Inércia Mecânica no Scroll (Apenas Desktop para melhor desempenho)
+        const elementosTexto = document.querySelectorAll('.atraso-scroll-texto');
+        const elementosImagem = document.querySelectorAll('.atraso-scroll-imagem');
+
+        function processarParallax() {
+            if (window.innerWidth > 968) {
+                const scrollTop = window.scrollY;
+
+                secoes.forEach((secao) => {
+                    const posicaoTopo = secao.offsetTop;
+                    const alturaSecao = secao.offsetHeight;
+                    
+                    // Verifica se a seção está visível na janela do navegador
+                    if (scrollTop + window.innerHeight > posicaoTopo && scrollTop < posicaoTopo + alturaSecao) {
+                        const deslocamento = scrollTop - posicaoTopo;
+                        
+                        const wrapperTexto = secao.querySelector('.atraso-scroll-texto');
+                        const wrapperImagem = secao.querySelector('.atraso-scroll-imagem');
+                        
+                        if (wrapperTexto) {
+                            const velocidadeTexto = parseFloat(wrapperTexto.getAttribute('data-speed')) * 0.04;
+                            wrapperTexto.style.transform = `translateY(${deslocamento * velocidadeTexto}px)`;
+                        }
+                        if (wrapperImagem) {
+                            const velocidadetarget = parseFloat(wrapperImagem.getAttribute('data-speed')) * 0.04;
+                            wrapperImagem.style.transform = `translateY(${deslocamento * velocidadetarget}px)`;
+                        }
+                    }
+                });
+            } else {
+                // Limpa transformações caso mude o tamanho da tela dinamicamente
+                elementosTexto.forEach(el => el.style.transform = 'none');
+                elementosImagem.forEach(el => el.style.transform = 'none');
+            }
+            requestAnimationFrame(processarParallax);
+        }
+        // Inicia a renderização do loop de atraso
+        requestAnimationFrame(processarParallax);
+
+        // 4. Interatividade Pesada de Impacto Visual ao Clicar nos Botões de Sabor
+        const botoes = document.querySelectorAll('.btn-interativo');
+        const shockwave = document.getElementById('shockwave');
+        const glowAmbiente = document.getElementById('glow');
+
+        botoes.forEach(botao => {
+            botao.addEventListener('click', (e) => {
+                const secaoPai = botao.closest('.secao-sabor');
+                const lata = secaoPai.querySelector('.lata-img');
+                
+                // Dispara flash/onda de choque no fundo do site
+                shockwave.classList.remove('disparar');
+                void shockwave.offsetWidth; // Força reflow CSS para reiniciar animação
+                shockwave.classList.add('disparar');
+
+                // Aumenta temporariamente a intensidade do glow ambiente
+                const opacidadeAtual = getComputedStyle(raizCss).getPropertyValue('--glow-opacity').trim();
+                glowAmbiente.style.opacity = "0.45";
+                setTimeout(() => { glowAmbiente.style.opacity = opacidadeAtual; }, 600);
+
+                // Executa super rotação 360 e escala na lata
+                if (lata) {
+                    lata.classList.add('ativada-efeito');
+                    setTimeout(() => {
+                        lata.classList.remove('ativada-efeito');
+                    }, 900); // Tempo casado com a transição CSS
+                }
+            });
+        });
+
+        // 5. JavaScript JavaScript Avançado para Alternância de Tema (Black / White)
+        const themeToggle = document.getElementById('themeToggle');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            
+            // Persiste a escolha do usuário localmente
+            const isLightActive = document.body.classList.contains('light-theme');
+            localStorage.setItem('montes-theme', isLightActive ? 'light' : 'dark');
+            
+            // Atualiza opacidade do glow de acordo com o novo tema ativo
+            const novaOpacidade = isLightActive ? '0.12' : '0.15';
+            raizCss.style.setProperty('--glow-opacity', novaOpacidade);
+        });
+
+        // Verifica se o usuário já possuía uma preferência de tema salva anteriormente
+        const temaSalvo = localStorage.getItem('montes-theme');
+        if (temaSalvo === 'light') {
+            document.body.classList.add('light-theme');
+            raizCss.style.setProperty('--glow-opacity', '0.12');
+        }
     </script>
 </body>
 </html>
