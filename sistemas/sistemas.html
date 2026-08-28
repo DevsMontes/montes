@@ -1,222 +1,31 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="logomontes.png">
-    <title>Montes Developers | Guia de Sistemas</title>
-    <style>
-        /* Variáveis de cores baseadas no logo */
-        :root {
-            --bg-color: #0b0e14;
-            --item-bg: rgba(255, 255, 255, 0.03);
-            --item-hover-bg: rgba(255, 255, 255, 0.08);
-            --primary-cyan: #00d2ff;
-            --primary-purple: #9d50bb;
-            --text-color: #ffffff;
-            --text-muted: #aaa;
-            --accent-gradient: linear-gradient(135deg, #00d2ff 0%, #9d50bb 100%);
-        }
-
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Permite rolar a página se houver muitos sistemas */
-            min-height: 100vh;
-            padding: 3rem 0;
-            box-sizing: border-box;
-        }
-
-        /* Efeito de fundo sutil - fixado para não bugar na rolagem */
-        body::before {
-            content: "";
-            position: fixed; 
-            width: 300px;
-            height: 300px;
-            background: var(--primary-cyan);
-            filter: blur(150px);
-            opacity: 0.15;
-            top: -50px;
-            left: -50px;
-            z-index: -1;
-        }
-
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 700px; /* Alargado para caber o formato em linhas */
-            width: 90%;
-        }
-
-        .logo-area img {
-            width: 160px;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.3));
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.2rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        h2 {
-            font-weight: 300;
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-        }
-
-        /* --- ESTILO DOS TÓPICOS E LINHAS --- */
-        .topic-group {
-            text-align: left;
-            margin-bottom: 2.5rem;
-        }
-
-        .topic-title {
-            font-size: 0.85rem;
-            color: var(--primary-cyan);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .list-sistemas {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .row-item {
-            background: var(--item-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 16px 20px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        /* Efeito de hover fluido deslizando para a direita */
-        .row-item:hover {
-            transform: translateX(8px); 
-            border-color: rgba(0, 210, 255, 0.4);
-            background: var(--item-hover-bg);
-            box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .icon {
-            font-size: 2rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            flex-shrink: 0;
-        }
-
-        .item-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .item-info b {
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .item-info span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .footer-text {
-            font-size: 0.9rem;
-            color: #777;
-            border-left: 3px solid var(--primary-purple);
-            padding-left: 15px;
-            text-align: left;
-            margin-top: 2rem;
-        }
-
-        @media (max-width: 480px) {
-            .row-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-        }
-    </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Conheça os protótipos de sistemas e módulos desenvolvidos pela Montes Developers.">
+  <meta name="theme-color" content="#070817">
+  <link rel="icon" type="image/png" href="../logomontes.png"><link rel="stylesheet" href="../assets/css/main.css">
+  <title>Laboratório de Sistemas — Montes Developers</title>
 </head>
-<body>
-
-    <div class="container">
-        <div class="logo-area">
-            <img src="../logomontes.png" alt="Montes Developers Logo">
-        </div>
-
-        <h1>Guia de Sistemas</h1>
-        <h2>Painel Administrativo e de Testes</h2>
-
-        <!-- TÓPICO 1: AUTENTICAÇÃO -->
-        <div class="topic-group">
-            <h3 class="topic-title">Sistemas de Autenticação</h3>
-            <div class="list-sistemas">
-                <!-- Observe que não há mais target="_blank" -->
-                <a href="login.html" class="row-item">
-                    <span class="icon">🔐</span>
-                    <div class="item-info">
-                        <b>Sistema de Login</b>
-                        <span>Acessar conta e validação de usuários</span>
-                    </div>
-                </a>
-                
-                <a href="cadastro.html" class="row-item">
-                    <span class="icon">📝</span>
-                    <div class="item-info">
-                        <b>Sistema de Cadastro</b>
-                        <span>Registrar novos clientes na plataforma</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!-- TÓPICO 2: GESTÃO -->
-        <div class="topic-group">
-            <h3 class="topic-title">Gestão e Controle</h3>
-            <div class="list-sistemas">
-                <a href="admin.html" class="row-item">
-                    <span class="icon">💰</span>
-                    <div class="item-info">
-                        <b>Acesso Financeiro</b>
-                        <span>Módulo de gestão, faturas e relatórios</span>
-                    </div>
-                </a>
-
-                <a href="acesso.html" class="row-item">
-                    <span class="icon">⚙️</span>
-                    <div class="item-info">
-                        <b>Acesso de Progressão</b>
-                        <span>Neste acesso, para o cliente/usuário, é mostrado o progresso do produto.</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <p class="footer-text">
-            <b>INFO:</b> Selecione um dos módulos acima para navegar pelas aplicações da <b>Montes Developers</b>.
-        </p>
-    </div>
-
+<body class="internal-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header internal-header"><div class="container header-inner">
+    <a class="brand" href="../index.html"><img src="../logomontes.png" alt="" width="52" height="40"><span>Montes <strong>Developers</strong></span></a>
+    <a class="back-link" href="../index.html#projetos">← Voltar ao portfólio</a>
+  </div></header>
+  <main id="conteudo">
+    <section class="page-hero"><div class="container"><p class="eyebrow"><span></span> Laboratório Montes</p><h1>Sistemas em demonstração.</h1><p>Explore fluxos funcionais criados para validar ideias, interfaces e experiências de uso.</p></div></section>
+    <section class="container module-grid" aria-label="Módulos disponíveis">
+      <article class="module-group"><h2>Autenticação</h2><p>Fluxos de acesso e entrada de novos usuários.</p><div class="module-list">
+        <a class="module-item" href="login.html"><span class="module-index">01</span><span><strong>Sistema de login</strong><small>Acesso e validação de usuários</small></span><b aria-hidden="true">→</b></a>
+        <a class="module-item" href="cadastro.html"><span class="module-index">02</span><span><strong>Sistema de cadastro</strong><small>Registro de novos clientes</small></span><b aria-hidden="true">→</b></a>
+      </div></article>
+      <article class="module-group"><h2>Gestão e controle</h2><p>Painéis para acompanhar informações e processos.</p><div class="module-list">
+        <a class="module-item" href="admin.html"><span class="module-index">03</span><span><strong>Acesso financeiro</strong><small>Gestão, faturas e relatórios</small></span><b aria-hidden="true">→</b></a>
+        <a class="module-item" href="acesso.html"><span class="module-index">04</span><span><strong>Acompanhamento de serviço</strong><small>Progresso do produto para o cliente</small></span><b aria-hidden="true">→</b></a>
+      </div></article>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><p>Ambiente demonstrativo da Montes Developers.</p><a href="../index.html#contato">Criar um projeto →</a></div></footer>
 </body>
 </html>
