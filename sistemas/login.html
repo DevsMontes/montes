@@ -298,8 +298,10 @@
             .v-foto-destaque, .v-foto-placeholder { width: 120px; height: 120px; }
         }
     </style>
+    <link rel="stylesheet" href="../assets/css/system-demo.css">
 </head>
-<body>
+<body class="demo-system" data-demo-title="Portal do cliente" data-demo-role="Visão do cliente" data-demo-summary="Esta é a área pessoal onde o cliente acessa seus dados, cadastra veículos e acompanha cada etapa do serviço sem precisar solicitar atualizações por mensagem." data-demo-features="Entrar em uma área pessoal e responsiva|Visualizar veículos e histórico de serviços|Acompanhar status, fotos e orçamento|Atualizar dados e acessar o suporte">
+<script src="../assets/js/system-demo.js"></script>
 
 <a href="sistemas.html" class="btn-home-fixed">
     <svg class="svg-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> 
@@ -326,7 +328,7 @@
         <label>Sua Senha</label>
         <input type="password" id="c-pass-login" placeholder="••••••">
         
-        <div class="aviso-senha">Protegemos seus dados com criptografia de ponta a ponta.</div>
+        <div class="aviso-senha">Ambiente demonstrativo — use apenas dados de teste.</div>
         
         <button class="btn-main" onclick="processarAcesso()">ENTRAR NO SISTEMA</button>
 
