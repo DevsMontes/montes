@@ -298,8 +298,10 @@
             .v-foto-destaque, .v-foto-placeholder { width: 120px; height: 120px; }
         }
     </style>
+    <link rel="stylesheet" href="../assets/css/system-demo.css">
 </head>
-<body>
+<body class="demo-system" data-demo-title="Entrada de novos clientes" data-demo-role="Primeiro acesso" data-demo-summary="Este fluxo mostra como um novo cliente pode criar sua conta, registrar um veículo e enviar uma solicitação inicial com poucos passos." data-demo-features="Criar uma conta com dados essenciais|Cadastrar o veículo e descrever a necessidade|Enviar uma solicitação diretamente à equipe|Continuar para o portal de acompanhamento">
+<script src="../assets/js/system-demo.js"></script>
 
 <a href="sistemas.html" class="btn-home-fixed">
     <svg class="svg-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> 
@@ -332,7 +334,7 @@
         <label>Sua Senha</label>
         <input type="password" id="c-pass-cad" placeholder="••••••">
         
-        <div class="aviso-senha">Protegemos seus dados com criptografia de ponta a ponta.</div>
+        <div class="aviso-senha">Ambiente demonstrativo — use apenas dados de teste.</div>
         
         <button class="btn-main" onclick="processarAcesso()">CADASTRAR E CONTINUAR</button>
 
