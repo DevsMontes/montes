@@ -315,7 +315,7 @@ function initAdmin() {
     extraView.hidden = showCore;
     if (showCore) {
       $('h2', adminTop).textContent = label === 'Visão geral' ? 'Painel de serviços' : 'Atendimentos em andamento';
-      $('p', adminTop).textContent = label === 'Visão geral' ? 'Quinta-feira, 28 de agosto · Dados exclusivamente demonstrativos' : 'Acompanhe prioridades, responsáveis e evolução da fila.';
+      $('p', adminTop).textContent = label === 'Visão geral' ? 'Sexta-feira, 28 de agosto · Dados exclusivamente demonstrativos' : 'Acompanhe prioridades, responsáveis e evolução da fila.';
     } else {
       const [title, description, content] = adminViews[label];
       $('h2', adminTop).textContent = title;
