@@ -52,30 +52,72 @@ function initChrome() {
   overlay.setAttribute('aria-hidden', 'true');
   overlay.innerHTML = `
     <aside class="feature-map" role="dialog" aria-modal="true" aria-labelledby="feature-map-title">
-      <div class="feature-map-head"><span>Mapa da interface</span><button class="feature-map-close" type="button" aria-label="Fechar">×</button></div>
-      <h2 id="feature-map-title">Como esta tela funciona</h2>
-      <p>Os números destacam o que o usuário enxerga e o que cada parte resolve na operação.</p>
-      <ol class="feature-tree">${targets.map((target, index) => {
+      <div class="feature-map-head"><div><span>Mapa interativo</span><small>${String(targets.length).padStart(2, '0')} pontos da experiência</small></div><button class="feature-map-close" type="button" aria-label="Fechar mapa"><i></i><i></i></button></div>
+      <div class="feature-map-layout">
+        <div class="feature-map-intro">
+          <p class="feature-map-kicker">Por dentro do produto</p>
+          <h2 id="feature-map-title">Explore cada decisão da interface.</h2>
+          <p>Escolha um item para ir diretamente até ele e entender o valor que entrega ao usuário.</p>
+          <div class="feature-map-hint"><span>↘</span><small>Toque em uma funcionalidade<br>para destacá-la na tela.</small></div>
+        </div>
+        <ol class="feature-tree">${targets.map((target, index) => {
         const [name, detail = 'Funcionalidade demonstrativa adaptável ao projeto.'] = (target.dataset.feature || '').split('|');
-        return `<li><span>${String(index + 1).padStart(2, '0')}</span><strong>${name}</strong><small>${detail}</small></li>`;
+        return `<li><button type="button" data-feature-jump="${index}"><span>${String(index + 1).padStart(2, '0')}</span><div><strong>${name}</strong><small>${detail}</small></div><i aria-hidden="true">↗</i></button></li>`;
       }).join('')}</ol>
+      </div>
+      <div class="feature-map-foot"><span>Montes Developers · Product walkthrough</span><small>ESC para fechar</small></div>
     </aside>`;
   body.append(overlay);
 
   const button = $('.demo-feature-button', toolbar);
   const close = $('.feature-map-close', overlay);
-  const setFeatureMode = (open) => {
+  const setFeatureMode = (open, restoreFocus = true) => {
     body.classList.toggle('feature-mode', open);
     overlay.classList.toggle('open', open);
     overlay.setAttribute('aria-hidden', String(!open));
     button.setAttribute('aria-expanded', String(open));
     if (open) close.focus();
-    else button.focus();
+    else if (restoreFocus) button.focus();
   };
   button.addEventListener('click', () => setFeatureMode(true));
   close.addEventListener('click', () => setFeatureMode(false));
   overlay.addEventListener('click', (event) => { if (event.target === overlay) setFeatureMode(false); });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setFeatureMode(false); });
+
+  const featureJumps = $$('[data-feature-jump]', overlay);
+  featureJumps.forEach((item) => item.addEventListener('click', () => {
+    const target = targets[Number(item.dataset.featureJump)];
+    if (!target) return;
+    const [name] = (target.dataset.feature || 'Funcionalidade').split('|');
+    setFeatureMode(false, false);
+    document.dispatchEvent(new CustomEvent('demo:feature-jump', { detail: { target } }));
+    $$('.feature-spotlight').forEach((element) => element.classList.remove('feature-spotlight'));
+    target.classList.add('feature-spotlight');
+    target.setAttribute('tabindex', '-1');
+    window.setTimeout(() => {
+      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+      target.focus({ preventScroll: true });
+    }, 120);
+    window.setTimeout(() => target.classList.remove('feature-spotlight'), 3600);
+    toast(`${String(Number(item.dataset.featureJump) + 1).padStart(2, '0')} · ${name}`);
+  }));
+  overlay.addEventListener('keydown', (event) => {
+    if (!overlay.classList.contains('open')) return;
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      const current = featureJumps.indexOf(document.activeElement);
+      if (current < 0) return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowDown' ? 1 : -1;
+      featureJumps[(current + direction + featureJumps.length) % featureJumps.length].focus();
+    }
+    if (event.key === 'Tab') {
+      const focusable = [close, ...featureJumps];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  });
 }
 
 function fillDemo() {
@@ -110,19 +152,46 @@ function initLogin() {
   });
 
   const dashboardViews = {
-    overview: ['Visão geral', 'As informações mais importantes do seu atendimento.', 'Atualizado há 12 min'],
-    vehicles: ['Meus veículos', 'Veículos cadastrados e serviços vinculados ao perfil.', '1 veículo ativo'],
-    history: ['Histórico', 'Revisões e solicitações anteriores organizadas em uma linha do tempo.', '3 registros'],
-    profile: ['Meu perfil', 'Dados de contato e preferências de comunicação do cliente.', 'Cadastro completo']
+    overview: {
+      head: ['Visão geral', 'As informações mais importantes do seu atendimento.', 'Atualizado há 12 min'],
+      metrics: [['Status atual','Em diagnóstico'],['Previsão','Hoje, 17h'],['Orçamento','R$ 860,00']],
+      card: '<h3>Honda HR-V · BRA2E19</h3><p>Revisão preventiva e verificação do sistema de freios.</p><div class="timeline"><div class="timeline-step done">Recebido</div><div class="timeline-step done">Triagem</div><div class="timeline-step active">Diagnóstico</div><div class="timeline-step">Finalizado</div></div><div class="tracking-note"><strong>Atualização da equipe</strong><p>O diagnóstico foi iniciado. Enviaremos a aprovação do orçamento assim que a avaliação estiver concluída.</p></div>'
+    },
+    vehicles: {
+      head: ['Meus veículos', 'Veículos cadastrados e serviços vinculados ao perfil.', '1 veículo ativo'],
+      metrics: [['Veículo principal','Honda HR-V'],['Ano','2021'],['Placa','BRA2E19']],
+      card: '<div class="demo-detail-visual"><span>HR-V</span><div><small>Veículo ativo</small><h3>Honda HR-V 2021</h3><p>Última revisão em 28 de agosto · 42.860 km</p></div></div><div class="demo-inline-actions"><button type="button">Ver histórico</button><button type="button">Solicitar serviço</button></div>'
+    },
+    history: {
+      head: ['Histórico', 'Revisões e solicitações anteriores organizadas em uma linha do tempo.', '3 registros'],
+      metrics: [['Serviços realizados','03'],['Investimento total','R$ 2.140'],['Próxima revisão','10.000 km']],
+      card: '<h3>Histórico recente</h3><div class="demo-history"><div><span>28 AGO</span><p><strong>Revisão preventiva</strong><small>Em andamento · LC-1042</small></p><b>R$ 860</b></div><div><span>14 MAR</span><p><strong>Troca de óleo</strong><small>Concluído · LC-0968</small></p><b>R$ 420</b></div><div><span>02 JAN</span><p><strong>Alinhamento</strong><small>Concluído · LC-0911</small></p><b>R$ 260</b></div></div>'
+    },
+    profile: {
+      head: ['Meu perfil', 'Dados de contato e preferências de comunicação do cliente.', 'Cadastro completo'],
+      metrics: [['Cliente desde','2023'],['Atendimentos','05'],['Canal preferido','WhatsApp']],
+      card: '<h3>Marina Costa</h3><p>cliente@demo.com · (61) 99918-2040</p><div class="demo-profile-grid"><div><small>Notificações</small><strong>WhatsApp e e-mail</strong></div><div><small>Oficina preferida</small><strong>Lima Car · Asa Norte</strong></div></div><button class="secondary-action demo-profile-action" type="button">Editar preferências</button>'
+    }
   };
   $$('[data-dashboard-nav]').forEach((item) => item.addEventListener('click', () => {
-    const [title, description, status] = dashboardViews[item.dataset.dashboardNav];
+    const view = dashboardViews[item.dataset.dashboardNav];
+    const [title, description, status] = view.head;
     $$('[data-dashboard-nav]').forEach((navItem) => navItem.classList.toggle('active', navItem === item));
     $('[data-dashboard-title]').textContent = title;
     $('[data-dashboard-description]').textContent = description;
     $('[data-dashboard-status]').textContent = status;
+    $('.summary-grid').innerHTML = view.metrics.map(([label, value]) => `<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join('');
+    $('.service-card-demo').innerHTML = view.card;
+    $('.dashboard-main').classList.remove('view-switch');
+    void $('.dashboard-main').offsetWidth;
+    $('.dashboard-main').classList.add('view-switch');
     toast(`${title}: módulo demonstrativo selecionado.`);
   }));
+  document.addEventListener('demo:feature-jump', (event) => {
+    if (!event.detail.target.closest('[data-customer-dashboard]')) return;
+    $('[data-login-view]').hidden = true;
+    $('[data-customer-dashboard]').hidden = false;
+  });
 }
 
 function initSignup() {
@@ -132,7 +201,14 @@ function initSignup() {
   const show = (index) => {
     current = Math.max(0, Math.min(index, steps.length - 1));
     steps.forEach((step, i) => { step.hidden = i !== current; });
-    indicators.forEach((indicator, i) => indicator.classList.toggle('active', i === current));
+    indicators.forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === current);
+      indicator.classList.toggle('completed', i < current);
+      indicator.setAttribute('aria-current', i === current ? 'step' : 'false');
+    });
+    steps[current]?.classList.remove('step-enter');
+    void steps[current]?.offsetWidth;
+    steps[current]?.classList.add('step-enter');
   };
   $$('[data-step-next]').forEach((button) => button.addEventListener('click', () => {
     const visible = steps[current];
@@ -149,6 +225,18 @@ function initSignup() {
     toast('Solicitação fictícia criada e enviada à operação.');
   });
   $('[data-signup-reset]')?.addEventListener('click', () => { $('[data-signup-success]').hidden = true; $('[data-signup-form]').hidden = false; show(0); });
+  document.addEventListener('demo:feature-jump', (event) => {
+    const stepIndex = steps.indexOf(event.detail.target);
+    if (stepIndex >= 0) {
+      $('[data-signup-success]').hidden = true;
+      $('[data-signup-form]').hidden = false;
+      show(stepIndex);
+    }
+    if (event.detail.target.matches('[data-signup-success]')) {
+      $('[data-signup-form]').hidden = true;
+      $('[data-signup-success]').hidden = false;
+    }
+  });
   show(0);
 }
 
@@ -207,9 +295,37 @@ function initAdmin() {
   };
   $('[data-job-detail-close]')?.addEventListener('click', closeDetail);
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDetail(); });
+  const adminContent = $('.admin-content');
+  const adminTop = $('.admin-top', adminContent);
+  const adminCore = [$('.kpi-grid', adminContent), $('.board', adminContent)];
+  const extraView = document.createElement('div');
+  extraView.className = 'admin-view-card';
+  extraView.hidden = true;
+  adminContent.append(extraView);
+  const adminViews = {
+    'Clientes': ['Clientes ativos','Organize relacionamento, veículos e histórico em um só lugar.','<div class="admin-list"><div><span>MC</span><p><strong>Marina Costa</strong><small>Honda HR-V · 5 serviços</small></p><b>Ativa</b></div><div><span>RM</span><p><strong>Rafael Mendes</strong><small>Toyota Corolla · 3 serviços</small></p><b>Ativo</b></div><div><span>CR</span><p><strong>Camila Rocha</strong><small>Jeep Renegade · 4 serviços</small></p><b>Ativa</b></div></div>'],
+    'Agenda': ['Agenda da equipe','Distribua horários e responsáveis sem perder o contexto.','<div class="agenda-grid"><div><span>09:00</span><strong>Marina · HR-V</strong><small>Revisão preventiva</small></div><div><span>11:30</span><strong>Rafael · Corolla</strong><small>Diagnóstico eletrônico</small></div><div><span>14:00</span><strong>Novo encaixe</strong><small>Horário disponível</small></div></div>'],
+    'Relatórios': ['Relatórios','Transforme a rotina da operação em decisões mais claras.','<div class="report-grid"><div><span>Conversão</span><strong>68%</strong><i style="--value:68%"></i></div><div><span>Ticket médio</span><strong>R$ 890</strong><i style="--value:82%"></i></div><div><span>Satisfação</span><strong>4,9/5</strong><i style="--value:96%"></i></div></div>']
+  };
   $$('[data-admin-nav]').forEach((item) => item.addEventListener('click', () => {
     $$('[data-admin-nav]').forEach((navItem) => navItem.classList.toggle('active', navItem === item));
-    toast(`${item.textContent.trim()}: visão selecionada para esta demonstração.`);
+    const label = item.textContent.trim();
+    const showCore = label === 'Visão geral' || label === 'Atendimentos';
+    adminCore.forEach((element) => { element.hidden = !showCore; });
+    extraView.hidden = showCore;
+    if (showCore) {
+      $('h2', adminTop).textContent = label === 'Visão geral' ? 'Painel de serviços' : 'Atendimentos em andamento';
+      $('p', adminTop).textContent = label === 'Visão geral' ? 'Quinta-feira, 28 de agosto · Dados exclusivamente demonstrativos' : 'Acompanhe prioridades, responsáveis e evolução da fila.';
+    } else {
+      const [title, description, content] = adminViews[label];
+      $('h2', adminTop).textContent = title;
+      $('p', adminTop).textContent = description;
+      extraView.innerHTML = content;
+      extraView.classList.remove('view-switch');
+      void extraView.offsetWidth;
+      extraView.classList.add('view-switch');
+    }
+    toast(`${label}: visão selecionada para esta demonstração.`);
   }));
   $('[data-new-request]')?.addEventListener('click', () => {
     const id = `LC-${1042 + Object.keys(demoData.jobs).length}`;
@@ -217,6 +333,9 @@ function initAdmin() {
     renderBoard();
     openJob(id);
     toast('Nova solicitação fictícia adicionada à fila.');
+  });
+  document.addEventListener('demo:feature-jump', (event) => {
+    if (event.detail.target.closest('[data-job-detail]')) openJob(Object.keys(demoData.jobs)[0]);
   });
 }
 
@@ -236,6 +355,11 @@ function initTracking() {
     $('[data-tracking-card]').hidden = true;
     $('[data-tracking-empty]').hidden = false;
   });
+  document.addEventListener('demo:feature-jump', (event) => {
+    if (!event.detail.target.closest('[data-tracking-card]')) return;
+    $('[data-tracking-empty]').hidden = true;
+    $('[data-tracking-card]').hidden = false;
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -243,4 +367,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initChrome();
   $$('[data-fill-demo]').forEach((button) => button.addEventListener('click', fillDemo));
   initLogin(); initSignup(); initAdmin(); initTracking();
+  $$('.primary-action,.secondary-action,.demo-example-button,.demo-feature-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      button.classList.remove('button-pop');
+      void button.offsetWidth;
+      button.classList.add('button-pop');
+      window.setTimeout(() => button.classList.remove('button-pop'), 420);
+    });
+  });
 });
