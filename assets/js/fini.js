@@ -1,1 +1,108 @@
-const root=document.documentElement;const reveals=[...document.querySelectorAll('.reveal')];const progress=document.querySelector('[data-progress]');const parallax=document.querySelector('[data-parallax]');const themes={berry:['#7b2e6a','#471f78','#ff5aa5'],banana:['#d7a914','#6d5011','#ffd83d'],blue:['#1688b5','#314a9d','#48cfff'],pink:['#c94c87','#6f2c78','#ff8fbf']};const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}})},{threshold:.14});reveals.forEach(el=>observer.observe(el));function onScroll(){const total=document.documentElement.scrollHeight-innerHeight;const value=total>0?scrollY/total*100:0;if(progress)progress.style.width=`${value}%`;if(parallax&&innerWidth>760){const rect=parallax.getBoundingClientRect();const offset=(innerHeight/2-(rect.top+rect.height/2))*.035;parallax.style.transform=`translateY(${offset}px)`}}window.addEventListener('scroll',onScroll,{passive:true});onScroll();document.querySelector('[data-confetti]')?.addEventListener('click',()=>{document.body.classList.remove('sweet-mode');void document.body.offsetWidth;document.body.classList.add('sweet-mode');window.setTimeout(()=>document.body.classList.remove('sweet-mode'),900);for(let i=0;i<18;i++){const piece=document.createElement('i');piece.style.cssText=`position:fixed;z-index:5000;left:${45+Math.random()*10}%;top:45%;width:${6+Math.random()*8}px;height:${12+Math.random()*14}px;border-radius:99px;background:${['#ff5aa5','#ffd83d','#48cfff','#fff'][i%4]};pointer-events:none;transform:rotate(${Math.random()*180}deg);transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .8s`;document.body.appendChild(piece);requestAnimationFrame(()=>{piece.style.transform=`translate(${(Math.random()-.5)*520}px,${120+Math.random()*420}px) rotate(${360+Math.random()*500}deg)`;piece.style.opacity='0'});setTimeout(()=>piece.remove(),900)}});document.querySelectorAll('[data-theme]').forEach(button=>button.addEventListener('click',()=>{const key=button.dataset.theme;const palette=themes[key];if(!palette)return;document.querySelectorAll('[data-theme]').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active))});const stage=document.querySelector('[data-flavor-stage]');stage.style.background=`radial-gradient(circle at 50% 45%,rgba(255,255,255,.18),transparent 22rem),linear-gradient(145deg,${palette[0]},${palette[1]})`;root.style.setProperty('--accent',palette[2])}));document.querySelectorAll('[data-tilt]').forEach(card=>{card.addEventListener('pointermove',event=>{if(innerWidth<900)return;const rect=card.getBoundingClientRect();const x=(event.clientX-rect.left)/rect.width-.5;const y=(event.clientY-rect.top)/rect.height-.5;card.style.transform=`perspective(1000px) rotateX(${y*-2.5}deg) rotateY(${x*3.5}deg)`});card.addEventListener('pointerleave',()=>card.style.transform='')});
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const finePointer = window.matchMedia('(pointer: fine)');
+const root = document.documentElement;
+const progress = document.querySelector('[data-progress]');
+const header = document.querySelector('[data-header]');
+const parallax = document.querySelector('[data-parallax]');
+
+const themes = {
+  berry: { accent: '#ff5aa5', rgb: '255, 90, 165', a: '#7b2e6a', b: '#471f78' },
+  banana: { accent: '#ffd83d', rgb: '255, 216, 61', a: '#c58b10', b: '#5c3f0c' },
+  blue: { accent: '#48cfff', rgb: '72, 207, 255', a: '#178bb8', b: '#304397' },
+  pink: { accent: '#ff8fbf', rgb: '255, 143, 191', a: '#ca4d88', b: '#6e2d79' }
+};
+
+const revealItems = [...document.querySelectorAll('.reveal')];
+if (!reduceMotion.matches && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -35px' });
+  revealItems.forEach((item) => observer.observe(item));
+} else {
+  revealItems.forEach((item) => item.classList.add('is-visible'));
+}
+
+function updateScrollEffects() {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const percent = total > 0 ? (window.scrollY / total) * 100 : 0;
+  if (progress) progress.style.width = `${percent}%`;
+  header?.classList.toggle('scrolled', window.scrollY > 18);
+
+  if (parallax && !reduceMotion.matches && window.innerWidth > 900) {
+    const rect = parallax.getBoundingClientRect();
+    const centerDelta = window.innerHeight / 2 - (rect.top + rect.height / 2);
+    parallax.style.transform = `translate3d(0, ${(centerDelta * 0.028).toFixed(2)}px, 0)`;
+  } else if (parallax) {
+    parallax.style.transform = '';
+  }
+}
+
+window.addEventListener('scroll', updateScrollEffects, { passive: true });
+window.addEventListener('resize', updateScrollEffects);
+updateScrollEffects();
+
+document.querySelector('[data-sugar-mode]')?.addEventListener('click', () => {
+  document.body.classList.remove('sugar-mode');
+  void document.body.offsetWidth;
+  document.body.classList.add('sugar-mode');
+  window.setTimeout(() => document.body.classList.remove('sugar-mode'), 950);
+
+  if (reduceMotion.matches) return;
+  const colors = ['#ff5aa5', '#ffd83d', '#48cfff', '#ffffff', '#9d72ff'];
+  const amount = window.innerWidth < 600 ? 14 : 24;
+  for (let index = 0; index < amount; index += 1) {
+    const piece = document.createElement('i');
+    piece.setAttribute('aria-hidden', 'true');
+    piece.style.cssText = [
+      'position:fixed', 'z-index:6000', 'pointer-events:none',
+      `left:${46 + Math.random() * 8}%`, `top:${42 + Math.random() * 8}%`,
+      `width:${6 + Math.random() * 8}px`, `height:${12 + Math.random() * 15}px`,
+      'border-radius:999px', `background:${colors[index % colors.length]}`,
+      `transform:rotate(${Math.random() * 180}deg)`,
+      'transition:transform .85s cubic-bezier(.2,.75,.2,1),opacity .85s ease'
+    ].join(';');
+    document.body.appendChild(piece);
+    requestAnimationFrame(() => {
+      const x = (Math.random() - 0.5) * Math.min(window.innerWidth * 0.75, 650);
+      const y = 120 + Math.random() * Math.min(window.innerHeight * 0.55, 480);
+      piece.style.transform = `translate(${x}px,${y}px) rotate(${360 + Math.random() * 560}deg)`;
+      piece.style.opacity = '0';
+    });
+    window.setTimeout(() => piece.remove(), 900);
+  }
+});
+
+document.querySelectorAll('[data-theme]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const theme = themes[button.dataset.theme];
+    if (!theme) return;
+
+    document.querySelectorAll('[data-theme]').forEach((item) => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+
+    root.style.setProperty('--accent', theme.accent);
+    root.style.setProperty('--accent-rgb', theme.rgb);
+    root.style.setProperty('--stage-a', theme.a);
+    root.style.setProperty('--stage-b', theme.b);
+  });
+});
+
+if (!reduceMotion.matches && finePointer.matches) {
+  document.querySelectorAll('[data-tilt]').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      if (window.innerWidth < 900) return;
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(1100px) rotateX(${(y * -2.4).toFixed(2)}deg) rotateY(${(x * 3.2).toFixed(2)}deg) translateY(-2px)`;
+    });
+    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+  });
+}
