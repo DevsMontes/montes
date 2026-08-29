@@ -129,6 +129,15 @@ button { font: inherit; }
 .monster-preview::before { content: ""; position: absolute; width: 170px; height: 170px; border-radius: 38% 62% 58% 42%; background: #63ff57; filter: blur(75px); opacity: .16; }
 .monster-word { position: relative; z-index: 1; color: white; font-size: clamp(2.2rem,6vw,4.8rem); font-weight: 950; letter-spacing: -.07em; transform: skew(-6deg); }
 .monster-stroke { position: absolute; z-index: 1; margin-top: 84px; color: #75ff55; font: 800 .76rem ui-monospace,monospace; letter-spacing: .4em; }
+.fini-preview { isolation:isolate; background:radial-gradient(circle at 75% 28%,rgba(255,224,66,.95),transparent 18%),linear-gradient(135deg,#ff72ac,#ef4e99 52%,#9c43cf); }
+.fini-preview::before { content:""; position:absolute; z-index:-1; width:280px; height:280px; right:-70px; bottom:-105px; border:1px solid rgba(255,255,255,.38); border-radius:50%; box-shadow:0 0 0 40px rgba(255,255,255,.05),0 0 0 80px rgba(255,255,255,.025); }
+.fini-preview-word { position:relative; z-index:2; color:white; font-size:clamp(4rem,8vw,7.5rem); font-weight:950; letter-spacing:-.1em; transform:rotate(-6deg); text-shadow:0 12px 30px rgba(106,21,78,.2); }
+.fini-preview-word span { color:#ffe146; }
+.fini-preview > strong { position:absolute; z-index:2; margin-top:104px; color:white; font-size:.72rem; letter-spacing:.34em; text-transform:uppercase; }
+.fini-preview > i { position:absolute; width:92px; height:25px; border-radius:999px; background:linear-gradient(90deg,#54d8f5,#ffe04a 48%,#ff689c); box-shadow:inset 0 3px 5px rgba(255,255,255,.45),0 14px 24px rgba(100,26,71,.2); }
+.fini-preview > i:nth-of-type(1) { left:9%; top:21%; transform:rotate(38deg); }
+.fini-preview > i:nth-of-type(2) { right:7%; bottom:18%; transform:rotate(-27deg); }
+.fini-preview > i:nth-of-type(3) { width:48px; height:48px; left:19%; bottom:13%; background:#ffe04a; }
 .systems-preview { background: radial-gradient(circle at 75% 20%,rgba(124,83,255,.34),transparent 35%),linear-gradient(145deg,#101834,#080a18); }
 .mini-window { width: min(78%,320px); padding: 18px; display: flex; flex-wrap: wrap; gap: 7px; border: 1px solid rgba(255,255,255,.17); border-radius: 16px; background: rgba(7,9,25,.73); box-shadow: 0 24px 60px rgba(0,0,0,.35); transform: rotate(3deg); }
 .mini-window i { width: 7px; height: 7px; border-radius: 50%; background: var(--purple); }
