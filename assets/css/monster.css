@@ -155,3 +155,59 @@ button { color: inherit; font: inherit; }
 }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* Fluxo móvel natural: nenhuma informação depende da altura da tela. */
+@media (max-width: 700px) {
+  .monster-header { position: relative; min-height: calc(64px + var(--safe-top)); padding: var(--safe-top) 14px 0; }
+  .energy-stage { min-height: 0; padding: 34px 14px 24px; overflow: hidden; }
+  .stage-content { width: 100%; max-width: 100%; margin: 0; display: grid; grid-template-columns: minmax(0,1fr); gap: 0; overflow: visible; }
+  .product-copy { display: block; max-width: 100%; padding: 0; }
+  .overline { margin: 0 0 10px; font-size: .58rem; }
+  .product-copy h1 { max-width: 100%; font-size: clamp(3rem,16vw,5rem); line-height: .8; overflow-wrap: anywhere; }
+  .product-slogan { margin-top: 18px; font-size: .92rem; }
+  .product-description { width: 100%; max-width: 100%; margin-top: 10px; display: block; overflow: visible; font-size: .84rem; line-height: 1.55; }
+  .energy-facts { width: 100%; max-width: 100%; margin-top: 22px; padding: 14px 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); overflow: visible; border-block: 1px solid var(--line); }
+  .energy-facts div,.energy-facts div:first-child { min-width: 0; padding: 0 6px; text-align: center; }
+  .energy-facts div:nth-child(3) { display: block; }
+  .energy-facts dt { font-size: .73rem; white-space: normal; }
+  .energy-facts dd { font-size: .49rem; line-height: 1.25; white-space: normal; }
+  .energy-button { width: 100%; min-height: 50px; margin-top: 16px; justify-content: space-between; }
+  .product-visual { width: 100%; min-height: 390px; height: auto; margin: 18px 0 0; }
+  .active-can { width: auto; max-width: min(50%,190px); height: 350px; }
+  .can-halo { width: min(68vw,270px); box-shadow: 0 0 0 25px rgba(var(--accent-rgb),.035),0 0 0 50px rgba(var(--accent-rgb),.018); }
+  .flavor-code { right: 4%; bottom: 10%; font-size: clamp(2.6rem,15vw,4rem); }
+  .giant-word { top: 61%; font-size: 29vw; }
+  .ambient-glow { left: 50%; top: 62%; width: 120vw; }
+  .flavor-dock { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; padding: 0; overflow: visible; }
+  .flavor-chip { min-width: 0; min-height: 52px; grid-template-columns: 28px minmax(0,1fr); }
+  .flavor-chip span:last-child { min-width: 0; font-size: .62rem; white-space: normal; line-height: 1.15; }
+  .lineup-section { padding: 74px 14px; }
+  .lineup-scroll { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0; overflow: visible; }
+  .lineup-card { min-width: 0; min-height: 330px; padding: 14px; }
+  .lineup-card img { height: 220px; max-width: 82%; }
+}
+
+@media (max-width: 430px) {
+  .labs-brand span { display: none; }
+  .product-visual { min-height: 350px; }
+  .active-can { height: 315px; }
+  .lineup-heading h2 { font-size: clamp(2.2rem,12vw,3rem); }
+  .lineup-card { min-height: 292px; }
+  .lineup-card img { height: 185px; }
+  .concept-note h2 { font-size: clamp(2.1rem,11vw,2.8rem); }
+}
+
+@media (max-width: 340px) {
+  .product-copy h1 { font-size: 2.8rem; }
+  .flavor-dock,.lineup-scroll { grid-template-columns: 1fr; }
+  .flavor-chip { min-height: 50px; }
+  .lineup-card { min-height: 340px; }
+  .lineup-card img { height: 235px; }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .energy-stage { min-height: 0; }
+  .stage-content { align-items: start; }
+  .product-visual { min-height: 340px; }
+  .active-can { height: 310px; }
+}
