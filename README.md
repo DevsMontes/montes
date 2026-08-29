@@ -28,3 +28,7 @@ Depois acesse `http://localhost:8000`.
 ## Publicação
 
 O conteúdo da branch `main` é publicado automaticamente no GitHub Pages pelo workflow de site estático.
+
+## Demonstração AltriX
+
+A página inicial inclui uma demonstração estática do atendente AltriX. Ela funciona inteiramente no navegador, não consulta banco de dados, não envia mensagens e não armazena informações. A integração real será habilitada somente quando a API possuir hospedagem HTTPS definitiva.
