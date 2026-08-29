@@ -12,7 +12,7 @@
     <section class="product-frame" data-admin-board>
       <div class="product-bar"><div class="product-brand"><span class="product-mark">LC</span>Operação Lima Car</div><span class="product-status"><i></i> Equipe conectada</span></div>
       <div class="admin-layout">
-        <aside class="admin-sidebar" data-feature="Navegação da equipe|Separa operação, clientes, agenda e relatórios."><h2>Lima Car</h2><button class="active">Visão geral</button><button>Atendimentos</button><button>Clientes</button><button>Agenda</button><button>Relatórios</button></aside>
+        <aside class="admin-sidebar" data-feature="Navegação da equipe|Separa operação, clientes, agenda e relatórios."><h2>Lima Car</h2><button class="active" type="button" data-admin-nav>Visão geral</button><button type="button" data-admin-nav>Atendimentos</button><button type="button" data-admin-nav>Clientes</button><button type="button" data-admin-nav>Agenda</button><button type="button" data-admin-nav>Relatórios</button></aside>
         <div class="admin-content">
           <div class="admin-top"><div><h2>Painel de serviços</h2><p>Quinta-feira, 28 de agosto · Dados exclusivamente demonstrativos</p></div><button class="secondary-action" type="button" data-new-request>+ Nova solicitação</button></div>
           <div class="kpi-grid" data-feature="Indicadores operacionais|Resume o volume em cada etapa para orientar prioridades.">
@@ -27,7 +27,7 @@
       </div>
     </section>
   </main>
-  <aside class="job-detail" data-job-detail aria-label="Detalhes do atendimento">
+  <aside class="job-detail" data-job-detail role="dialog" aria-modal="true" aria-label="Detalhes do atendimento" aria-hidden="true">
     <button class="job-detail-close" type="button" data-job-detail-close aria-label="Fechar">×</button>
     <p class="demo-kicker" data-detail-id>LC-0000</p><h2 data-detail-car>Veículo</h2><p>Edite a etapa abaixo para experimentar o fluxo do painel.</p>
     <ul class="detail-list"><li><span>Cliente</span><strong data-detail-customer></strong></li><li><span>Placa</span><strong data-detail-plate></strong></li><li><span>Contato</span><strong data-detail-phone></strong></li><li><span>Serviço</span><strong data-detail-service></strong></li><li><span>Orçamento</span><strong data-detail-quote></strong></li></ul>

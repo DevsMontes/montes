@@ -108,6 +108,21 @@ function initLogin() {
     $('[data-login-view]').hidden = false;
     toast('Sessão demonstrativa encerrada.');
   });
+
+  const dashboardViews = {
+    overview: ['Visão geral', 'As informações mais importantes do seu atendimento.', 'Atualizado há 12 min'],
+    vehicles: ['Meus veículos', 'Veículos cadastrados e serviços vinculados ao perfil.', '1 veículo ativo'],
+    history: ['Histórico', 'Revisões e solicitações anteriores organizadas em uma linha do tempo.', '3 registros'],
+    profile: ['Meu perfil', 'Dados de contato e preferências de comunicação do cliente.', 'Cadastro completo']
+  };
+  $$('[data-dashboard-nav]').forEach((item) => item.addEventListener('click', () => {
+    const [title, description, status] = dashboardViews[item.dataset.dashboardNav];
+    $$('[data-dashboard-nav]').forEach((navItem) => navItem.classList.toggle('active', navItem === item));
+    $('[data-dashboard-title]').textContent = title;
+    $('[data-dashboard-description]').textContent = description;
+    $('[data-dashboard-status]').textContent = status;
+    toast(`${title}: módulo demonstrativo selecionado.`);
+  }));
 }
 
 function initSignup() {
@@ -178,12 +193,24 @@ function openJob(id) {
   });
   detail.dataset.currentJob = id;
   detail.classList.add('open');
+  detail.setAttribute('aria-hidden', 'false');
+  $('[data-job-detail-close]', detail)?.focus();
 }
 
 function initAdmin() {
   if (!$('[data-admin-board]')) return;
   renderBoard();
-  $('[data-job-detail-close]')?.addEventListener('click', () => $('[data-job-detail]').classList.remove('open'));
+  const closeDetail = () => {
+    const detail = $('[data-job-detail]');
+    detail.classList.remove('open');
+    detail.setAttribute('aria-hidden', 'true');
+  };
+  $('[data-job-detail-close]')?.addEventListener('click', closeDetail);
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDetail(); });
+  $$('[data-admin-nav]').forEach((item) => item.addEventListener('click', () => {
+    $$('[data-admin-nav]').forEach((navItem) => navItem.classList.toggle('active', navItem === item));
+    toast(`${item.textContent.trim()}: visão selecionada para esta demonstração.`);
+  }));
   $('[data-new-request]')?.addEventListener('click', () => {
     const id = `LC-${1042 + Object.keys(demoData.jobs).length}`;
     demoData.jobs[id] = { customer: 'Novo cliente', car: 'Fiat Pulse 2024', plate: 'DEM0A01', service: 'Avaliação inicial', phone: '(61) 99999-0000', quote: 'Em análise', stage: 'queue' };

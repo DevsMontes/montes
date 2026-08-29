@@ -247,6 +247,9 @@ button { font: inherit; }
 
 :focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
 
+.reveal-ready { opacity: 0; transform: translateY(22px); transition: opacity .65s ease var(--reveal-delay,0ms),transform .65s cubic-bezier(.2,.75,.2,1) var(--reveal-delay,0ms); }
+.reveal-ready.revealed { opacity: 1; transform: none; }
+
 /* Mobile-first refinement: denser rhythm, larger touch targets and earlier content */
 @media (max-width: 720px) {
   body { font-size: 16px; }

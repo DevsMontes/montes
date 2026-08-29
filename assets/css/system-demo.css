@@ -64,8 +64,8 @@ body.demo-system.feature-mode { overflow: hidden; }
 .dashboard-grid { display: grid; grid-template-columns: 210px minmax(0,1fr); min-height: 570px; }
 .dashboard-nav { padding: 28px 18px; color: white; background: var(--demo-navy); }
 .dashboard-nav strong { display: block; margin-bottom: 28px; font-size: .9rem; }
-.dashboard-nav a { padding: 11px 12px; display: block; border-left: 2px solid transparent; color: #aeb9c9; font-size: .72rem; }
-.dashboard-nav a.active { border-color: #5ed7ec; color: white; background: rgba(255,255,255,.05); }
+.dashboard-nav button { width: 100%; padding: 11px 12px; display: block; border: 0; border-left: 2px solid transparent; color: #aeb9c9; background: transparent; text-align: left; font: inherit; font-size: .72rem; cursor: pointer; }
+.dashboard-nav button.active { border-color: #5ed7ec; color: white; background: rgba(255,255,255,.05); }
 .dashboard-main { min-width: 0; padding: clamp(20px,3vw,34px); }
 .dashboard-head { display: flex; align-items: start; justify-content: space-between; gap: 18px; }
 .dashboard-head h2 { margin: 0; font-size: clamp(1.5rem,3vw,2.4rem); letter-spacing: -.04em; }
