@@ -66,3 +66,20 @@ if (!reduceMotion.matches && 'IntersectionObserver' in window) {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
   revealItems.forEach((item) => revealObserver.observe(item));
 }
+
+const studio = document.querySelector('.hero-studio');
+const studioWindow = studio?.querySelector('.studio-window');
+
+if (studio && studioWindow && !reduceMotion.matches && window.matchMedia('(pointer: fine)').matches) {
+  studio.addEventListener('pointermove', (event) => {
+    const bounds = studio.getBoundingClientRect();
+    const rotateY = ((event.clientX - bounds.left) / bounds.width - 0.5) * 8;
+    const rotateX = ((event.clientY - bounds.top) / bounds.height - 0.5) * -6;
+    studioWindow.style.setProperty('--studio-rotate-x', `${rotateX.toFixed(2)}deg`);
+    studioWindow.style.setProperty('--studio-rotate-y', `${rotateY.toFixed(2)}deg`);
+  });
+  studio.addEventListener('pointerleave', () => {
+    studioWindow.style.removeProperty('--studio-rotate-x');
+    studioWindow.style.removeProperty('--studio-rotate-y');
+  });
+}
