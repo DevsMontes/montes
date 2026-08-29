@@ -1,288 +1,39 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta id="viewport-meta" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <link rel="icon" type="image/png" href="../logomontes.png">
-    <title>Mecânica Lima Car | Sistema de Acesso</title>
-    <style>
-        :root { 
-            --bg: #0a0e17;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --primary: #29b6f6;
-            --primary-alt: #8b5cf6;
-            --primary-glow: rgba(41, 182, 246, 0.3);
-            --text-main: #ffffff; 
-            --text-dim: #94a3b8;
-            --border: rgba(41, 182, 246, 0.15); 
-            --success: #10b981; 
-            --warning: #f59e0b; 
-            --danger: #ef4444; 
-            --input-bg: #111827; 
-            --logo-size: 200px; 
-            --radius: 16px;
-        } 
-        
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; } 
-        
-        body { 
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg); 
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(41, 182, 246, 0.04) 0%, transparent 30%),
-                radial-gradient(circle at 90% 90%, rgba(139, 92, 246, 0.04) 0%, transparent 30%);
-            color: var(--text-main); 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; 
-            padding: 10px;
-            overflow-x: hidden;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .animar-entrada {
-            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .badge-modo {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .modo-novo { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid var(--success); }
-        .modo-edicao { background: rgba(41, 182, 246, 0.15); color: var(--primary); border: 1px solid var(--primary); }
-
-        @media (min-width: 768px) {
-            body { padding: 25px; justify-content: center; }
-        }
-
-        .btn-home-fixed {
-            display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px); border: 1px solid var(--border); color: var(--text-main);
-            padding: 10px 18px; border-radius: 50px; text-decoration: none; font-size: 12px;
-            font-weight: 600; margin-bottom: 20px; transition: all 0.3s ease; width: fit-content;
-        }
-
-        @media (min-width: 768px) {
-            .btn-home-fixed { position: fixed; top: 25px; left: 25px; margin-bottom: 0; z-index: 1000; }
-        }
-
-        .container { width: 100%; max-width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; transition: max-width 0.4s ease; } 
-
-        @media (min-width: 768px) { 
-            .container { max-width: 450px; } 
-            .container:has(#view-painel:not(.hidden)) { max-width: 95vw; }
-            #view-painel.card { width: 100% !important; min-height: 85vh; display: flex; flex-direction: column; }
-        }
-
-        section { display: block; animation: fadeIn 0.5s ease; width: 100%; } 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } 
-        
-        .card { 
-            background: var(--card-bg); border: 1px solid var(--border); padding: 20px; 
-            border-radius: var(--radius); position: relative; width: 100%; backdrop-filter: blur(12px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); margin: 0 auto;
-        } 
-
-        .logo-box { text-align: center; margin-bottom: 30px; } 
-        .logo-img { width: 100%; max-width: var(--logo-size); height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 0 10px var(--primary-glow)); } 
-        
-        label { display: block; font-size: 10px; color: var(--primary); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; } 
-        input, textarea, select { width: 100%; padding: 14px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 12px; color: #fff; font-size: 16px !important; margin-bottom: 15px; transition: 0.3s; } 
-        
-        .btn-upload-custom { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(41, 182, 246, 0.05); border: 2px dashed var(--border); color: var(--primary); padding: 25px 15px; border-radius: var(--radius); cursor: pointer; margin-bottom: 20px; font-weight: 600; font-size: 12px; transition: 0.3s; width: 100%; } 
-        .input-placa-grande { font-family: 'Monaco', monospace; font-size: 32px !important; background: linear-gradient(to bottom, #fff, #cbd5e1) !important; color: #0f172a !important; border: none !important; text-transform: uppercase; letter-spacing: 4px; text-align: center; border-radius: 12px !important; font-weight: 900; } 
-        .btn-main { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-alt) 100%); color: #fff; width: 100%; padding: 16px; border: none; border-radius: 12px; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 13px; transition: 0.3s; box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3); margin-top: 5px; display: block; text-decoration: none; text-align: center; } 
-
-        .categorias-filtro { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 12px; width: 100%; scrollbar-width: none; } 
-        .cat-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-dim); padding: 10px 16px; border-radius: 100px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; } 
-        .cat-btn.active { border-color: var(--primary); color: #fff; background: var(--primary); } 
-
-        .status-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; } 
-        .status-option { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 12px 4px; border-radius: 10px; text-align: center; font-size: 9px; font-weight: 700; cursor: pointer; color: var(--text-dim); text-transform: uppercase; } 
-        .status-option.active { border-color: var(--primary); color: var(--primary); background: rgba(41, 182, 246, 0.1); }
-
-        .table-container { margin-top: 15px; background: rgba(0,0,0,0.2); border-radius: 14px; border: 1px solid var(--border); overflow-x: auto; max-height: 400px; } 
-        table { width: 100%; border-collapse: collapse; min-width: 280px; }
-        td { padding: 14px 10px; border-bottom: 1px solid var(--border); font-size: 13px; } 
-        
-        .hidden { display: none !important; } 
-        #img-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); } 
-        #modal-view { max-width: 95%; max-height: 80%; border: 1px solid var(--primary); border-radius: 10px; } 
-
-        .fotos-grid { display: grid; gap: 8px; margin-top: 15px; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); } 
-        .img-item { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); } 
-
-        .confirm-box { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 10001; backdrop-filter: blur(8px); }
-        .confirm-box .card { background: var(--bg); border: 1px solid var(--border); padding: 30px; border-radius: 20px; border-top: 4px solid var(--danger); max-width: 320px; text-align: center;}
-
-        .solicitacao-item { background: linear-gradient(145deg, rgba(41, 182, 246, 0.08), rgba(0,0,0,0)); border: 1px solid var(--border); padding: 15px; border-radius: 14px; margin-bottom: 12px; position: relative; }
-        .solicitacao-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-        .solicitacao-badge { background: var(--input-bg); padding: 3px 8px; border-radius: 6px; font-size: 9px; color: var(--primary); font-weight: 800; border: 1px solid var(--border); }
-        .solicitacao-info b { color: var(--text-main); font-size: 14px; text-transform: uppercase; }
-        .solicitacao-info span { color: var(--primary); font-size: 11px; font-weight: 700; display: block; margin-top: 2px; }
-
-        .relatorio-cliente-box { background: rgba(41, 182, 246, 0.05); padding: 15px; border-radius: 12px; border-left: 3px solid var(--primary); margin-bottom: 20px; }
-        .painel-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; flex: 1; } 
-        
-        @media (min-width: 992px) { 
-            .painel-grid { flex-direction: row; align-items: stretch; } 
-            .painel-col { flex: 1; height: 100%; display: flex; flex-direction: column; } 
-            .painel-col:first-child { flex: 1.2; }
-        } 
-        
-        .whatsapp-float-btn { background: #128c7e !important; color: white !important; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; border: none; padding: 14px; }
-        .tag-servico { font-size: 10px; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 100px; cursor: pointer; border: 1px solid var(--border); color: var(--text-dim); font-weight: 600; }
-        #custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 30000; padding: 15px 20px; border-radius: 10px; background: #1e293b; color: white; border-left: 4px solid var(--primary); font-size: 13px; font-weight: 600; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 85%; text-align: center; }
-        
-        .btn-danger-outline { background: none; border: 1px solid var(--danger); color: var(--danger); padding: 12px; border-radius: 12px; font-weight: 800; font-size: 11px; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.3s; }
-        .btn-danger-outline:hover { background: var(--danger); color: white; }
-    </style>
-    <link rel="stylesheet" href="../assets/css/system-demo.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Demonstração interativa de acompanhamento de serviço.">
+  <link rel="icon" href="../logomontes.png"><link rel="stylesheet" href="../assets/css/system-demo.css">
+  <title>Acompanhamento de serviço — Demonstração Montes</title>
 </head>
-<body class="demo-system" data-demo-title="Acompanhamento rápido" data-demo-role="Consulta do cliente" data-demo-summary="Uma alternativa de acesso direto para o cliente consultar o andamento do serviço, ver registros da equipe e entrar em contato quando necessário." data-demo-features="Consultar o serviço usando dados de acesso|Ver a etapa atual e a linha do tempo|Conferir fotos, observações e orçamento|Falar com a equipe sem perder o contexto">
-<script src="../assets/js/system-demo.js"></script>
-
-<a href="sistemas.html" class="btn-home-fixed"> 
-    <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> 
-    INÍCIO
-</a>
-<div id="custom-alert"></div>
-
-<div class="container">
-    <section id="view-cliente" class="card">
-        <div class="logo-box"><img src="../logomontes.png" class="logo-img" alt="Logo Montes Developers"></div>
-        <div id="area-busca">
-            <label>E-mail de Cadastro</label>
-            <input type="email" id="login-user" placeholder="exemplo@email.com" oninput="verificarUsuarioMecanico(this.value)">
-            
-            <label>Sua Senha</label>
-            <input type="password" id="login-pass" placeholder="••••">
-            
-            <div id="wrapper-placa" class="hidden">
-                <label>Placa do Veículo</label>
-                <input type="text" id="login-placa" class="input-placa-grande" maxlength="7" placeholder="ABC1D23">
-            </div>
-            
-            <button class="btn-main" onclick="gerenciarLogin()">ACESSAR CONTA</button>
+<body class="demo-system" data-demo-title="Acompanhamento de serviço">
+  <main class="demo-shell">
+    <header class="demo-intro"><div><p class="demo-kicker">Consulta do cliente / Demonstração 04</p><h1>Consulte um serviço e acompanhe cada etapa.</h1><p>Preencha os campos ou carregue o exemplo para abrir um atendimento fictício completo.</p></div><button class="demo-example-button" type="button" data-fill-demo>Carregar consulta de exemplo</button></header>
+    <section class="product-frame">
+      <div class="product-bar"><div class="product-brand"><span class="product-mark">LC</span>Lima Car</div><span class="product-status"><i></i> Consulta disponível</span></div>
+      <div class="tracking-layout">
+        <form class="tracking-form" data-tracking-form data-feature="Identificação do serviço|Combina dados pessoais e placa para localizar o atendimento correto.">
+          <h2>Acompanhar serviço</h2><p>Use somente os dados fictícios desta demonstração.</p>
+          <div class="field"><label for="track-email">E-mail</label><input id="track-email" type="email" autocomplete="off" placeholder="cliente@exemplo.com"></div>
+          <div class="field"><label for="track-password">Senha</label><input id="track-password" type="password" autocomplete="off" placeholder="Sua senha"></div>
+          <div class="field"><label for="track-plate">Placa do veículo</label><input id="track-plate" maxlength="7" autocomplete="off" placeholder="ABC1D23"></div>
+          <button class="primary-action" type="submit">Consultar andamento <span aria-hidden="true">→</span></button>
+          <p class="demo-credentials">Clique em “Carregar consulta de exemplo” para testar sem criar conta.</p>
+        </form>
+        <div class="tracking-result">
+          <div class="empty-state" data-tracking-empty><div><span aria-hidden="true">⌕</span><strong>Nenhum serviço consultado</strong><p>O andamento aparecerá aqui depois da identificação.</p></div></div>
+          <article class="tracking-card" data-tracking-card hidden>
+            <div class="dashboard-head"><div><p class="demo-kicker">Serviço LC-1042</p><h2>Honda HR-V 2021</h2></div><span class="status-chip">Em diagnóstico</span></div>
+            <div class="tracking-meta"><span>Placa BRA2E19</span><span>Entrada: 28/08, 09:15</span><span>Previsão: hoje, 17h</span></div>
+            <div class="timeline" data-feature="Andamento em etapas|O cliente entende o que já aconteceu e qual é a etapa atual."><div class="timeline-step done">Recebido</div><div class="timeline-step done">Triagem</div><div class="timeline-step active">Diagnóstico</div><div class="timeline-step">Finalizado</div></div>
+            <div class="tracking-note" data-feature="Atualização da equipe|Notas objetivas reduzem ligações e mensagens repetidas."><strong>Última atualização · 14:32</strong><p>O diagnóstico foi iniciado. A equipe está verificando o sistema de freios e enviará a aprovação antes de qualquer execução.</p></div>
+            <div class="quote-row" data-feature="Orçamento transparente|Valor e situação da aprovação ficam visíveis no mesmo contexto."><span>Orçamento preliminar<br>Aguardando aprovação</span><strong>R$ 860,00</strong></div>
+            <button class="secondary-action" type="button" data-tracking-reset style="margin-top:22px">Fazer outra consulta</button>
+          </article>
         </div>
-        <div id="resultado-cliente"></div>
+      </div>
     </section>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
-<script>
-    const firebaseConfig = {
-        apiKey: "COLE_AQUI",
-        authDomain: "a-fonte-43744.firebaseapp.com",
-        databaseURL: "https://a-fonte-43744-default-rtdb.firebaseio.com",
-        projectId: "a-fonte-43744",
-        storageBucket: "a-fonte-43744.appspot.com",
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    
-    // Credenciais e Contatos
-    const LOGIN_ADM = "adm.limacar";
-    const SENHA_ADM = "1234";
-    const WHATSAPP_MECANICA = "5511999999999"; 
-
-    function sanitizarEmail(email) {
-        return email.toLowerCase().trim().replace(/\./g, '_').replace(/@/g, '_at_');
-    }
-
-    function verificarUsuarioMecanico(valor) {
-        const wrapperPlaca = document.getElementById('wrapper-placa');
-        const loginLimpo = valor.trim().toLowerCase();
-        if (loginLimpo === LOGIN_ADM || loginLimpo === "") {
-            wrapperPlaca.classList.add('hidden');
-        } else {
-            wrapperPlaca.classList.remove('hidden');
-        }
-    }
-
-    function gerenciarLogin() {
-        const userDigitado = document.getElementById('login-user').value.trim().toLowerCase();
-        const senhaDigitada = document.getElementById('login-pass').value.trim();
-        
-        if(userDigitado === LOGIN_ADM && senhaDigitada === SENHA_ADM) {
-            // REDIRECIONA PARA A PÁGINA DO PAINEL (CADASTRO)
-            window.location.href = 'cadastro.html'; 
-        } else {
-            consultarCarro();
-        }
-    }
-
-    function consultarCarro() {
-        const emailDigitado = document.getElementById('login-user').value.trim();
-        const senhaDigitada = document.getElementById('login-pass').value.trim();
-        const placaDigitada = document.getElementById('login-placa').value.trim().toUpperCase();
-        const res = document.getElementById('resultado-cliente');
-        
-        if(!emailDigitado || !senhaDigitada || !placaDigitada) return showAlert("⚠️ PREENCHA TODOS OS CAMPOS");
-
-        const emailChave = sanitizarEmail(emailDigitado);
-        
-        db.ref('veiculos/' + placaDigitada).once('value', (snapVeiculo) => {
-            const v = snapVeiculo.val();
-            
-            if(v && v.identificacao === emailChave) {
-                db.ref('usuarios/' + emailChave).once('value', (snapUser) => {
-                    const dadosUsuario = snapUser.val();
-                    
-                    if(dadosUsuario && dadosUsuario.senha === senhaDigitada) {
-                         res.innerHTML = `
-                            <div style="margin-top:20px; background:rgba(255,255,255,0.05); padding:20px; border-radius:16px; border:1px solid var(--border); animation: slideIn 0.3s ease;">
-                                <h3 style="color:var(--primary); text-transform:uppercase;">${v.modelo || 'Veículo'}</h3>
-                                <p style="margin: 10px 0; font-size:12px;">Status Atual: <b style="color:var(--primary); font-size:16px;">${v.status}</b></p>
-                                <div style="margin:15px 0; color:#cbd5e1; font-size:13px; line-height:1.5; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
-                                    <b>Nota Técnica:</b><br>${v.obs || 'Analisando veículo...'}
-                                </div>
-                                ${v.fotos ? `<div class="fotos-grid" style="margin-bottom:15px">${v.fotos.map(f => `<img src="${f}" class="img-item" onclick="zoomImg('${f}')">`).join('')}</div>` : ''}
-                                <div style="text-align:center">
-                                    <small style="display:block; margin-bottom:5px; color:var(--text-dim)">Valor Previsto</small>
-                                    <p style="color:var(--success); font-weight:900; font-size:28px">R$ ${v.preco || '0,00'}</p>
-                                </div>
-                                <a href="https://wa.me/${WHATSAPP_MECANICA}?text=Olá,%20sou%20${dadosUsuario.nome}%20e%20quero%20saber%20mais%20sobre%20meu%20carro%20(Placa%20${placaDigitada})" target="_blank" class="btn-main whatsapp-float-btn" style="margin-top:20px; text-decoration:none; justify-content:center;">💬 FALAR COM O MECÂNICO</a>
-                            </div>
-                            <button onclick="location.reload()" class="btn-main" style="background:none; border:1px solid #333; color:#fff; margin-top:15px">SAIR DA CONTA</button>`;
-                        document.getElementById('area-busca').classList.add('hidden');
-                    } else {
-                        showAlert("❌ SENHA INCORRETA");
-                    }
-                });
-            } else {
-                showAlert("🔍 PLACA OU E-MAIL NÃO CONFEREM");
-            }
-        });
-    }
-
-    function showAlert(m) { 
-        const d = document.getElementById('custom-alert'); 
-        d.innerText = m; 
-        d.style.display = 'block'; 
-        setTimeout(() => d.style.display='none', 2500); 
-    }
-
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            if (!document.getElementById('view-cliente').classList.contains('hidden')) {
-                gerenciarLogin();
-            }
-        }
-    });
-</script>
+  </main>
+  <script src="../assets/js/system-demo.js" defer></script>
 </body>
 </html>
