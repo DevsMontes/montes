@@ -48,55 +48,6 @@ document.querySelectorAll('[data-year]').forEach((item) => {
   item.textContent = String(new Date().getFullYear());
 });
 
-function createFiniPreview(prefix = '') {
-  const preview = document.createElement('div');
-  preview.className = 'project-preview';
-  preview.setAttribute('aria-hidden', 'true');
-  preview.style.cssText = 'position:relative;min-height:360px;background:linear-gradient(135deg,#5b2f91,#ff5aa5);overflow:hidden';
-
-  const image = document.createElement('img');
-  image.src = `${prefix}imagens/fini/fini-1.webp`;
-  image.alt = '';
-  image.loading = 'lazy';
-  image.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease';
-  preview.appendChild(image);
-
-  const badge = document.createElement('span');
-  badge.textContent = 'SWEET EXPERIENCE';
-  badge.style.cssText = 'position:absolute;left:22px;top:22px;padding:8px 11px;border-radius:999px;color:#2b1538;background:#ffd83d;font:800 .58rem ui-monospace,monospace;letter-spacing:.09em';
-  preview.appendChild(badge);
-  return preview;
-}
-
-function injectFiniProject() {
-  const homeGrid = document.querySelector('.portfolio-home .project-grid');
-  if (homeGrid && !homeGrid.querySelector('[data-fini-project]')) {
-    const card = document.createElement('a');
-    card.className = 'project-card project-primary';
-    card.href = 'sistemas/fini.html';
-    card.dataset.finiProject = '';
-    card.style.gridColumn = '1 / -1';
-    card.appendChild(createFiniPreview(''));
-    card.insertAdjacentHTML('beforeend', '<div class="project-info"><div><span>Experiência de marca</span><h3>Fini Sweet Experience</h3></div><span class="project-link" aria-hidden="true">Abrir projeto ↗</span></div>');
-    card.addEventListener('mouseenter', () => { const img = card.querySelector('img'); if (img) img.style.transform = 'scale(1.035)'; });
-    card.addEventListener('mouseleave', () => { const img = card.querySelector('img'); if (img) img.style.transform = ''; });
-    homeGrid.prepend(card);
-  }
-
-  const demoGrid = document.querySelector('.experiments-page .demo-grid');
-  if (demoGrid && !demoGrid.querySelector('[data-fini-project]')) {
-    const card = document.createElement('a');
-    card.className = 'demo-card';
-    card.href = 'fini.html';
-    card.dataset.finiProject = '';
-    card.appendChild(createFiniPreview('../'));
-    card.insertAdjacentHTML('beforeend', '<div class="project-info"><div><span>Experiência de marca</span><h3>Fini Sweet Experience</h3></div><span class="project-link">Abrir ↗</span></div>');
-    demoGrid.prepend(card);
-  }
-}
-
-injectFiniProject();
-
 const revealItems = document.querySelectorAll(
   '.section-heading, .service-card, .process-intro, .process-list li, .project-card, .projects-footer, .contact-panel'
 );
