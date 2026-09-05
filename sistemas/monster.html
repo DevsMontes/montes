@@ -1,111 +1,193 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Experiência conceitual interativa inspirada na linha Monster Energy, criada pela Montes Developers.">
-  <meta name="theme-color" content="#050704">
+  <meta name="description" content="Unleash the Energy — uma experiência digital conceitual da Montes Developers, com direção de arte, motion e desenvolvimento front-end interativo.">
+  <meta name="theme-color" content="#050805">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:title" content="Unleash the Energy — Montes Labs">
+  <meta property="og:description" content="Uma experiência digital independente criada pela Montes Developers para demonstrar direção de arte, motion e creative development.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devsmontes.github.io/montes/sistemas/monster.html">
+  <meta property="og:image" content="https://devsmontes.github.io/montes/assets/og.png">
+  <meta property="og:image:alt" content="Montes Developers — experiências digitais impossíveis de ignorar">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Unleash the Energy — Montes Labs">
+  <meta name="twitter:description" content="Direção de arte, motion e desenvolvimento front-end em uma experiência conceitual da Montes Developers.">
+  <meta name="twitter:image" content="https://devsmontes.github.io/montes/assets/og.png">
+  <link rel="canonical" href="https://devsmontes.github.io/montes/sistemas/monster.html">
   <link rel="icon" type="image/png" href="../logomontes.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="../imagens/original.png" fetchpriority="high">
   <link rel="stylesheet" href="../assets/css/monster.css">
-  <title>Monster Energy Concept — Montes Labs</title>
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <title>Unleash the Energy — Monster Concept by Montes Labs</title>
 </head>
-<body>
+<body data-flavor="original">
   <a class="skip-link" href="#experiencia">Pular para a experiência</a>
-  <div class="energy-progress" aria-hidden="true"><span data-progress></span></div>
 
-  <header class="monster-header">
-    <a class="labs-brand" href="../index.html" aria-label="Montes Labs — voltar ao portfólio">
-      <img src="../logomontes.png" alt="" width="43" height="34">
-      <span>Montes <strong>Labs</strong></span>
+  <div class="intro-loader" data-loader role="status" aria-live="polite" aria-label="Carregando experiência">
+    <div class="loader-noise" aria-hidden="true"></div>
+    <div class="loader-meta"><span>Montes Labs</span><span>Experiment 01</span></div>
+    <div class="loader-core" aria-hidden="true"><span class="loader-mark">M</span><span class="loader-ring"></span></div>
+    <div class="loader-status"><span>Inicializando energia</span><strong data-loader-count>00</strong></div>
+    <div class="loader-line"><i data-loader-line></i></div>
+  </div>
+
+  <div class="energy-progress" aria-hidden="true"><span data-progress></span></div>
+  <div class="custom-cursor" data-cursor aria-hidden="true"><span data-cursor-label></span></div>
+
+  <header class="monster-header" data-header>
+    <a class="labs-brand magnetic" href="../index.html" aria-label="Montes Labs — voltar ao início">
+      <img src="../logomontes.png" alt="" width="46" height="36"><span>Montes <strong>Labs</strong></span>
     </a>
-    <span class="concept-label">Concept 01 / Energy</span>
-    <a class="back-button" href="../index.html#projetos"><span aria-hidden="true">←</span> Portfólio</a>
+    <p class="concept-label"><span>Independent concept</span><b data-header-index>01</b> / 04</p>
+    <a class="back-button magnetic" href="../index.html#projetos" data-cursor-text="BACK"><span aria-hidden="true">←</span><span class="back-label">Portfólio</span></a>
   </header>
 
   <main id="experiencia">
-    <section class="energy-stage" data-stage>
-      <div class="ambient-grid" aria-hidden="true"></div>
-      <div class="ambient-glow" aria-hidden="true"></div>
-      <p class="giant-word" aria-hidden="true">UNLEASH</p>
+    <section class="scroll-story" data-story aria-label="Quatro mundos de energia">
+      <div class="story-frame">
+        <div class="worlds" aria-hidden="true">
+          <div class="world world-original is-active" data-world="original"><span class="world-sweep"></span><span class="world-orbit orbit-one"></span><span class="world-orbit orbit-two"></span></div>
+          <div class="world world-mango" data-world="mango"><span class="mango-sun"></span><span class="mango-bloom bloom-one"></span><span class="mango-bloom bloom-two"></span></div>
+          <div class="world world-strawberry" data-world="strawberry"><span class="dream-orb orb-one"></span><span class="dream-orb orb-two"></span><span class="dream-ribbon"></span></div>
+          <div class="world world-watermelon" data-world="watermelon"><span class="velocity-slice slice-one"></span><span class="velocity-slice slice-two"></span><span class="velocity-ring"></span></div>
+          <div class="scene-grid"></div><div class="scene-vignette"></div>
+        </div>
 
-      <div class="stage-content">
-        <div class="product-copy">
-          <p class="overline">Monster Energy / <span data-line>Original</span></p>
-          <h1 data-title>Original<br>Green</h1>
-          <p class="product-slogan" data-slogan>Libere a besta.</p>
-          <p class="product-description" data-description>O clássico que começou tudo: sabor intenso, atitude sem filtro e energia para ir além.</p>
+        <canvas class="energy-canvas" data-particles aria-hidden="true"></canvas>
 
-          <dl class="energy-facts">
-            <div><dt data-fact-one-value>160mg</dt><dd data-fact-one-label>Cafeína</dd></div>
-            <div><dt data-fact-two-value>500ml</dt><dd data-fact-two-label>Volume</dd></div>
-            <div><dt data-fact-three-value>Original</dt><dd data-fact-three-label>Linha</dd></div>
+        <div class="world-words" aria-hidden="true">
+          <p class="world-word is-active" data-world-word="original">UNLEASH</p>
+          <p class="world-word" data-world-word="mango">TROPICAL</p>
+          <p class="world-word" data-world-word="strawberry">DREAMSTATE</p>
+          <p class="world-word" data-world-word="watermelon">RUSH</p>
+        </div>
+
+        <div class="chapter-copies">
+          <article class="chapter-copy is-active" data-chapter="original">
+            <p class="chapter-kicker"><span>01</span> Monster Energy / Original</p>
+            <h1>Unleash<br><em>the energy.</em></h1>
+            <p class="chapter-lead">O ícone preto e verde. Energia bruta, atitude sem filtro.</p>
+            <div class="chapter-facts" aria-label="Informações do produto"><span><strong>160</strong> mg cafeína</span><span><strong>500</strong> ml volume</span></div>
+          </article>
+          <article class="chapter-copy" data-chapter="mango">
+            <p class="chapter-kicker"><span>02</span> Juice Monster / Mango Loco</p>
+            <h2>Chaos<br><em>goes tropical.</em></h2>
+            <p class="chapter-lead">Uma colisão elétrica de manga, azul profundo e calor latino.</p>
+            <div class="chapter-facts"><span><strong>15</strong>% suco</span><span><strong>∞</strong> tropical</span></div>
+          </article>
+          <article class="chapter-copy" data-chapter="strawberry">
+            <p class="chapter-kicker"><span>03</span> Monster Ultra / Strawberry Dreams</p>
+            <h2>Soft haze.<br><em>Sharp energy.</em></h2>
+            <p class="chapter-lead">Morango etéreo por fora. A mesma intensidade por dentro.</p>
+            <div class="chapter-facts"><span><strong>0</strong> g açúcar</span><span><strong>473</strong> ml volume</span></div>
+          </article>
+          <article class="chapter-copy" data-chapter="watermelon">
+            <p class="chapter-kicker"><span>04</span> Monster Ultra / Watermelon</p>
+            <h2>Fresh hits<br><em>different.</em></h2>
+            <p class="chapter-lead">Melancia cortante. Vermelho no limite. Zero espaço para o comum.</p>
+            <div class="chapter-facts"><span><strong>0</strong> g açúcar</span><span><strong>100</strong>% rush</span></div>
+          </article>
+        </div>
+
+        <div class="product-chamber" data-parallax-zone aria-live="polite">
+          <div class="energy-portal" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="can-stack" data-can-stack>
+            <img class="story-can is-active" data-story-can="original" src="../imagens/original.png" alt="Lata Monster Energy Original Green" width="362" height="842" fetchpriority="high">
+            <img class="story-can" data-story-can="mango" src="../imagens/mango.png" alt="" aria-hidden="true" width="800" height="800">
+            <img class="story-can" data-story-can="strawberry" src="../imagens/strawberry.png" alt="" aria-hidden="true" width="748" height="748">
+            <img class="story-can" data-story-can="watermelon" src="../imagens/monster-ultra-watermelon.png" alt="" aria-hidden="true" width="1500" height="1500">
+          </div>
+          <span class="can-floor" aria-hidden="true"></span>
+          <p class="product-id" aria-hidden="true"><span data-product-id>M—01</span><i></i></p>
+        </div>
+
+        <nav class="chapter-rail" aria-label="Capítulos da experiência">
+          <button class="is-active" type="button" data-jump="original" aria-label="Ir para Original"><span>01</span><i></i><b>Original</b></button>
+          <button type="button" data-jump="mango" aria-label="Ir para Mango Loco"><span>02</span><i></i><b>Mango</b></button>
+          <button type="button" data-jump="strawberry" aria-label="Ir para Strawberry Dreams"><span>03</span><i></i><b>Dreams</b></button>
+          <button type="button" data-jump="watermelon" aria-label="Ir para Ultra Watermelon"><span>04</span><i></i><b>Watermelon</b></button>
+        </nav>
+
+        <div class="scroll-cue" aria-hidden="true"><span>Scroll to transform</span><i></i></div>
+        <p class="chapter-count" aria-hidden="true"><span data-chapter-count>01</span><b>/04</b></p>
+      </div>
+    </section>
+
+    <section class="energy-manifesto" aria-labelledby="manifesto-title">
+      <div class="manifesto-track" aria-hidden="true"><span>FOUR WORLDS / ONE PULSE / FOUR WORLDS / ONE PULSE /</span></div>
+      <div class="manifesto-inner">
+        <p class="section-index">Montes Labs / Field note 01</p>
+        <h2 id="manifesto-title">A lata não muda apenas de sabor.<br><em>Ela muda a frequência inteira.</em></h2>
+        <div class="manifesto-copy"><p>Quatro identidades conectadas por um único sistema visual — cada uma com ritmo, luz e matéria próprios.</p><span aria-hidden="true">↓</span></div>
+      </div>
+    </section>
+
+    <section class="flavor-lab" data-flavor-lab aria-labelledby="lab-title">
+      <div class="lab-world" aria-hidden="true"><span></span><i></i><b></b></div>
+      <div class="lab-head"><p class="section-index">Interactive flavor lab</p><h2 id="lab-title">Escolha sua<br><em>frequência.</em></h2></div>
+
+      <div class="lab-stage" data-drag-zone data-cursor-text="DRAG">
+        <div class="lab-copy" id="flavor-panel" role="tabpanel" aria-labelledby="tab-original" aria-live="polite">
+          <p data-lab-line>Monster Energy / Original</p><h3 data-lab-title>Original Green</h3>
+          <p data-lab-description>O clássico que começou tudo. Intenso, direto e impossível de confundir.</p>
+          <dl class="lab-specs">
+            <div><dt data-lab-fact-a>160mg</dt><dd data-lab-label-a>Cafeína</dd></div>
+            <div><dt data-lab-fact-b>500ml</dt><dd data-lab-label-b>Volume</dd></div>
+            <div><dt data-lab-fact-c>Original</dt><dd data-lab-label-c>Linha</dd></div>
           </dl>
-
-          <button class="energy-button" type="button" data-energy-button>
-            <span>Ativar energia</span><i aria-hidden="true">↗</i>
-          </button>
         </div>
 
-        <div class="product-visual" aria-live="polite">
-          <div class="can-halo" aria-hidden="true"></div>
-          <p class="flavor-code" data-code aria-hidden="true">M-01</p>
-          <img class="active-can" data-can src="../imagens/original.png" alt="Lata Monster Energy Original Green" width="650" height="1200">
-          <span class="drag-hint"><i aria-hidden="true">↔</i> Escolha o sabor abaixo</span>
+        <div class="lab-product" aria-hidden="true">
+          <span class="lab-aura"></span><span class="lab-type" data-lab-type>ORIGINAL</span>
+          <img data-lab-can src="../imagens/original.png" alt="" width="362" height="842" loading="lazy"><span class="lab-shadow"></span>
+        </div>
+
+        <div class="lab-actions">
+          <button class="lab-arrow magnetic" type="button" data-direction="prev" aria-label="Sabor anterior">←</button><span><b data-lab-index>01</b> / 04</span><button class="lab-arrow magnetic" type="button" data-direction="next" aria-label="Próximo sabor">→</button>
         </div>
       </div>
 
-      <div class="flavor-dock" aria-label="Escolha um sabor" data-flavor-dock>
-        <button class="flavor-chip active" type="button" data-flavor="original" aria-pressed="true">
-          <span class="chip-color color-green"></span><span><small>01</small> Original</span>
-        </button>
-        <button class="flavor-chip" type="button" data-flavor="mango" aria-pressed="false">
-          <span class="chip-color color-blue"></span><span><small>02</small> Mango Loco</span>
-        </button>
-        <button class="flavor-chip" type="button" data-flavor="strawberry" aria-pressed="false">
-          <span class="chip-color color-pink"></span><span><small>03</small> Strawberry</span>
-        </button>
-        <button class="flavor-chip" type="button" data-flavor="watermelon" aria-pressed="false">
-          <span class="chip-color color-red"></span><span><small>04</small> Watermelon</span>
-        </button>
+      <div class="flavor-tabs" role="tablist" aria-label="Selecionar sabor">
+        <button class="is-active" id="tab-original" role="tab" type="button" aria-selected="true" aria-controls="flavor-panel" data-lab-flavor="original" data-cursor-text="VIEW"><span>01</span><b>Original</b><i></i></button>
+        <button id="tab-mango" role="tab" type="button" aria-selected="false" aria-controls="flavor-panel" tabindex="-1" data-lab-flavor="mango" data-cursor-text="VIEW"><span>02</span><b>Mango Loco</b><i></i></button>
+        <button id="tab-strawberry" role="tab" type="button" aria-selected="false" aria-controls="flavor-panel" tabindex="-1" data-lab-flavor="strawberry" data-cursor-text="VIEW"><span>03</span><b>Strawberry</b><i></i></button>
+        <button id="tab-watermelon" role="tab" type="button" aria-selected="false" aria-controls="flavor-panel" tabindex="-1" data-lab-flavor="watermelon" data-cursor-text="VIEW"><span>04</span><b>Watermelon</b><i></i></button>
       </div>
+      <p class="sr-only" data-live-status aria-live="polite"></p>
     </section>
 
-    <section class="lineup-section" id="sabores">
-      <div class="lineup-heading">
-        <p>Explore a coleção</p>
-        <h2>Quatro sabores.<br>Uma atitude.</h2>
-      </div>
-      <div class="lineup-scroll" aria-label="Coleção de sabores">
-        <button class="lineup-card" type="button" data-card-flavor="original">
-          <span>01 / Original</span><img src="../imagens/original.png" alt="" loading="lazy"><strong>Original Green</strong>
-        </button>
-        <button class="lineup-card" type="button" data-card-flavor="mango">
-          <span>02 / Juice</span><img src="../imagens/mango.png" alt="" loading="lazy"><strong>Mango Loco</strong>
-        </button>
-        <button class="lineup-card" type="button" data-card-flavor="strawberry">
-          <span>03 / Ultra</span><img src="../imagens/strawberry.png" alt="" loading="lazy"><strong>Strawberry Dreams</strong>
-        </button>
-        <button class="lineup-card" type="button" data-card-flavor="watermelon">
-          <span>04 / Ultra</span><img src="../imagens/monster-ultra-watermelon.png" alt="" loading="lazy"><strong>Ultra Watermelon</strong>
-        </button>
-      </div>
-    </section>
+    <section class="montes-transition" aria-hidden="true"><p>DESIGN <span>×</span> MOTION <span>×</span> DEVELOPMENT <span>×</span> INTERACTION</p></section>
 
-    <section class="concept-note">
-      <div>
-        <p>Projeto conceitual</p>
-        <h2>Design que coloca a marca em movimento.</h2>
+    <section class="montes-cta" aria-labelledby="montes-title">
+      <div class="montes-signal" aria-hidden="true"><span>M</span><i></i><i></i></div>
+      <div class="montes-cta-inner">
+        <p class="section-index">The concept ends. Your project starts.</p>
+        <h2 id="montes-title">E se a sua marca fosse<br><em>impossível de ignorar?</em></h2>
+        <p>Experiências digitais desenvolvidas para transformar atenção em desejo, presença em impacto e marcas em memória.</p>
+        <div class="montes-actions">
+          <a class="primary-cta magnetic" href="../index.html#contato" data-cursor-text="OPEN"><span>Criar uma experiência com a Montes</span><i aria-hidden="true">↗</i></a>
+          <a class="secondary-link" href="../index.html#projetos"><span>Voltar ao portfólio</span><i aria-hidden="true">→</i></a>
+        </div>
+        <ul class="capability-list" aria-label="Competências da Montes Developers"><li><span>01</span>Design</li><li><span>02</span>Motion</li><li><span>03</span>Development</li><li><span>04</span>Interaction</li></ul>
       </div>
-      <p>Esta experiência não é uma página oficial da Monster Energy. É uma demonstração independente de direção de arte e desenvolvimento front-end criada pela Montes Developers.</p>
     </section>
   </main>
 
   <footer class="monster-footer">
-    <a class="labs-brand" href="../index.html"><img src="../logomontes.png" alt="" width="43" height="34"><span>Montes <strong>Developers</strong></span></a>
-    <p>Conceito independente para fins de portfólio.</p>
-    <a href="https://www.instagram.com/montes.dev" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+    <a class="labs-brand" href="../index.html" aria-label="Montes Developers — início"><img src="../logomontes.png" alt="" width="46" height="36"><span>Montes <strong>Developers</strong></span></a>
+    <p>Projeto conceitual independente desenvolvido para demonstração de direção de arte e desenvolvimento front-end. Não afiliado à Monster Energy Company.</p>
+    <a href="https://www.instagram.com/montes.dev" target="_blank" rel="noopener noreferrer" data-cursor-text="OPEN">Instagram ↗</a>
   </footer>
 
+  <noscript><p class="noscript-note">A experiência permanece navegável, mas as transições interativas exigem JavaScript.</p></noscript>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
   <script src="../assets/js/monster.js" defer></script>
 </body>
 </html>
