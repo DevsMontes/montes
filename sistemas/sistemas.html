@@ -15,10 +15,10 @@
   <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
   <header class="cabecalho cabecalho-interno" data-header>
     <a class="marca" href="../index.html" aria-label="Montes.dev, início"><span class="marca-sinal" aria-hidden="true"></span><span>montes.dev</span></a>
-    <nav class="navegacao" aria-label="Navegação do projeto"><a href="#jornada">Jornada</a><a href="#cliente">Cliente</a><a href="#empresa">Empresa</a></nav>
+    <nav class="navegacao" aria-label="Navegação do projeto"><a href="#jornada">Jornada</a><a href="#modulos">Testar sistema</a><a href="#cliente">Cliente</a><a href="#empresa">Empresa</a></nav>
     <a class="link-seta" href="demonstracao.html">Laboratório <span aria-hidden="true">↗</span></a>
     <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu-movel" aria-label="Abrir menu"><span></span><span></span></button>
-    <div class="menu-movel" id="menu-movel" hidden><a href="#jornada">Jornada</a><a href="#cliente">Cliente</a><a href="#empresa">Empresa</a><a href="demonstracao.html">Laboratório</a></div>
+    <div class="menu-movel" id="menu-movel" hidden><a href="#jornada">Jornada</a><a href="#modulos">Testar sistema</a><a href="#cliente">Cliente</a><a href="#empresa">Empresa</a><a href="demonstracao.html">Laboratório</a></div>
   </header>
   <main id="conteudo">
     <section class="sistema-hero">
@@ -29,6 +29,29 @@
     <section class="jornada" id="jornada" aria-labelledby="titulo-jornada">
       <div class="jornada-fixo revelar"><p class="rotulo">A jornada conectada</p><h2 id="titulo-jornada">Um fluxo contínuo, da solicitação à entrega.</h2><p>Cada atualização feita pela empresa chega ao cliente com contexto e clareza.</p></div>
       <ol class="jornada-passos"><li class="revelar"><span>01</span><h3>Cliente solicita</h3><p>Informa veículo, serviço e necessidade em poucos passos.</p></li><li class="revelar"><span>02</span><h3>Empresa recebe</h3><p>A equipe encontra os dados organizados no painel de gestão.</p></li><li class="revelar"><span>03</span><h3>Serviço é atualizado</h3><p>Status e informações avançam conforme o trabalho acontece.</p></li><li class="revelar"><span>04</span><h3>Cliente acompanha</h3><p>A evolução fica visível sem depender de mensagens soltas.</p></li></ol>
+    </section>
+
+    <section class="modulos-praticos" id="modulos" aria-labelledby="titulo-modulos">
+      <header class="modulos-cabecalho revelar"><p class="rotulo">Demonstrações funcionais</p><h2 id="titulo-modulos">Escolha uma tela e use o sistema na prática.</h2><p>As quatro experiências abaixo são navegáveis. Entre como cliente, faça um cadastro, gerencie a operação ou acompanhe um serviço.</p></header>
+      <div class="modulos-grade">
+        <a class="modulo-pratico revelar" href="login.html">
+          <figure><img src="../assets/images/interfaces/portal-cliente.webp" width="1280" height="800" loading="lazy" alt="Tela de entrada do portal do cliente"></figure>
+          <div><span>01 · Visão do cliente</span><h3>Portal do cliente</h3><p>Acesse o ambiente pessoal, veículos, histórico e serviços.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
+        <a class="modulo-pratico revelar" href="cadastro.html">
+          <figure><img src="../assets/images/interfaces/cadastro.webp" width="1280" height="800" loading="lazy" alt="Tela de cadastro de novo cliente"></figure>
+          <div><span>02 · Primeiro acesso</span><h3>Novo cadastro</h3><p>Percorra o fluxo de entrada e registre os dados iniciais.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
+        <a class="modulo-pratico revelar" href="admin.html">
+          <figure><img src="../assets/images/interfaces/painel-equipe.webp" width="1280" height="800" loading="lazy" alt="Painel de operação da equipe"></figure>
+          <div><span>03 · Visão da empresa</span><h3>Painel da equipe</h3><p>Gerencie solicitações, etapas e informações da operação.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
+        <a class="modulo-pratico revelar" href="acesso.html">
+          <figure><img src="../assets/images/interfaces/acompanhamento.webp" width="1280" height="800" loading="lazy" alt="Tela de acompanhamento do serviço"></figure>
+          <div><span>04 · Consulta rápida</span><h3>Acompanhamento</h3><p>Consulte o andamento do serviço pela visão do cliente.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
+      </div>
+      <p class="modulos-nota revelar"><i></i> Todos os ambientes usam dados exclusivamente demonstrativos.</p>
     </section>
 
     <section class="interface-narrativa interface-cliente" id="cliente">
