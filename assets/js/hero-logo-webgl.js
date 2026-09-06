@@ -27,20 +27,33 @@
     uniform float uTime;
     uniform float uLayer;
     uniform float uScroll;
+    uniform float uIntro;
+    uniform float uObject;
     uniform vec2 uPointer;
+    uniform vec2 uScale;
+    uniform vec2 uOffset;
     varying vec2 vUv;
     varying float vWave;
 
     void main() {
-      vec2 p = aPosition;
+      float symbol = 1.0 - uObject;
+      vec2 p = aPosition * uScale + uOffset;
       float calm = 1.0 - uLayer;
       float wave = sin(aUv.x * 7.2 + uTime * .72) * .014;
       wave += cos(aUv.y * 8.8 - uTime * .52) * .009;
-      wave *= sin(aUv.y * 3.14159265) * calm;
+      wave *= sin(aUv.y * 3.14159265) * calm * mix(.3, 1.0, symbol);
 
-      float angleY = uPointer.x * .16 + sin(uTime * .19) * .025;
-      float angleX = -uPointer.y * .11 + cos(uTime * .23) * .018 - uScroll * .055;
-      float z = wave - uLayer * .085;
+      float reveal = 1.0 - uIntro;
+      float sceneScale = mix(.62, 1.0, uIntro) * (1.0 + uScroll * .035);
+      p *= sceneScale;
+      p += vec2(.24, -.045) * reveal;
+      p.y += sin(uTime * mix(.17, .28, symbol) + uObject) * .012 * symbol;
+      p.y += uScroll * mix(.035, .08, symbol);
+
+      float angleY = uPointer.x * mix(.095, .18, symbol) + sin(uTime * .19) * .025;
+      angleY += reveal * .62 + uScroll * mix(.06, .16, symbol);
+      float angleX = -uPointer.y * mix(.055, .105, symbol) + cos(uTime * .23) * .014 - uScroll * .06;
+      float z = wave + symbol * .035 - uLayer * mix(.055, .11, symbol);
 
       float cy = cos(angleY);
       float sy = sin(angleY);
@@ -63,12 +76,15 @@
     uniform sampler2D uTexture;
     uniform float uTime;
     uniform float uLayer;
+    uniform float uObject;
     uniform vec2 uPointer;
+    uniform vec4 uTextureRect;
     varying vec2 vUv;
     varying float vWave;
 
     void main() {
-      vec4 texel = texture2D(uTexture, vUv);
+      vec2 textureUv = mix(uTextureRect.xy, uTextureRect.zw, vUv);
+      vec4 texel = texture2D(uTexture, textureUv);
       float luminance = max(texel.r, max(texel.g, texel.b));
       float mask = smoothstep(.025, .16, luminance);
       if (mask < .01) discard;
@@ -78,10 +94,12 @@
       float edgeLight = pow(max(0.0, 1.0 - abs(vUv.y - .5) * 2.0), 2.0);
       vec3 cobalt = vec3(.07, .23, .58);
       vec3 violet = vec3(.34, .12, .68);
-      vec3 depthColor = mix(cobalt, violet, vUv.x);
-      vec3 face = texel.rgb * (1.02 + sweep * .28 + abs(vWave) * 4.0);
-      vec3 color = mix(depthColor * (.18 + edgeLight * .12), face, 1.0 - uLayer);
-      float alpha = mask * mix(.28, 1.0, 1.0 - uLayer);
+      vec3 graphite = vec3(.055, .075, .105);
+      vec3 depthColor = mix(graphite, mix(cobalt, violet, vUv.x), .42 + edgeLight * .2);
+      vec3 face = texel.rgb * (.96 + sweep * .24 + abs(vWave) * 3.5);
+      face += vec3(.12, .19, .27) * sweep * .16;
+      vec3 color = mix(depthColor, face, smoothstep(.0, .48, 1.0 - uLayer));
+      float alpha = mask * mix(.42, 1.0, 1.0 - uLayer);
       gl_FragColor = vec4(color, alpha);
     }
   `;
@@ -153,7 +171,12 @@
     time: gl.getUniformLocation(program, 'uTime'),
     layer: gl.getUniformLocation(program, 'uLayer'),
     scroll: gl.getUniformLocation(program, 'uScroll'),
+    intro: gl.getUniformLocation(program, 'uIntro'),
+    object: gl.getUniformLocation(program, 'uObject'),
     pointer: gl.getUniformLocation(program, 'uPointer'),
+    scale: gl.getUniformLocation(program, 'uScale'),
+    offset: gl.getUniformLocation(program, 'uOffset'),
+    textureRect: gl.getUniformLocation(program, 'uTextureRect'),
     texture: gl.getUniformLocation(program, 'uTexture')
   };
   const texture = gl.createTexture();
@@ -191,16 +214,28 @@
     pointer.y += (pointer.targetY - pointer.y) * (isReduced ? 1 : .065);
     const progress = Number.parseFloat(getComputedStyle(hero).getPropertyValue('--hero-progress')) || 0;
     const time = isReduced ? 0 : (now - startedAt) / 1000;
+    const intro = isReduced ? 1 : Math.min(1, time / 1.65);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.uniform1f(uniforms.time, time);
     gl.uniform1f(uniforms.scroll, progress);
+    gl.uniform1f(uniforms.intro, intro * intro * (3 - 2 * intro));
     gl.uniform2f(uniforms.pointer, pointer.x, pointer.y);
-    const layers = innerWidth <= 720 ? 4 : 7;
-    for (let layer = layers; layer >= 0; layer -= 1) {
-      gl.uniform1f(uniforms.layer, layer / Math.max(1, layers));
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
-    }
+    const mobile = innerWidth <= 720;
+    const objects = [
+      { object: 0, rect: [.205, .035, .735, .625], scale: mobile ? [.52, .57] : [.50, .58], offset: [.08, .18], layers: mobile ? 5 : 10 },
+      { object: 1, rect: [.13, .665, .82, .975], scale: mobile ? [.67, .25] : [.69, .25], offset: [.08, -.48], layers: mobile ? 3 : 6 }
+    ];
+    objects.forEach((item) => {
+      gl.uniform1f(uniforms.object, item.object);
+      gl.uniform4f(uniforms.textureRect, ...item.rect);
+      gl.uniform2f(uniforms.scale, ...item.scale);
+      gl.uniform2f(uniforms.offset, ...item.offset);
+      for (let layer = item.layers; layer >= 0; layer -= 1) {
+        gl.uniform1f(uniforms.layer, layer / Math.max(1, item.layers));
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+      }
+    });
     if (visible && !isReduced) frame = requestAnimationFrame(draw);
   };
 
