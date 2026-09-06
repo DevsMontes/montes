@@ -1,0 +1,213 @@
+/* Loaded inside AltriX's shadow root; does not leak into project pages. */
+:host {
+  all: initial;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #eef0f5;
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+.alx {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 35;
+}
+.alx-toggle {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid #ffffff55;
+  border-radius: 30px;
+  background: #101723;
+  color: #eef0f5;
+  font:
+    500 14px Arial,
+    sans-serif;
+  box-shadow: 0 4px 24px #0004;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.alx-toggle:hover {
+  background: #164cf4;
+  transform: translateY(-3px);
+}
+.alx-panel {
+  position: fixed;
+  inset: auto 22px 86px auto;
+  margin: 0;
+  padding: 0;
+  width: min(400px, calc(100vw - 32px));
+  height: min(600px, calc(100dvh - 112px));
+  max-width: none;
+  max-height: none;
+  overflow: hidden;
+  border: 1px solid #57667c;
+  border-radius: 8px;
+  color: #eef0f5;
+  background: #101723;
+  box-shadow: 0 24px 90px #0009;
+}
+.alx-panel[open] {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  animation: alx-in 0.2s ease-out;
+}
+.alx-panel::backdrop {
+  background: #050b1666;
+}
+.alx-head {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #164cf4;
+}
+.alx-avatar {
+  font-size: 20px;
+}
+.alx-head div {
+  display: grid;
+  gap: 4px;
+}
+.alx-head strong {
+  font-size: 18px;
+}
+.alx-head small {
+  font-size: 12px;
+  color: #e1e8ff;
+}
+.alx-close {
+  margin-left: auto;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 26px;
+  border: 0;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+.alx-notice {
+  padding: 12px 16px;
+  color: #b8c3d4;
+  font-size: 12px;
+  line-height: 1.5;
+  border-bottom: 1px solid #ffffff24;
+}
+.alx-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.alx-bubble {
+  max-width: 90%;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border-radius: 4px;
+}
+.alx-assistant {
+  align-self: flex-start;
+  background: #202c3e;
+  border-left: 2px solid #448aff;
+}
+.alx-user {
+  align-self: flex-end;
+  background: #164cf4;
+  color: white;
+}
+.alx-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.alx-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  color: #afcbff;
+  border: 1px solid #448aff;
+  font-size: 13px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.alx-actions a:hover {
+  background: #164cf4;
+  color: white;
+}
+.alx-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 48px;
+  padding: 12px;
+  gap: 8px;
+  border-top: 1px solid #ffffff24;
+}
+.alx-form input {
+  min-width: 0;
+  min-height: 48px;
+  border: 1px solid #58677e;
+  padding: 10px;
+  background: #090c12;
+  color: white;
+  font:
+    16px Arial,
+    sans-serif;
+  border-radius: 4px;
+}
+.alx-form input::placeholder {
+  color: #a3abb9;
+}
+.alx-form button {
+  border: 0;
+  border-radius: 4px;
+  background: #164cf4;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #86b4ff;
+  outline-offset: 3px;
+}
+@keyframes alx-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 520px) {
+  .alx {
+    right: 16px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+  .alx-panel {
+    inset: auto 12px max(14px, env(safe-area-inset-bottom)) 12px;
+    width: auto;
+    height: min(620px, calc(100dvh - 28px));
+    border-radius: 8px;
+  }
+  .alx-toggle {
+    font-size: 13px;
+    min-height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
