@@ -65,10 +65,14 @@ em{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:430}
 .hero-altrix button{margin-top:1.25rem;padding:.5rem 0;border:0;background:transparent;color:var(--white);font-size:.7rem;font-weight:650;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
 .hero-altrix button i{display:inline-block;margin-left:.5rem;font-style:normal;transition:transform .2s}
 .hero-altrix button:hover i{transform:translate(.2rem,-.15rem)}
-.hero-logo-3d{position:absolute;z-index:2;right:clamp(1rem,4vw,5rem);top:clamp(27rem,48vh,34rem);width:min(37vw,34rem);margin:0;perspective:1200px;filter:drop-shadow(0 2rem 4rem rgba(0,0,0,.48));transform:translate3d(calc(var(--pointer-x) * .7rem),calc(var(--hero-progress) * 5rem + var(--pointer-y) * .45rem),0) rotateX(calc(var(--pointer-y) * -3deg)) rotateY(calc(var(--pointer-x) * 5deg)) scale(calc(1 - var(--hero-progress) * .12));transform-style:preserve-3d;will-change:transform}
-.hero-logo-3d:before,.hero-logo-3d:after{content:"";position:absolute;inset:0;background:url("../../logomontes.png") center/contain no-repeat;mix-blend-mode:screen;filter:brightness(.28) saturate(.55);transform:translate3d(12px,10px,-24px);opacity:.38}
-.hero-logo-3d:after{transform:translate3d(6px,5px,-12px);opacity:.58}
-.hero-logo-3d img{position:relative;z-index:2;width:100%;height:auto;mix-blend-mode:screen;filter:saturate(1.08) contrast(1.08) drop-shadow(0 .65rem 1.1rem rgba(80,154,255,.2))}
+.hero-logo-3d{position:absolute;z-index:2;right:clamp(1rem,4vw,5rem);top:clamp(27rem,48vh,34rem);width:min(37vw,34rem);aspect-ratio:640/407;margin:0;filter:drop-shadow(0 2rem 4rem rgba(0,0,0,.48));transform:translate3d(0,calc(var(--hero-progress) * 5rem),0) scale(calc(1 - var(--hero-progress) * .12));will-change:transform}
+.hero-logo-canvas,.hero-logo-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.hero-logo-canvas{z-index:2;display:block;opacity:0;filter:drop-shadow(0 .8rem 1.2rem rgba(70,139,255,.28));transition:opacity .6s var(--ease)}
+.hero-logo-fallback{z-index:1;mix-blend-mode:screen;filter:saturate(1.08) contrast(1.08) drop-shadow(0 .65rem 1.1rem rgba(80,154,255,.2));transition:opacity .45s var(--ease)}
+.hero-logo-3d.webgl-ativo .hero-logo-canvas{opacity:1}
+.hero-logo-3d.webgl-ativo .hero-logo-fallback{opacity:0}
+.hero-logo-3d figcaption{position:absolute;z-index:4;right:.4rem;bottom:-.65rem;color:rgba(226,239,250,.66);font:600 .56rem ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;opacity:0;transform:translateY(.35rem);transition:opacity .4s,transform .4s}
+.hero-logo-3d.webgl-ativo:hover figcaption{opacity:1;transform:none}
 .hero-rolagem{position:absolute;z-index:5;left:var(--pad);bottom:calc(clamp(4rem,7vw,8rem) + 1rem);display:flex;align-items:center;gap:.8rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:#c3ccd5}
 .hero-rolagem i{width:3.5rem;height:1px;background:currentColor;position:relative}
 .hero-rolagem i:after{content:"";position:absolute;right:0;top:-2px;width:5px;height:5px;border-right:1px solid;border-bottom:1px solid;transform:rotate(-45deg)}
@@ -83,7 +87,7 @@ em{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:430}
 .projeto{max-width:var(--max);margin:0 auto}
 .projeto-sistema{display:grid;grid-template-columns:minmax(18rem,.52fr) minmax(0,1.48fr);gap:6vw;align-items:center}
 .projeto-texto{position:relative;padding:4rem 0}
-.projeto-numero{position:absolute;top:-1rem;right:5%;color:rgba(7,17,29,.1);font-size:9rem;font-weight:650;line-height:1}
+.projeto-numero{position:absolute;top:-1rem;right:5%;color:rgba(7,17,29,.56);font-size:9rem;font-weight:650;line-height:1}
 .projeto-texto h3{position:relative;margin:1.5rem 0 1.25rem;font-size:clamp(2.2rem,3.4vw,4.4rem);font-weight:560;line-height:.98;letter-spacing:-.055em}
 .projeto-texto>p:not(.rotulo){max-width:30rem;margin:0 0 2rem;color:#566372}
 .projeto-imagem{position:relative;display:block;min-height:0;aspect-ratio:2/1;overflow:hidden;background:#0a101a;clip-path:polygon(3% 0,100% 0,100% 92%,0 100%,0 8%)}
@@ -361,8 +365,9 @@ em{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:430}
 
 @media (max-width:720px){
   .lab-titulo h1{font-size:14.7vw;line-height:.8}
-  .hero{min-height:0;padding:7.5rem var(--pad) 22rem;display:block}
-  .hero-conteudo{display:block}
+  .hero{min-height:0;padding:7.5rem var(--pad) 6.5rem;display:flex;flex-direction:column}
+  .hero-conteudo{display:contents}
+  .hero-copy{order:1}
   .hero-copy{opacity:calc(1 - var(--hero-progress) * .35);transform:translate3d(0,calc(var(--hero-progress) * -.7rem),0)}
   .hero h1{max-width:11ch;margin:1rem 0 1.35rem;font-size:clamp(3.05rem,15.5vw,4.8rem);line-height:.9;letter-spacing:-.065em}
   .hero-descricao{max-width:31rem;font-size:.98rem}
@@ -370,13 +375,14 @@ em{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:430}
   .hero .acoes .botao{width:100%}
   .hero .acoes .link-seta{padding:.6rem 0}
   .hero-segmentos{max-width:28rem;margin-top:1rem;line-height:1.45}
-  .hero-altrix{max-width:31rem;margin-top:2.25rem;padding:1.2rem 4.75rem 1.2rem 1.15rem}
+  .hero-altrix{order:4;max-width:31rem;margin-top:3rem;padding:1.2rem 4.75rem 1.2rem 1.15rem}
   .hero-altrix p{font-size:.91rem}
-  .hero-logo-3d{top:auto;right:5vw;bottom:3.8rem;width:72vw;transform:translate3d(calc(var(--pointer-x) * .2rem),calc(var(--hero-progress) * 1.5rem),0) rotateY(calc(var(--pointer-x) * 1deg)) scale(calc(1 - var(--hero-progress) * .04))}
+  .hero-logo-3d{position:relative;order:2;top:auto;right:auto;bottom:auto;align-self:flex-start;width:min(68vw,24rem);margin:2.6rem 0 0 -.3rem;transform:translate3d(0,calc(var(--hero-progress) * .6rem),0) scale(calc(1 - var(--hero-progress) * .025))}
+  .hero-logo-3d figcaption{display:none}
   .hero-everest img{object-position:62% center;transform:translate3d(0,calc(var(--hero-progress) * 1rem),0) scale(1.08)}
   .hero-everest:after{background:linear-gradient(180deg,rgba(5,13,23,.4),rgba(5,13,23,.66) 47%,#050d17 100%),linear-gradient(90deg,rgba(5,13,23,.8),rgba(5,13,23,.16))}
   .hero-grade{background-size:4.5rem 4.5rem;opacity:.28}
-  .hero-rolagem{display:flex;left:var(--pad);bottom:calc(5rem + 48vw);font-size:.6rem}
+  .hero-rolagem{position:relative;order:3;left:auto;bottom:auto;margin-top:1.15rem;font-size:.6rem}
   .hero-transicao{height:3.5rem;clip-path:polygon(0 78%,60% 48%,100% 65%,100% 100%,0 100%)}
   .projetos{padding-top:6rem}
   .hero-palco,.projeto-imagem,.servicos-visual,.altrix-cena,.lab-fini .lab-imagem,.lab-monster .lab-imagem,.sistema-hero-imagem,.interface-imagem,.interface-empresa .interface-imagem,.interface-cliente .interface-imagem,.interface-acompanhar .interface-imagem{width:calc(100% + 2.3rem);margin-left:-1.15rem;margin-right:-1.15rem}
@@ -407,4 +413,4 @@ em{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:430}
   .altrix-lancador{width:4.25rem;height:4.25rem}
 }
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.revelar{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.revelar{opacity:1;transform:none}.hero-logo-3d figcaption{display:none}}

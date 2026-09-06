@@ -11,6 +11,7 @@
   <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/images/hero/everest.webp" as="image" type="image/webp">
   <link rel="stylesheet" href="assets/css/portfolio.css">
+  <script src="assets/js/hero-logo-webgl.js" defer></script>
   <script src="assets/js/portfolio.js" defer></script>
   <script src="assets/js/altrix-demo.js" defer></script>
 </head>
@@ -46,7 +47,11 @@
           <button type="button" data-open-altrix>Conversar com a AltriX <i aria-hidden="true">↗</i></button>
         </aside>
       </div>
-      <figure class="hero-logo-3d" aria-label="Logo tridimensional da Montes Developers"><img src="logomontes.png" width="640" height="407" alt="Logo Montes Developers em azul e violeta"></figure>
+      <figure class="hero-logo-3d" data-logo-scene aria-label="Logo tridimensional e interativa da Montes Developers">
+        <canvas class="hero-logo-canvas" data-logo-canvas width="960" height="612" aria-hidden="true"></canvas>
+        <img class="hero-logo-fallback" data-logo-fallback src="logomontes.png" width="640" height="407" alt="Logo Montes Developers em azul e violeta">
+        <figcaption>Movimente para explorar a marca</figcaption>
+      </figure>
       <a class="hero-rolagem" href="#projetos"><span>Role para explorar</span><i aria-hidden="true"></i></a>
       <div class="hero-transicao" aria-hidden="true"></div>
     </section>
@@ -54,7 +59,7 @@
     <section class="projetos" id="projetos" aria-labelledby="titulo-projetos">
       <div class="secao-abertura revelar"><p class="rotulo">Projetos selecionados</p><h2 id="titulo-projetos">Cada projeto nasce de um problema <em>real.</em></h2><p>Estratégia e execução caminham juntas, com atenção ao que a empresa e as pessoas precisam fazer.</p></div>
       <article class="projeto projeto-sistema revelar">
-        <div class="projeto-texto"><span class="projeto-numero">01</span><p class="rotulo">Sistema sob medida</p><h3>Gestão automotiva conectada de ponta a ponta.</h3><p>Uma experiência que organiza solicitações, atualizações da equipe e acompanhamento do cliente no mesmo fluxo.</p><a class="link-seta" href="sistemas/sistemas.html">Conhecer o sistema <span aria-hidden="true">↗</span></a></div>
+        <div class="projeto-texto"><span class="projeto-numero" aria-hidden="true">01</span><p class="rotulo">Sistema sob medida</p><h3>Gestão automotiva conectada de ponta a ponta.</h3><p>Uma experiência que organiza solicitações, atualizações da equipe e acompanhamento do cliente no mesmo fluxo.</p><a class="link-seta" href="sistemas/sistemas.html">Conhecer o sistema <span aria-hidden="true">↗</span></a></div>
         <a class="projeto-imagem projeto-imagem-sistema" href="sistemas/sistemas.html" aria-label="Testar o sistema de gestão automotiva"><img src="assets/images/capas/capa-sistema.webp" width="1774" height="887" alt="Capa do sistema de gestão automotiva com painéis da equipe e do cliente"><span class="etiqueta">Abrir demonstrações ↗</span></a>
       </article>
       <div class="projetos-dupla">
