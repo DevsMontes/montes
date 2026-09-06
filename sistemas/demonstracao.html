@@ -1,27 +1,54 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Conceitos visuais e experiências digitais criadas pela Montes Developers.">
-  <meta name="theme-color" content="#070817">
-  <link rel="icon" type="image/png" href="../logomontes.png"><link rel="stylesheet" href="../assets/css/main.css">
-  <title>Demonstrações — Montes Developers</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#dfe8f0">
+  <meta name="description" content="Laboratório Montes: conceitos, experiências e sistemas desenvolvidos pela Montes.dev.">
+  <title>Laboratório Montes — Montes.dev</title>
+  <link rel="icon" href="../logomontes.png">
+  <link rel="preload" href="../assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/portfolio.css">
+  <script src="../assets/js/portfolio.js" defer></script>
 </head>
-<body class="internal-page experiments-page">
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <header class="site-header internal-header"><div class="container header-inner">
-    <a class="brand" href="../index.html"><img src="../logomontes.png" alt="" width="52" height="40"><span>Montes <strong>Developers</strong></span></a>
-    <a class="back-link" href="../index.html#projetos">← Voltar ao portfólio</a>
-  </div></header>
+<body class="pagina-interna pagina-laboratorio">
+  <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+  <header class="cabecalho cabecalho-interno" data-header>
+    <a class="marca" href="../index.html" aria-label="Voltar ao início da Montes.dev"><span class="marca-sinal" aria-hidden="true"></span><span>montes.dev</span></a>
+    <nav class="navegacao" aria-label="Navegação principal"><a href="#marcas">Marcas</a><a href="#sistemas">Sistemas</a><a href="../index.html#servicos">Serviços</a></nav>
+    <a class="link-seta" href="../index.html">Voltar ao início <span aria-hidden="true">↗</span></a>
+    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu-movel" aria-label="Abrir menu"><span></span><span></span></button>
+    <div class="menu-movel" id="menu-movel" hidden><a href="#marcas">Marcas</a><a href="#sistemas">Sistemas</a><a href="../index.html#servicos">Serviços</a><a href="../index.html">Voltar ao início</a></div>
+  </header>
   <main id="conteudo">
-    <section class="page-hero"><div class="container"><p class="eyebrow"><span></span> Montes Experiments</p><h1>Conceitos que exploram possibilidades.</h1><p>Uma seleção de experiências para demonstrar direção de arte, interação e desenvolvimento front-end.</p></div></section>
-    <section class="container demo-grid" aria-label="Demonstrações disponíveis">
-      <a class="demo-card" href="fini.html"><div class="project-preview fini-preview" aria-hidden="true"><span class="fini-preview-word">fini<span>!</span></span><strong>candyverse</strong><i></i><i></i><i></i></div><div class="project-info"><div><span>Direção de arte interativa</span><h3>Fini Candyverse Concept</h3></div><span class="project-link">Abrir ↗</span></div></a>
-      <a class="demo-card" href="monster.html"><div class="project-preview monster-preview" aria-hidden="true"><span class="monster-word">MONSTER</span><span class="monster-stroke">ENERGY</span></div><div class="project-info"><div><span>Experiência de marca</span><h3>Monster Energy Concept</h3></div><span class="project-link">Abrir ↗</span></div></a>
-      <a class="demo-card" href="sistemas.html"><div class="project-preview systems-preview" aria-hidden="true"><div class="mini-window"><i></i><i></i><i></i><span></span><span></span><span></span></div></div><div class="project-info"><div><span>Produto funcional</span><h3>Laboratório de Sistemas</h3></div><span class="project-link">Explorar ↗</span></div></a>
+    <section class="lab-hero">
+      <div class="lab-titulo revelar"><p class="rotulo">Exploração aplicada</p><h1>Laboratório<br>Montes</h1></div>
+      <div class="lab-intro revelar"><p>Conceitos, experiências e sistemas desenvolvidos para mostrar o que conseguimos transformar em realidade.</p><span>Ideia → linguagem → produto</span></div>
+      <div class="lab-linha" aria-hidden="true"><i></i></div>
     </section>
+
+    <section class="lab-marcas" id="marcas" aria-labelledby="titulo-marcas">
+      <header class="lab-secao-cabecalho revelar"><span>01</span><p class="rotulo">Experiências de marca</p><h2 id="titulo-marcas">Mundos digitais com personalidade própria.</h2></header>
+      <article class="lab-destaque lab-fini revelar">
+        <a class="lab-imagem" href="fini.html"><img src="../assets/images/fini-candyverse.webp" width="1280" height="853" alt="Conceito digital Fini Candyverse"><span>Abrir conceito ↗</span></a>
+        <div class="lab-descricao"><p>Conceito Fini Candyverse</p><h3>Cor, movimento e descoberta para transformar produto em experiência.</h3><small>Direção visual · interação · desenvolvimento</small></div>
+      </article>
+      <article class="lab-destaque lab-monster revelar">
+        <div class="lab-descricao"><p>Conceito Monster Energy</p><h3>Uma linguagem intensa, construída com ritmo, contraste e resposta ao movimento.</h3><small>Conceito digital · movimento · experiência</small><a class="link-seta" href="monster.html">Explorar o conceito <span aria-hidden="true">↗</span></a></div>
+        <a class="lab-imagem" href="monster.html"><img src="../assets/images/monster-original.webp" width="1280" height="853" loading="lazy" alt="Conceito digital Monster Energy"><span>Abrir conceito ↗</span></a>
+      </article>
+    </section>
+
+    <section class="lab-sistemas" id="sistemas" aria-labelledby="titulo-sistemas">
+      <header class="lab-secao-cabecalho revelar"><span>02</span><p class="rotulo">Sistemas</p><h2 id="titulo-sistemas">Interfaces que organizam operações reais.</h2></header>
+      <a class="sistema-panoramico revelar" href="sistemas.html">
+        <div class="panoramico-texto"><p>Sistema de gestão automotiva</p><h3>Uma jornada conectada entre quem solicita e quem executa.</h3><span>Conhecer o projeto ↗</span></div>
+        <div class="panoramico-telas"><img src="../assets/images/interfaces/portal-cliente.webp" width="1280" height="800" loading="lazy" alt="Portal do cliente"><img src="../assets/images/interfaces/painel-equipe.webp" width="1280" height="800" loading="lazy" alt="Painel da equipe"><img src="../assets/images/interfaces/acompanhamento.webp" width="1280" height="800" loading="lazy" alt="Acompanhamento do serviço"></div>
+      </a>
+    </section>
+
+    <section class="lab-fecho"><p class="rotulo revelar">Seu projeto pode ser o próximo</p><h2 class="revelar">Do conceito ao sistema, construímos a forma certa para cada ideia.</h2><a class="botao botao-escuro revelar" href="../index.html#contato">Conte sua ideia <span aria-hidden="true">↗</span></a></section>
   </main>
-  <footer class="site-footer"><div class="container footer-inner"><p>© <span data-year>2026</span> Montes Developers.</p><a href="../index.html#contato">Começar um projeto →</a></div></footer>
-  <script src="../assets/js/main.js?v=remove-fini-sweet-20260829" defer></script>
+  <footer class="rodape rodape-claro"><a class="marca" href="../index.html"><span class="marca-sinal" aria-hidden="true"></span><span>montes.dev</span></a><p>Design e desenvolvimento em Brasília, para qualquer lugar.</p><div><a href="../index.html#contato">Contato ↗</a><a href="https://www.instagram.com/montes.dev" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div><small>© <span data-year></span> Montes.dev</small></footer>
 </body>
 </html>
