@@ -9,7 +9,7 @@
   <title>Montes.dev — Tecnologia feita para avançar</title>
   <link rel="icon" href="logomontes.png">
   <link rel="preload" href="assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/images/capas/capa-estudio.webp" as="image" type="image/webp">
+  <link rel="preload" href="assets/images/hero/everest.webp" as="image" type="image/webp">
   <link rel="stylesheet" href="assets/css/portfolio.css">
   <script src="assets/js/portfolio.js" defer></script>
   <script src="assets/js/altrix-demo.js" defer></script>
@@ -25,19 +25,30 @@
   </header>
 
   <main id="conteudo">
-    <section class="hero" id="inicio" aria-labelledby="titulo-hero">
-      <div class="hero-fundo" aria-hidden="true"><span></span><span></span><span></span></div>
+    <section class="hero hero-imersivo" id="inicio" aria-labelledby="titulo-hero" data-hero>
+      <div class="hero-atmosfera" aria-hidden="true">
+        <div class="hero-everest"><img src="assets/images/hero/everest.webp" width="1774" height="887" alt=""></div>
+        <div class="hero-nevoa"></div>
+        <div class="hero-grade"></div>
+      </div>
       <div class="hero-conteudo">
-        <p class="rotulo revelar">Sites, sistemas, automação e IA</p>
-        <h1 id="titulo-hero" class="revelar">Criamos <em>tecnologia</em> para negócios que querem avançar.</h1>
-        <div class="hero-resumo revelar"><p>Da primeira ideia ao produto em uso, a Montes.dev une design, desenvolvimento e estratégia para construir soluções digitais claras, rápidas e úteis.</p><div class="acoes"><a class="botao botao-claro" href="#contato">Conte sua ideia <span aria-hidden="true">↗</span></a><a class="link-seta" href="#projetos">Ver projetos <span aria-hidden="true">↓</span></a></div></div>
+        <div class="hero-copy">
+          <p class="rotulo revelar">Conheça a Montes</p>
+          <h1 id="titulo-hero" class="revelar">Tecnologia feita <em>para mover empresas.</em></h1>
+          <p class="hero-descricao revelar">Criamos sites, sistemas, automações e soluções digitais sob medida para empresas de diferentes segmentos.</p>
+          <div class="acoes revelar"><a class="botao botao-claro" href="#projetos">Conhecer nossos projetos <span aria-hidden="true">↓</span></a><a class="link-seta" href="#contato">Conte sua ideia <span aria-hidden="true">↗</span></a></div>
+          <p class="hero-segmentos revelar"><i aria-hidden="true"></i>Soluções pensadas para diferentes tipos de negócio.</p>
+          <a class="hero-testar revelar" href="sistemas/sistemas.html">Testar sistema em funcionamento <span aria-hidden="true">↗</span></a>
+        </div>
+        <aside class="hero-altrix revelar" aria-label="Apresentação da AltriX">
+          <span>AltriX · atendimento inteligente</span>
+          <p>A AltriX entende o que cada cliente procura, organiza o primeiro contato e direciona a conversa para sua equipe com mais contexto.</p>
+          <button type="button" data-open-altrix>Conversar com a AltriX <i aria-hidden="true">↗</i></button>
+        </aside>
       </div>
-      <div class="hero-palco revelar" aria-label="Tecnologia conectada criada pela Montes.dev">
-        <figure class="hero-capa"><img src="assets/images/capas/capa-estudio.webp" width="1774" height="887" alt="Jornada digital conectando site, sistema e automação"></figure>
-        <div class="hero-nota"><span></span> Produto digital, do fluxo à interface</div>
-        <a class="hero-testar" href="sistemas/sistemas.html">Testar o sistema completo <span aria-hidden="true">↗</span></a>
-      </div>
+      <figure class="hero-logo-3d" aria-label="Logo tridimensional da Montes Developers"><img src="logomontes.png" width="640" height="407" alt="Logo Montes Developers em azul e violeta"></figure>
       <a class="hero-rolagem" href="#projetos"><span>Role para explorar</span><i aria-hidden="true"></i></a>
+      <div class="hero-transicao" aria-hidden="true"></div>
     </section>
 
     <section class="projetos" id="projetos" aria-labelledby="titulo-projetos">

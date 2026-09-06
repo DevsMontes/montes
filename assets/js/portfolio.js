@@ -31,6 +31,43 @@
     if (window.innerWidth > 1080) closeMenu();
   });
 
+  const immersiveHero = document.querySelector('[data-hero]');
+  if (immersiveHero && !reducedMotion) {
+    let heroVisible = true;
+    let heroFrame = 0;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const updateHeroScroll = () => {
+      heroFrame = 0;
+      if (!heroVisible) return;
+      const rect = immersiveHero.getBoundingClientRect();
+      const distance = Math.max(1, immersiveHero.offsetHeight - window.innerHeight * 0.55);
+      const progressValue = clamp(-rect.top / distance, 0, 1);
+      immersiveHero.style.setProperty('--hero-progress', progressValue.toFixed(3));
+    };
+    const requestHeroUpdate = () => {
+      if (!heroFrame) heroFrame = window.requestAnimationFrame(updateHeroScroll);
+    };
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      if (heroVisible) requestHeroUpdate();
+    }, { rootMargin: '10% 0px' });
+    heroObserver.observe(immersiveHero);
+    window.addEventListener('scroll', requestHeroUpdate, { passive: true });
+    window.addEventListener('resize', requestHeroUpdate, { passive: true });
+    immersiveHero.addEventListener('pointermove', (event) => {
+      if (!finePointer.matches || window.innerWidth <= 1080) return;
+      const bounds = immersiveHero.getBoundingClientRect();
+      immersiveHero.style.setProperty('--pointer-x', ((event.clientX - bounds.left) / bounds.width * 2 - 1).toFixed(3));
+      immersiveHero.style.setProperty('--pointer-y', ((event.clientY - bounds.top) / bounds.height * 2 - 1).toFixed(3));
+    });
+    immersiveHero.addEventListener('pointerleave', () => {
+      immersiveHero.style.setProperty('--pointer-x', '0');
+      immersiveHero.style.setProperty('--pointer-y', '0');
+    });
+    updateHeroScroll();
+  }
+
   const revealItems = document.querySelectorAll('.revelar');
   if (reducedMotion || !('IntersectionObserver' in window)) {
     revealItems.forEach((item) => item.classList.add('visivel'));
