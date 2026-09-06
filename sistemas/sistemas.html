@@ -3,149 +3,74 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore um sistema completo de gestão automotiva pelos pontos de vista do cliente e da equipe.">
-  <meta name="theme-color" content="#070817">
-  <link rel="icon" type="image/png" href="../logomontes.png">
-  <link rel="stylesheet" href="../assets/css/main.css">
-  <style>.systems-showcase .module-card-copy > .module-open{color:#081017}</style>
-  <title>Case de Sistema Automotivo — Montes Developers</title>
+  <meta name="theme-color" content="#07111d">
+  <meta name="description" content="Sistema de gestão automotiva apresentado pelos fluxos do cliente e da empresa.">
+  <title>Gestão automotiva — Laboratório Montes</title>
+  <link rel="icon" href="../logomontes.png">
+  <link rel="preload" href="../assets/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/portfolio.css">
+  <script src="../assets/js/portfolio.js" defer></script>
 </head>
-<body class="internal-page systems-showcase">
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <header class="site-header internal-header">
-    <div class="container header-inner">
-      <a class="brand" href="../index.html"><img src="../logomontes.png" alt="" width="612" height="408"><span>Montes <strong>Developers</strong></span></a>
-      <a class="back-link" href="../index.html#projetos">← Voltar ao portfólio</a>
-    </div>
+<body class="pagina-interna pagina-sistema">
+  <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+  <header class="cabecalho cabecalho-interno" data-header>
+    <a class="marca" href="../index.html" aria-label="Montes.dev, início"><span class="marca-sinal" aria-hidden="true"></span><span>montes.dev</span></a>
+    <nav class="navegacao" aria-label="Navegação do projeto"><a href="#jornada">Jornada</a><a href="#modulos">Testar sistema</a><a href="#cliente">Cliente</a><a href="#empresa">Empresa</a></nav>
+    <a class="link-seta" href="demonstracao.html">Laboratório <span aria-hidden="true">↗</span></a>
+    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu-movel" aria-label="Abrir menu"><span></span><span></span></button>
+    <div class="menu-movel" id="menu-movel" hidden><a href="#jornada">Jornada</a><a href="#modulos">Testar sistema</a><a href="#cliente">Cliente</a><a href="#empresa">Empresa</a><a href="demonstracao.html">Laboratório</a></div>
   </header>
-
   <main id="conteudo">
-    <section class="systems-case-hero">
-      <div class="container systems-case-grid">
-        <div class="systems-case-copy">
-          <p class="eyebrow"><span></span> Case interativo / Gestão automotiva</p>
-          <h1>Veja como um sistema conecta <em>empresa e cliente.</em></h1>
-          <p>Este ambiente demonstra uma jornada completa: entrada do cliente, gestão interna da equipe e acompanhamento do serviço em tempo real.</p>
-          <div class="case-actions">
-            <a class="button" href="#modulos">Escolher uma tela <span aria-hidden="true">↓</span></a>
-            <span><i></i> Demonstração funcional</span>
-          </div>
-        </div>
-        <div class="journey-map" aria-label="Fluxo do sistema">
-          <div class="journey-top"><span>Fluxo do produto</span><strong>4 módulos conectados</strong></div>
-          <div class="journey-nodes">
-            <div class="journey-node"><span>01</span><strong>Cliente entra</strong><small>Cadastro ou login</small></div>
-            <i aria-hidden="true">→</i>
-            <div class="journey-node"><span>02</span><strong>Equipe gerencia</strong><small>Painel da oficina</small></div>
-            <i aria-hidden="true">→</i>
-            <div class="journey-node"><span>03</span><strong>Cliente acompanha</strong><small>Status do serviço</small></div>
-          </div>
-          <div class="journey-result"><span>Resultado</span><strong>Mais transparência, menos mensagens repetidas.</strong></div>
-        </div>
-      </div>
+    <section class="sistema-hero">
+      <div class="sistema-hero-texto revelar"><p class="rotulo">Sistema de gestão automotiva</p><h1>O sistema visto pelos <em>dois lados.</em></h1><p>O cliente acompanha cada etapa. A empresa recebe, organiza e atualiza o serviço. Uma mesma informação, apresentada do jeito certo para cada pessoa.</p><div class="sistema-lados"><span>Cliente</span><i aria-hidden="true"></i><span>Empresa</span></div></div>
+      <figure class="sistema-hero-imagem revelar"><img src="../assets/images/capas/capa-sistema.webp" width="1774" height="887" alt="Capa do sistema de gestão automotiva conectando operação e portal do cliente"><figcaption>Gestão conectada · da equipe ao cliente</figcaption></figure>
     </section>
 
-    <section class="systems-modules-section" id="modulos">
-      <div class="container">
-        <div class="section-heading split-heading">
-          <div><p class="eyebrow"><span></span> Escolha uma perspectiva</p><h2>Explore como cada pessoa usa o produto.</h2></div>
-          <p>Cada tela abre uma demonstração real. Use o guia dentro delas para entender o objetivo e os recursos que poderiam ser adaptados ao seu negócio.</p>
-        </div>
-
-        <div class="systems-module-grid">
-          <a class="systems-module-card client-module" href="login.html">
-            <div class="module-card-top"><span class="role-badge">Visão do cliente</span><b>01</b></div>
-            <div class="module-preview login-preview" aria-hidden="true">
-              <div class="preview-phone"><i></i><strong>Bem-vindo</strong><span></span><span></span><em>Entrar</em></div>
-            </div>
-            <div class="module-card-copy">
-              <h3>Portal do cliente</h3>
-              <p>Login, perfil, veículos, histórico e acompanhamento de serviços em um só lugar.</p>
-              <ul><li>Acesso pessoal</li><li>Área responsiva</li><li>Suporte integrado</li></ul>
-              <span class="module-open">Abrir demonstração ↗</span>
-            </div>
-          </a>
-
-          <a class="systems-module-card signup-module" href="cadastro.html">
-            <div class="module-card-top"><span class="role-badge">Primeiro acesso</span><b>02</b></div>
-            <div class="module-preview signup-preview" aria-hidden="true">
-              <div class="preview-form"><i></i><span></span><span></span><span></span><em>Criar conta</em></div>
-            </div>
-            <div class="module-card-copy">
-              <h3>Entrada de novos clientes</h3>
-              <p>Um fluxo simples para cadastrar dados, veículo e solicitação sem depender de atendimento manual.</p>
-              <ul><li>Cadastro guiado</li><li>Menos atrito</li><li>Dados organizados</li></ul>
-              <span class="module-open">Abrir demonstração ↗</span>
-            </div>
-          </a>
-
-          <a class="systems-module-card admin-module" href="admin.html">
-            <div class="module-card-top"><span class="role-badge">Visão da equipe</span><b>03</b></div>
-            <div class="module-preview admin-preview" aria-hidden="true">
-              <div class="preview-dashboard"><div><i></i><i></i><i></i></div><span></span><span></span><span></span></div>
-            </div>
-            <div class="module-card-copy">
-              <h3>Painel de operação</h3>
-              <p>A equipe recebe solicitações, atualiza etapas, registra serviços, fotos e orçamento.</p>
-              <ul><li>Fila de trabalho</li><li>Status em tempo real</li><li>Gestão centralizada</li></ul>
-              <span class="module-open">Abrir demonstração ↗</span>
-            </div>
-          </a>
-
-          <a class="systems-module-card tracking-module" href="acesso.html">
-            <div class="module-card-top"><span class="role-badge">Acesso rápido</span><b>04</b></div>
-            <div class="module-preview tracking-preview" aria-hidden="true">
-              <div class="preview-timeline"><span class="done"><i></i>Recebido</span><span class="active"><i></i>Em andamento</span><span><i></i>Pronto</span></div>
-            </div>
-            <div class="module-card-copy">
-              <h3>Acompanhamento do serviço</h3>
-              <p>Consulta direta por dados do cliente e placa para reduzir dúvidas durante a execução.</p>
-              <ul><li>Linha do tempo</li><li>Fotos e orçamento</li><li>Contato rápido</li></ul>
-              <span class="module-open">Abrir demonstração ↗</span>
-            </div>
-          </a>
-        </div>
-      </div>
+    <section class="jornada" id="jornada" aria-labelledby="titulo-jornada">
+      <div class="jornada-fixo revelar"><p class="rotulo">A jornada conectada</p><h2 id="titulo-jornada">Um fluxo contínuo, da solicitação à entrega.</h2><p>Cada atualização feita pela empresa chega ao cliente com contexto e clareza.</p></div>
+      <ol class="jornada-passos"><li class="revelar"><span>01</span><h3>Cliente solicita</h3><p>Informa veículo, serviço e necessidade em poucos passos.</p></li><li class="revelar"><span>02</span><h3>Empresa recebe</h3><p>A equipe encontra os dados organizados no painel de gestão.</p></li><li class="revelar"><span>03</span><h3>Serviço é atualizado</h3><p>Status e informações avançam conforme o trabalho acontece.</p></li><li class="revelar"><span>04</span><h3>Cliente acompanha</h3><p>A evolução fica visível sem depender de mensagens soltas.</p></li></ol>
     </section>
 
-    <section class="guided-tour-section">
-      <div class="container guided-tour-grid">
-        <div class="guided-tour-copy"><p class="eyebrow"><span></span> Novo modo guiado</p><h2>Entenda a interface enquanto usa.</h2><p>Em todas as telas, o botão “Visualizar funcionalidades” abre um mapa numerado. Ele conecta cada elemento visível ao benefício que entrega para o cliente ou para a equipe.</p><a class="button button-secondary" href="acesso.html">Testar no acompanhamento →</a></div>
-        <div class="guided-tree" aria-label="Exemplo do mapa de funcionalidades">
-          <div class="guided-root"><span>Produto digital</span><strong>Jornada do serviço</strong></div>
-          <ul><li><span>01</span><div><strong>Entrada</strong><small>Cadastro simples e contextual</small></div></li><li><span>02</span><div><strong>Operação</strong><small>Fila, responsáveis e etapas</small></div></li><li><span>03</span><div><strong>Transparência</strong><small>Status e orçamento para o cliente</small></div></li></ul>
-        </div>
+    <section class="modulos-praticos" id="modulos" aria-labelledby="titulo-modulos">
+      <header class="modulos-cabecalho revelar"><p class="rotulo">Demonstrações funcionais</p><h2 id="titulo-modulos">Escolha uma tela e use o sistema na prática.</h2><p>As quatro experiências abaixo são navegáveis. Entre como cliente, faça um cadastro, gerencie a operação ou acompanhe um serviço.</p></header>
+      <div class="modulos-grade">
+        <a class="modulo-pratico revelar" href="login.html">
+          <figure><img src="../assets/images/interfaces/portal-cliente.webp" width="1280" height="800" loading="lazy" alt="Tela de entrada do portal do cliente"></figure>
+          <div><span>01 · Visão do cliente</span><h3>Portal do cliente</h3><p>Acesse o ambiente pessoal, veículos, histórico e serviços.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
+        <a class="modulo-pratico revelar" href="cadastro.html">
+          <figure><img src="../assets/images/interfaces/cadastro.webp" width="1280" height="800" loading="lazy" alt="Tela de cadastro de novo cliente"></figure>
+          <div><span>02 · Primeiro acesso</span><h3>Novo cadastro</h3><p>Percorra o fluxo de entrada e registre os dados iniciais.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
+        <a class="modulo-pratico revelar" href="admin.html">
+          <figure><img src="../assets/images/interfaces/painel-equipe.webp" width="1280" height="800" loading="lazy" alt="Painel de operação da equipe"></figure>
+          <div><span>03 · Visão da empresa</span><h3>Painel da equipe</h3><p>Gerencie solicitações, etapas e informações da operação.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
+        <a class="modulo-pratico revelar" href="acesso.html">
+          <figure><img src="../assets/images/interfaces/acompanhamento.webp" width="1280" height="800" loading="lazy" alt="Tela de acompanhamento do serviço"></figure>
+          <div><span>04 · Consulta rápida</span><h3>Acompanhamento</h3><p>Consulte o andamento do serviço pela visão do cliente.</p><strong>Abrir demonstração ↗</strong></div>
+        </a>
       </div>
+      <p class="modulos-nota revelar"><i></i> Todos os ambientes usam dados exclusivamente demonstrativos.</p>
     </section>
 
-    <section class="systems-possibilities">
-      <div class="container possibilities-grid">
-        <div>
-          <p class="eyebrow"><span></span> Além deste exemplo</p>
-          <h2>A mesma lógica pode atender outros negócios.</h2>
-          <p>O fluxo é adaptável: muda a identidade, os campos, as etapas e as automações para refletir exatamente a operação da empresa.</p>
-        </div>
-        <ul>
-          <li><span>01</span>Clínicas e agendamentos</li>
-          <li><span>02</span>Assistências técnicas</li>
-          <li><span>03</span>Pedidos e entregas</li>
-          <li><span>04</span>Serviços residenciais</li>
-          <li><span>05</span>Academias e assinaturas</li>
-          <li><span>06</span>Equipes de campo</li>
-        </ul>
-      </div>
+    <section class="interface-narrativa interface-cliente" id="cliente">
+      <div class="interface-texto revelar"><p class="rotulo">Lado do cliente</p><span class="interface-indice" data-index="01" aria-hidden="true"></span><h2>Solicitar sem complicação.</h2><p>O portal começa com o essencial. A pessoa identifica o veículo, descreve o que precisa e envia a solicitação sem enfrentar um formulário longo.</p><a class="link-seta" href="login.html">Abrir portal do cliente <span aria-hidden="true">↗</span></a></div>
+      <figure class="interface-imagem revelar"><img src="../assets/images/interfaces/cadastro.webp" width="1280" height="800" loading="lazy" alt="Cadastro de solicitação no portal do cliente"><figcaption>Cadastro da solicitação</figcaption></figure>
     </section>
 
-    <section class="systems-case-cta">
-      <div class="container contact-panel">
-        <div class="contact-copy"><p class="eyebrow"><span></span> Seu sistema</p><h2>Imagine este fluxo com a sua marca.</h2><p>Mapeamos sua operação e criamos uma experiência simples para a equipe e para os clientes.</p></div>
-        <div class="contact-options">
-          <a href="../index.html#contato"><span class="contact-avatar">MD</span><span><small>Próximo passo</small><strong>Solicitar uma proposta</strong></span><b aria-hidden="true">→</b></a>
-        </div>
-      </div>
+    <section class="interface-narrativa interface-empresa" id="empresa">
+      <figure class="interface-imagem revelar"><img src="../assets/images/interfaces/painel-equipe.webp" width="1280" height="800" loading="lazy" alt="Painel de gestão usado pela empresa"><figcaption>Painel da equipe</figcaption></figure>
+      <div class="interface-texto revelar"><p class="rotulo">Lado da empresa</p><span class="interface-indice" data-index="02" aria-hidden="true"></span><h2>Decidir com a operação à vista.</h2><p>Solicitações, clientes e serviços aparecem em um ambiente único. A equipe atualiza o andamento e mantém o histórico acessível.</p><a class="link-seta" href="acesso.html">Abrir acesso da empresa <span aria-hidden="true">↗</span></a></div>
     </section>
+
+    <section class="interface-narrativa interface-acompanhar">
+      <div class="interface-texto revelar"><p class="rotulo">Informação compartilhada</p><span class="interface-indice" data-index="03" aria-hidden="true"></span><h2>O andamento fala por si.</h2><p>A tela de acompanhamento traduz as atualizações internas para uma visão simples. Assim, cliente e equipe sabem onde o serviço está.</p></div>
+      <figure class="interface-imagem revelar"><img src="../assets/images/interfaces/acompanhamento.webp" width="1280" height="800" loading="lazy" alt="Tela de acompanhamento do serviço"><figcaption>Acompanhamento em tempo real</figcaption></figure>
+    </section>
+
+    <section class="sistema-fecho"><p class="rotulo revelar">Sistemas sob medida</p><h2 class="revelar">Quando o fluxo da empresa é único, a solução também pode ser.</h2><div class="acoes revelar"><a class="botao botao-claro" href="../index.html#contato">Conversar sobre um sistema <span aria-hidden="true">↗</span></a><a class="link-seta" href="demonstracao.html">Voltar ao laboratório <span aria-hidden="true">↗</span></a></div></section>
   </main>
-
-  <footer class="site-footer"><div class="container footer-inner"><p>Case demonstrativo da Montes Developers.</p><a href="../index.html#projetos">Ver outros projetos →</a></div></footer>
+  <footer class="rodape"><a class="marca" href="../index.html"><span class="marca-sinal" aria-hidden="true"></span><span>montes.dev</span></a><p>Design e desenvolvimento em Brasília, para qualquer lugar.</p><div><a href="../index.html#contato">Contato ↗</a><a href="demonstracao.html">Laboratório ↗</a></div><small>© <span data-year></span> Montes.dev</small></footer>
 </body>
 </html>
