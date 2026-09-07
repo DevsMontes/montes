@@ -1,243 +1,344 @@
 import * as THREE from 'three';
 import { SVGLoader } from '../vendor/three/SVGLoader.js';
-import { FontLoader } from '../vendor/three/FontLoader.js';
-import { TextGeometry } from '../vendor/three/TextGeometry.js';
 
 const hero = document.querySelector('[data-cinematic-hero]');
-const canvas = document.querySelector('[data-three-canvas]');
+const canvas = hero?.querySelector('[data-three-canvas]');
 if (!hero || !canvas) throw new Error('Cena do hero não encontrada.');
 
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-const mobile = window.matchMedia('(max-width: 720px)');
+const media = {
+  reduced: window.matchMedia('(prefers-reduced-motion: reduce)'),
+  finePointer: window.matchMedia('(hover: hover) and (pointer: fine)'),
+  compact: window.matchMedia('(max-width: 1080px)'),
+  mobile: window.matchMedia('(max-width: 720px)')
+};
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
 
-if (reducedMotion.matches) {
-  hero.classList.add('hero-cena-estatica');
-} else {
-  let renderer;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !mobile.matches, powerPreference: 'high-performance' });
-  } catch {
-    hero.classList.add('hero-cena-estatica');
+class MontesHeroScene {
+  constructor(element, targetCanvas) {
+    this.hero = element;
+    this.canvas = targetCanvas;
+    this.clock = new THREE.Clock();
+    this.pointer = new THREE.Vector2();
+    this.pointerTarget = new THREE.Vector2();
+    this.pointerVelocity = new THREE.Vector2();
+    this.progress = 0;
+    this.visible = true;
+    this.ready = false;
+    this.frame = 0;
+    this.startedAt = performance.now();
+    this.pieces = [];
+    this.disposables = [];
+    this.abortController = new AbortController();
+    this.assemble = this.shouldAssemble();
   }
 
-  if (renderer) {
-    renderer.setClearColor(0x000000, 0);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.12;
+  shouldAssemble() {
+    try {
+      const key = 'montes-hero-assembled-v1';
+      if (sessionStorage.getItem(key)) return false;
+      sessionStorage.setItem(key, 'true');
+      return true;
+    } catch {
+      return true;
+    }
+  }
 
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x07111d, 0.052);
-    const camera = new THREE.PerspectiveCamera(31, 1, 0.1, 60);
-    camera.position.set(0, 0.1, 9.4);
-
-    const stage = new THREE.Group();
-    const logo = new THREE.Group();
-    stage.add(logo);
-    scene.add(stage);
-
-    const hemi = new THREE.HemisphereLight(0x91c8ff, 0x06101b, 1.45);
-    const key = new THREE.SpotLight(0xc6e6ff, 75, 24, Math.PI / 5, 0.65, 1.2);
-    key.position.set(-4.5, 5.2, 7);
-    const rim = new THREE.PointLight(0x7558ff, 42, 18, 1.5);
-    rim.position.set(5, -1, 4);
-    const cold = new THREE.PointLight(0x4cbcff, 28, 15, 1.6);
-    cold.position.set(-4, -2, 3);
-    scene.add(hemi, key, rim, cold);
-
-    const materialFor = (color) => new THREE.MeshPhysicalMaterial({
-      color,
-      metalness: 0.76,
-      roughness: 0.24,
-      clearcoat: 0.58,
-      clearcoatRoughness: 0.2,
-      reflectivity: 0.82,
-      side: THREE.DoubleSide
+  createRenderer() {
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: this.canvas,
+      alpha: true,
+      antialias: !media.mobile.matches,
+      powerPreference: 'high-performance'
     });
-    const silver = materialFor(0xe8eef4);
-    const cyan = materialFor(0x49c3ef);
-    const violet = materialFor(0x8f5ce8);
+    this.renderer.setClearColor(0x000000, 0);
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.01;
+  }
 
-    const addExtrudedMark = (svgData) => {
-      const mark = new THREE.Group();
-      svgData.paths.forEach((path, pathIndex) => {
-        const shapes = SVGLoader.createShapes(path);
-        shapes.forEach((shape) => {
-          const geometry = new THREE.ExtrudeGeometry(shape, {
-            depth: 24,
-            bevelEnabled: true,
-            bevelThickness: 5,
-            bevelSize: 3.2,
-            bevelSegments: mobile.matches ? 2 : 4,
-            curveSegments: mobile.matches ? 4 : 8
-          });
-          geometry.computeVertexNormals();
-          const mesh = new THREE.Mesh(geometry, pathIndex === 2 ? violet : cyan);
-          mark.add(mesh);
-        });
+  createEnvironment() {
+    const environment = new THREE.Scene();
+    environment.background = new THREE.Color(0x07111d);
+    const panels = [
+      [-3.5, 3.2, 4, 0xa8c9df, 2.8],
+      [4.2, 0.8, 2.5, 0x245d91, 2.1],
+      [0, -3.8, 3, 0x0b263c, 3.2]
+    ].map(([x, y, z, color, scale]) => {
+      const geometry = new THREE.PlaneGeometry(scale, scale);
+      const material = new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide });
+      const panel = new THREE.Mesh(geometry, material);
+      panel.position.set(x, y, z);
+      panel.lookAt(0, 0, 0);
+      environment.add(panel);
+      return { geometry, material };
+    });
+    const pmrem = new THREE.PMREMGenerator(this.renderer);
+    const target = pmrem.fromScene(environment, 0.11);
+    this.scene.environment = target.texture;
+    panels.forEach(({ geometry, material }) => {
+      geometry.dispose();
+      material.dispose();
+    });
+    pmrem.dispose();
+    this.disposables.push(target);
+  }
+
+  createLights() {
+    this.hemi = new THREE.HemisphereLight(0x9abbd1, 0x06101a, 0.82);
+    this.key = new THREE.SpotLight(0xc8def0, 47, 24, Math.PI / 5.8, 0.76, 1.4);
+    this.key.position.set(-4.2, 5.4, 7.2);
+    this.rim = new THREE.PointLight(0x4d8fc4, 18, 17, 1.7);
+    this.rim.position.set(4.8, 0.5, 3.3);
+    this.fill = new THREE.PointLight(0x183e66, 12, 15, 1.9);
+    this.fill.position.set(-3.6, -2.2, 3);
+    this.scene.add(this.hemi, this.key, this.rim, this.fill);
+  }
+
+  createMaterials() {
+    const anodized = (color, roughness) => {
+      const material = new THREE.MeshPhysicalMaterial({
+        color,
+        emissive: color,
+        emissiveIntensity: media.mobile.matches ? 0.085 : 0.025,
+        metalness: 0.68,
+        roughness,
+        clearcoat: 0.16,
+        clearcoatRoughness: 0.48,
+        envMapIntensity: 0.72,
+        side: THREE.DoubleSide
       });
-      mark.scale.set(0.0076, -0.0076, 0.0076);
-      const bounds = new THREE.Box3().setFromObject(mark);
-      const center = bounds.getCenter(new THREE.Vector3());
-      mark.position.sub(center);
-      mark.position.y = 1.55;
-      logo.add(mark);
-      return mark;
+      this.disposables.push(material);
+      return material;
     };
+    this.materials = [
+      anodized(0x176b9d, 0.34),
+      anodized(0x126f9e, 0.39),
+      anodized(0x28538b, 0.37)
+    ];
+  }
 
-    const addWordmark = (font) => {
-      const createText = (text, size, depth, y, material) => {
-        const geometry = new TextGeometry(text, {
-          font,
-          size,
-          depth,
-          curveSegments: mobile.matches ? 3 : 6,
+  createLogo(svgData) {
+    this.logo = new THREE.Group();
+    this.stage.add(this.logo);
+    svgData.paths.forEach((path, pathIndex) => {
+      SVGLoader.createShapes(path).forEach((shape) => {
+        const geometry = new THREE.ExtrudeGeometry(shape, {
+          depth: 17,
           bevelEnabled: true,
-          bevelThickness: 0.035,
-          bevelSize: 0.018,
-          bevelSegments: mobile.matches ? 1 : 3
+          bevelThickness: 2.6,
+          bevelSize: 2.15,
+          bevelSegments: media.mobile.matches ? 2 : 4,
+          curveSegments: media.mobile.matches ? 4 : 7
         });
-        geometry.center();
         geometry.computeVertexNormals();
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.y = y;
-        logo.add(mesh);
-      };
-      createText('MONTES', 0.61, 0.18, -1.82, silver);
-      createText('D E V E L O P E R S', 0.13, 0.1, -2.3, cyan);
-    };
+        const mesh = new THREE.Mesh(geometry, this.materials[pathIndex] || this.materials[0]);
+        mesh.userData.target = new THREE.Vector3();
+        const offsets = [
+          new THREE.Vector3(0.08, 0.24, -0.1),
+          new THREE.Vector3(-0.3, -0.06, 0.13),
+          new THREE.Vector3(0.27, -0.11, 0.16)
+        ];
+        mesh.userData.offset = offsets[pathIndex] || new THREE.Vector3();
+        this.pieces.push(mesh);
+        this.logo.add(mesh);
+        this.disposables.push(geometry);
+      });
+    });
+    this.logo.scale.set(0.0076, -0.0076, 0.0076);
+    const bounds = new THREE.Box3().setFromObject(this.logo);
+    const center = bounds.getCenter(new THREE.Vector3());
+    this.logo.position.sub(center);
+  }
 
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particleCount = mobile.matches ? 65 : 180;
+  createAtmosphere() {
+    const particleCount = media.mobile.matches ? 34 : 92;
     const positions = new Float32Array(particleCount * 3);
     for (let index = 0; index < particleCount; index += 1) {
       positions[index * 3] = (Math.random() - 0.5) * 14;
-      positions[index * 3 + 1] = (Math.random() - 0.5) * 9;
+      positions[index * 3 + 1] = (Math.random() - 0.5) * 8;
       positions[index * 3 + 2] = (Math.random() - 0.5) * 7 - 1;
     }
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particles = new THREE.Points(particlesGeometry, new THREE.PointsMaterial({ color: 0xb9d9f2, size: mobile.matches ? 0.018 : 0.024, transparent: true, opacity: 0.34, depthWrite: false }));
-    scene.add(particles);
-
-    const glowTexture = (() => {
-      const textureCanvas = document.createElement('canvas');
-      textureCanvas.width = textureCanvas.height = 128;
-      const context = textureCanvas.getContext('2d');
-      const gradient = context.createRadialGradient(64, 64, 0, 64, 64, 64);
-      gradient.addColorStop(0, 'rgba(114,173,230,.24)');
-      gradient.addColorStop(0.45, 'rgba(57,111,175,.09)');
-      gradient.addColorStop(1, 'rgba(5,13,23,0)');
-      context.fillStyle = gradient;
-      context.fillRect(0, 0, 128, 128);
-      return new THREE.CanvasTexture(textureCanvas);
-    })();
-    const mist = Array.from({ length: mobile.matches ? 2 : 4 }, (_, index) => {
-      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture, transparent: true, opacity: 0.28, depthWrite: false }));
-      sprite.scale.set(5.5 + index, 2.5 + index * 0.45, 1);
-      sprite.position.set(-1 + index * 1.2, -1.4 + index * 0.45, -2 - index);
-      scene.add(sprite);
-      return sprite;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+      color: 0xb7cddd,
+      size: media.mobile.matches ? 0.013 : 0.017,
+      transparent: true,
+      opacity: 0.2,
+      depthWrite: false
     });
+    this.particles = new THREE.Points(geometry, material);
+    this.scene.add(this.particles);
+    this.disposables.push(geometry, material);
 
-    const pointer = new THREE.Vector2();
-    const pointerTarget = new THREE.Vector2();
-    const clock = new THREE.Clock();
-    let progress = 0;
-    let visible = true;
-    let frame = 0;
-    let ready = false;
-
-    const layout = () => {
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      if (!width || !height) return;
-      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile.matches ? 1.15 : 1.65));
-      renderer.setSize(width, height, false);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-    };
-
-    const updateScroll = () => {
-      const rect = hero.getBoundingClientRect();
-      progress = clamp(-rect.top / Math.max(1, rect.height - innerHeight), 0, 1);
-      hero.style.setProperty('--hero-progress', progress.toFixed(4));
-    };
-
-    const render = () => {
-      frame = 0;
-      if (!visible || document.hidden || !ready) return;
-      const elapsed = clock.getElapsedTime();
-      const intro = clamp(elapsed / 1.8, 0, 1);
-      const easedIntro = 1 - Math.pow(1 - intro, 3);
-      pointer.lerp(pointerTarget, 0.045);
-
-      const mobileView = mobile.matches;
-      stage.position.x = mobileView ? -0.15 + progress * 0.15 : 2.15 + progress * 0.55;
-      stage.position.y = mobileView ? -1.18 + progress * 0.16 : -0.38 + progress * 0.16;
-      stage.position.z = -1.6 * (1 - easedIntro) + progress * 0.55;
-      stage.scale.setScalar((mobileView ? 0.24 : 0.56) * (0.72 + easedIntro * 0.28));
-      stage.rotation.x = -0.07 + progress * 0.16 - pointer.y * 0.035;
-      stage.rotation.y = -0.5 * (1 - easedIntro) + progress * 0.48 + pointer.x * 0.075 + Math.sin(elapsed * 0.28) * 0.025;
-      stage.rotation.z = -0.035 + Math.sin(elapsed * 0.22) * 0.012;
-
-      camera.position.z = 9.4 - progress * 1.15;
-      camera.position.x = progress * -0.35;
-      camera.lookAt(0.25, -0.15, 0);
-      key.position.x = -4.5 + Math.sin(elapsed * 0.42) * 2.1 + pointer.x;
-      rim.position.y = -1 + Math.cos(elapsed * 0.34) * 1.2;
-      particles.rotation.y = elapsed * 0.012 + progress * 0.08;
-      particles.position.y = progress * 0.35;
-      mist.forEach((sprite, index) => {
-        sprite.position.x += Math.sin(elapsed * 0.08 + index) * 0.0008;
-        sprite.material.opacity = 0.19 + Math.sin(elapsed * 0.2 + index) * 0.045;
-      });
-
-      renderer.render(scene, camera);
-      frame = requestAnimationFrame(render);
-    };
-
-    const start = () => {
-      if (!frame && visible && ready && !document.hidden) frame = requestAnimationFrame(render);
-    };
-    const stop = () => {
-      if (frame) cancelAnimationFrame(frame);
-      frame = 0;
-    };
-
-    Promise.all([
-      new SVGLoader().loadAsync('assets/models/montes-mark.svg'),
-      new FontLoader().loadAsync('assets/vendor/three/helvetiker_bold.typeface.json')
-    ]).then(([svg, font]) => {
-      addExtrudedMark(svg);
-      addWordmark(font);
-      ready = true;
-      hero.classList.add('hero-cena-pronta');
-      hero.dataset.sceneReady = 'true';
-      layout();
-      updateScroll();
-      renderer.render(scene, camera);
-      start();
-    }).catch(() => {
-      hero.classList.add('hero-cena-estatica');
-      hero.dataset.sceneError = 'assets';
-    });
-
-    hero.addEventListener('pointermove', (event) => {
-      if (!finePointer.matches) return;
-      pointerTarget.set(event.clientX / innerWidth * 2 - 1, -(event.clientY / innerHeight * 2 - 1));
-    });
-    hero.addEventListener('pointerleave', () => pointerTarget.set(0, 0));
-    window.addEventListener('scroll', updateScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      layout();
-      updateScroll();
-    }, { passive: true });
-    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      visible ? start() : stop();
-    }, { rootMargin: '12% 0px' }).observe(hero);
+    const shadowCanvas = document.createElement('canvas');
+    shadowCanvas.width = 256;
+    shadowCanvas.height = 128;
+    const context = shadowCanvas.getContext('2d');
+    const gradient = context.createRadialGradient(128, 64, 4, 128, 64, 116);
+    gradient.addColorStop(0, 'rgba(0,8,16,.44)');
+    gradient.addColorStop(0.46, 'rgba(0,8,16,.2)');
+    gradient.addColorStop(1, 'rgba(0,8,16,0)');
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 256, 128);
+    const texture = new THREE.CanvasTexture(shadowCanvas);
+    const shadowMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.5, depthWrite: false });
+    this.contactShadow = new THREE.Sprite(shadowMaterial);
+    this.contactShadow.scale.set(4.8, 2.1, 1);
+    this.contactShadow.position.set(0.08, -1.32, -0.32);
+    this.stage.add(this.contactShadow);
+    this.disposables.push(texture, shadowMaterial);
   }
+
+  async init() {
+    this.createRenderer();
+    this.scene = new THREE.Scene();
+    this.scene.fog = new THREE.FogExp2(0x07111d, 0.043);
+    this.camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
+    this.camera.position.set(0, 0.1, 9.8);
+    this.stage = new THREE.Group();
+    this.scene.add(this.stage);
+    this.createEnvironment();
+    this.createLights();
+    this.createMaterials();
+    this.createAtmosphere();
+    const svg = await new SVGLoader().loadAsync('assets/models/montes-mark.svg');
+    this.createLogo(svg);
+    this.ready = true;
+    this.hero.classList.add('hero-cena-pronta');
+    this.hero.dataset.sceneReady = 'true';
+    this.layout();
+    this.updateScroll();
+    this.bindEvents();
+    this.renderer.render(this.scene, this.camera);
+    this.start();
+  }
+
+  layout() {
+    const width = this.canvas.clientWidth;
+    const height = this.canvas.clientHeight;
+    if (!width || !height) return;
+    const dprLimit = media.mobile.matches ? 1.05 : 1.45;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, dprLimit));
+    this.renderer.setSize(width, height, false);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+  }
+
+  updateScroll() {
+    const rect = this.hero.getBoundingClientRect();
+    this.progress = clamp(-rect.top / Math.max(1, rect.height - innerHeight), 0, 1);
+    this.hero.style.setProperty('--hero-progress', this.progress.toFixed(4));
+  }
+
+  updatePointer() {
+    const spring = 0.035;
+    const damping = 0.84;
+    this.pointerVelocity.x = (this.pointerVelocity.x + (this.pointerTarget.x - this.pointer.x) * spring) * damping;
+    this.pointerVelocity.y = (this.pointerVelocity.y + (this.pointerTarget.y - this.pointer.y) * spring) * damping;
+    this.pointer.add(this.pointerVelocity);
+  }
+
+  render = () => {
+    this.frame = 0;
+    if (!this.visible || document.hidden || !this.ready) return;
+    const elapsed = this.clock.getElapsedTime();
+    const introElapsed = (performance.now() - this.startedAt) / 1000;
+    const intro = easeOutCubic(clamp(introElapsed / 1.15, 0, 1));
+    const assembly = this.assemble ? easeOutCubic(clamp((introElapsed - 0.12) / 1.05, 0, 1)) : 1;
+    this.updatePointer();
+
+    this.pieces.forEach((piece) => {
+      piece.position.copy(piece.userData.target).addScaledVector(piece.userData.offset, 1 - assembly);
+      piece.rotation.z = (1 - assembly) * (piece.userData.offset.x * 0.1);
+    });
+
+    const isMobile = media.mobile.matches;
+    const isCompact = media.compact.matches;
+    const compactRatio = clamp((innerWidth - 768) / 312, 0, 1);
+    const restingScale = isMobile ? 0.255 : isCompact ? 0.31 + compactRatio * 0.07 : 0.455;
+    const float = Math.sin(elapsed * 0.62) * 0.018;
+    this.stage.position.x = isMobile ? 0.08 : isCompact ? 1.15 + compactRatio * 0.55 : 2.62 + this.progress * 0.18;
+    this.stage.position.y = isMobile ? -1.32 + float : isCompact ? -0.28 + float : -0.14 + float + this.progress * 0.1;
+    this.stage.position.z = -0.42 * (1 - intro) + this.progress * 0.28;
+    this.stage.scale.setScalar(restingScale * (0.92 + intro * 0.08));
+    this.stage.rotation.x = -0.055 + this.progress * 0.075 - this.pointer.y * 0.012;
+    this.stage.rotation.y = -0.085 + this.progress * 0.14 + this.pointer.x * 0.028;
+    this.stage.rotation.z = -0.012 + Math.sin(elapsed * 0.38) * 0.004;
+
+    this.camera.position.x = -this.progress * 0.16 + this.pointer.x * 0.055;
+    this.camera.position.y = 0.1 + this.pointer.y * 0.035;
+    this.camera.position.z = 9.8 - this.progress * 0.62;
+    this.camera.lookAt(0.18, -0.12, 0);
+
+    const lightBreath = 1 + Math.sin(elapsed * 0.48) * 0.025;
+    this.key.intensity = 47 * intro * lightBreath;
+    this.rim.intensity = 18 * intro;
+    this.fill.intensity = 12 * intro;
+    this.key.position.x = -4.2 + this.pointer.x * 0.65 + this.progress * 0.35;
+    this.key.position.y = 5.4 + this.pointer.y * 0.35;
+    this.rim.position.y = 0.5 + Math.sin(elapsed * 0.32) * 0.12;
+    this.contactShadow.material.opacity = 0.38 + this.progress * 0.07;
+    this.particles.rotation.y = elapsed * 0.003 + this.progress * 0.035;
+    this.particles.position.y = this.progress * 0.12;
+
+    this.hero.style.setProperty('--hero-pointer-x', this.pointer.x.toFixed(4));
+    this.hero.style.setProperty('--hero-pointer-y', this.pointer.y.toFixed(4));
+    this.renderer.render(this.scene, this.camera);
+    this.frame = requestAnimationFrame(this.render);
+  };
+
+  start() {
+    if (!this.frame && this.visible && this.ready && !document.hidden) this.frame = requestAnimationFrame(this.render);
+  }
+
+  stop() {
+    if (this.frame) cancelAnimationFrame(this.frame);
+    this.frame = 0;
+  }
+
+  bindEvents() {
+    const { signal } = this.abortController;
+    this.hero.addEventListener('pointermove', (event) => {
+      if (!media.finePointer.matches) return;
+      const rect = this.hero.getBoundingClientRect();
+      this.pointerTarget.set(
+        clamp((event.clientX - rect.left) / rect.width * 2 - 1, -1, 1),
+        clamp(-((event.clientY - rect.top) / innerHeight * 2 - 1), -1, 1)
+      );
+    }, { signal, passive: true });
+    this.hero.addEventListener('pointerleave', () => this.pointerTarget.set(0, 0), { signal });
+    window.addEventListener('scroll', () => this.updateScroll(), { signal, passive: true });
+    window.addEventListener('resize', () => {
+      this.layout();
+      this.updateScroll();
+    }, { signal, passive: true });
+    document.addEventListener('visibilitychange', () => document.hidden ? this.stop() : this.start(), { signal });
+    window.addEventListener('pagehide', () => this.dispose(), { signal, once: true });
+    this.observer = new IntersectionObserver(([entry]) => {
+      this.visible = entry.isIntersecting;
+      this.visible ? this.start() : this.stop();
+    }, { rootMargin: '10% 0px' });
+    this.observer.observe(this.hero);
+  }
+
+  dispose() {
+    this.stop();
+    this.observer?.disconnect();
+    this.abortController.abort();
+    this.disposables.forEach((resource) => resource.dispose?.());
+    this.renderer?.dispose();
+  }
+}
+
+if (media.reduced.matches) {
+  hero.classList.add('hero-cena-estatica');
+} else {
+  const scene = new MontesHeroScene(hero, canvas);
+  scene.init().catch(() => {
+    scene.dispose();
+    hero.classList.add('hero-cena-estatica');
+    hero.dataset.sceneError = 'assets';
+  });
 }
