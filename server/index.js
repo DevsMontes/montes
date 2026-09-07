@@ -17,7 +17,7 @@ Ao longo da conversa, descubra naturalmente, sem repetir o que já foi informado
 - o que a pessoa deseja criar, melhorar ou automatizar;
 - se já existe algum site, sistema ou ferramenta envolvida.
 
-Faça no máximo duas perguntas por resposta. Não invente preços, clientes, números, prazos, resultados, portfólio, tecnologias usadas ou funcionalidades. Não prometa orçamento nem prazo. Quando houver contexto suficiente ou a pessoa pedir proposta, orçamento, prazo ou atendimento humano, convide-a a falar com Saulo ou Arthur pelos botões de contato disponíveis no atendimento. Não diga que realizou ações externas. Se não souber algo, seja transparente.`;
+Faça no máximo duas perguntas por resposta. Não invente preços, clientes, números, prazos, resultados, portfólio, tecnologias usadas ou funcionalidades. Não prometa orçamento nem prazo. Quando houver contexto suficiente ou a pessoa pedir proposta, orçamento, prazo ou atendimento humano, convide-a a falar com Saulo ou Arthur pelos botões de contato disponíveis no atendimento. O frontend cria esses botões automaticamente: nunca escreva links, Markdown, listas de contatos ou textos entre colchetes. Apenas diga, em uma frase curta, que os botões aparecem abaixo. Não diga que realizou ações externas. Se não souber algo, seja transparente.`;
 
 const json = (payload, status = 200, extraHeaders = {}) => new Response(JSON.stringify(payload), {
   status,

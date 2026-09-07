@@ -35,6 +35,15 @@
     return paragraph;
   };
 
+  const contactInvitation = (text) => /falar com (saulo|arthur)|whatsapp|bot(?:ão|ões) (?:abaixo|de contato)|falar (?:diretamente )?com (?:a )?nossa equipe|atendimento humano/i.test(text);
+
+  const cleanAssistantText = (text) => text
+    .replace(/\*\*\[Falar com (Saulo|Arthur)\]\*\*/gi, '')
+    .replace(/\[Falar com (Saulo|Arthur)\](?:\([^\n)]+\))?/gi, '')
+    .replace(/^\s*[-•]\s*$/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+
   const addContacts = () => {
     const contacts = document.createElement('div');
     contacts.className = 'mensagem mensagem-altrix mensagem-contatos';
@@ -116,7 +125,10 @@
       if (!response.ok || typeof payload.reply !== 'string' || !payload.reply.trim()) throw new Error('Resposta inválida');
       typing.remove();
       const reply = payload.reply.trim();
-      addMessage(reply);
+      const shouldShowContacts = contactInvitation(reply);
+      const visibleReply = cleanAssistantText(reply);
+      if (visibleReply) addMessage(visibleReply);
+      if (shouldShowContacts) addContacts();
       history.push({ role: 'assistant', content: reply });
       if (history.length > 10) history.splice(0, history.length - 10);
       setStatus('Disponível');
