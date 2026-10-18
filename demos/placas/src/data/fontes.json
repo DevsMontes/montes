@@ -1,0 +1,74 @@
+[
+  {
+    "id": "G01",
+    "titulo": "Google — Link e QR para solicitar avaliações",
+    "url": "https://support.google.com/business/answer/16816815?hl=en",
+    "tipo": "Orientação oficial",
+    "resumo": "O Google oferece link e QR para solicitar avaliações. O QR pode ser exposto no estabelecimento.",
+    "limite": "Sustenta a função do acesso; não mede ganho causado por placas NFC.",
+    "consultado_em": "2026-10-17"
+  },
+  {
+    "id": "G02",
+    "titulo": "Google — Dicas para receber avaliações",
+    "url": "https://support.google.com/business/answer/3474122?hl=pt-BR",
+    "tipo": "Orientação oficial",
+    "resumo": "Avaliações devem ser autênticas; o cliente precisa entrar em uma Conta do Google para publicar.",
+    "limite": "Não prometer publicação automática, ausência de login ou avaliação positiva.",
+    "consultado_em": "2026-10-17"
+  },
+  {
+    "id": "G03",
+    "titulo": "Google — Classificação local",
+    "url": "https://support.google.com/business/answer/7091?hl=pt-BR",
+    "tipo": "Orientação oficial sobre busca local",
+    "resumo": "Relevância, distância e destaque influenciam resultados locais; avaliações e classificações positivas podem ajudar.",
+    "limite": "Não demonstra efeito isolado de uma placa, posição garantida ou impacto no ranking orgânico geral do site.",
+    "consultado_em": "2026-10-17"
+  },
+  {
+    "id": "G04",
+    "titulo": "Google Maps — Conteúdo proibido e restrito",
+    "url": "https://support.google.com/contributionpolicy/answer/7400114?hl=en",
+    "tipo": "Política oficial",
+    "resumo": "Proíbe incentivos, manipulação e solicitação seletiva de avaliações positivas.",
+    "limite": "Convidar opiniões honestas de todos; nunca encaminhar apenas satisfeitos ao Google.",
+    "consultado_em": "2026-10-17"
+  },
+  {
+    "id": "T01",
+    "titulo": "Apple — Background Tag Reading",
+    "url": "https://developer.apple.com/documentation/corenfc/adding-support-for-background-tag-reading",
+    "tipo": "Documentação técnica",
+    "resumo": "iPhones compatíveis podem ler URLs NDEF em segundo plano; há notificação e condições de funcionamento.",
+    "limite": "Compatibilidade e interação variam; não prometer funcionamento universal nem abertura sem confirmação.",
+    "consultado_em": "2026-10-17"
+  },
+  {
+    "id": "T02",
+    "titulo": "Android — NFC basics",
+    "url": "https://developer.android.com/develop/connectivity/nfc/nfc",
+    "tipo": "Documentação técnica",
+    "resumo": "Android interpreta registros NDEF e URIs de tags NFC.",
+    "limite": "Requer aparelho com NFC e condições adequadas; não comprova que todo Android possua NFC.",
+    "consultado_em": "2026-10-17"
+  },
+  {
+    "id": "R01",
+    "titulo": "Michael Luca — Reviews, Reputation, and Revenue: The Case of Yelp.com",
+    "url": "https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf",
+    "tipo": "Working paper 12-016; 2011, revisão 2016",
+    "resumo": "Estudo com dados de restaurantes de Seattle, 2003–2009, usa descontinuidade nos arredondamentos do Yelp. Estima efeito de 5–9% na receita por uma estrela, concentrado em restaurantes independentes.",
+    "limite": "Receita não é lucro. Não é estudo de Google Reviews, Brasil ou placas NFC. Não usar como taxa no simulador nem criar curva mensal com esse intervalo.",
+    "consultado_em": "2026-10-17"
+  },
+  {
+    "id": "B01",
+    "titulo": "Google — Brand Resource Center: Guidance",
+    "url": "https://about.google/brand-resource-center/guidance/",
+    "tipo": "Diretrizes de marca",
+    "resumo": "Permite referência informativa em texto simples dentro das regras; restringe impressão de afiliação, imitação visual e marca em mercadorias.",
+    "limite": "Fotos de produtos à venda não demonstram licença. Não redistribuir logos nem usar o G na placa deste conceito.",
+    "consultado_em": "2026-10-17"
+  }
+]

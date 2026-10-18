@@ -1,0 +1,26 @@
+{
+  "natureza": "Produtos, especificações e preços fictícios para protótipo; não são oferta comercial.",
+  "moeda": "BRL",
+  "modelos": [
+    {
+      "id": "mesa",
+      "nome": "Placa de balcão",
+      "preco_unitario": 149,
+      "medidas_conceito_cm": [11, 15],
+      "acabamentos": ["Preto", "Branco"],
+      "tecnologia_conceito": ["NFC com URL NDEF", "QR Code"]
+    },
+    {
+      "id": "kit3",
+      "nome": "Kit com 3 placas",
+      "preco_kit": 399,
+      "quantidade_placas": 3,
+      "acabamentos": ["Preto", "Branco"]
+    }
+  ],
+  "frete_demo": {
+    "padrao": 19.9,
+    "prazo": "Prazo ilustrativo: 5 a 8 dias úteis; não calculado por transportadora"
+  },
+  "regras": "Sem desconto por avaliação, estoque artificial, cronômetro ou vendas recentes falsas. Acabamento sem diferença de preço. Quantidade de 1 a 20 itens; kit é um item com 3 placas. Sem cobrança real."
+}

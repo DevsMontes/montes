@@ -38,3 +38,9 @@ O comando `node scripts/build.mjs` também prepara `dist/client` e `dist/server`
 A AltriX envia a conversa para `POST /api/altrix`. O endpoint valida a entrada, limita requisições, aplica tempo máximo de resposta e chama a API da Groq no servidor. A conversa permanece apenas na memória da aba.
 
 Configure `GROQ_API_KEY` como segredo no ambiente de hospedagem. Para servir o frontend em outro domínio, configure também `ALTRIX_ALLOWED_ORIGIN` com a origem completa permitida. Nunca coloque a chave em HTML, JavaScript do navegador ou arquivos versionados.
+
+## Montes — Objetos de conexão
+
+A demo de placas NFC/QR está em `sistemas/placas/`, com acessos na página inicial e no Laboratório. Inclui personalização, simuladores e checkout demonstrativo. Não cobra nem cria pedidos comerciais.
+
+Fonte em `demos/placas/`. Para atualizar: `cd demos/placas`, `npm ci`, `npm test`, `npm run build`; depois copie o conteúdo de `dist/` para `sistemas/placas/`. Os caminhos de assets, retorno e QR funcionam tanto em subdiretório do GitHub Pages quanto em domínio próprio.

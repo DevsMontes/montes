@@ -473,3 +473,7 @@ em{font-family:"Instrument Sans",system-ui,sans-serif;font-weight:430}
 }
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.revelar{opacity:1;transform:none}}
+
+/* Six selected projects and the matching laboratory entry. */
+@media(min-width:1081px){.projetos-grade-home{grid-template-columns:repeat(3,minmax(0,1fr))}.faixa-projetos{grid-template-columns:repeat(4,minmax(0,1fr));padding-top:1.5rem;padding-bottom:1.5rem}.lab-acessos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.lab-placas .lab-imagem{background:#F5F5F7}
