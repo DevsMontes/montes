@@ -1,0 +1,98 @@
+export const products = [
+  {
+    id: "worm",
+    name: "Minhocas azedinhas",
+    title: "Minhocas<br>azedinhas.",
+    line: "AZEDINHO",
+    description:
+      "Curvas inesperadas, duas cores e aquele arrepio bom. A aventura começa na primeira mordida.",
+    traits: ["Açucarada", "Elástica", "Ousada"],
+    bg: "#ffc7e6",
+  },
+  {
+    id: "teeth",
+    name: "Dentaduras",
+    title: "Sorrisos<br>contagiantes.",
+    line: "DIVERSÃO",
+    description:
+      "Uma curva vermelha, dentes macios e um sorriso que você reconhece de longe. Humor em forma de gelatina.",
+    traits: ["Macia", "Divertida", "Clássica"],
+    bg: "#aa80ff",
+  },
+  {
+    id: "kiss",
+    name: "Beijos",
+    title: "Um beijo.<br>Mil sensações.",
+    line: "AFETO",
+    description:
+      "Morango por cima, suavidade por baixo. Um pequeno gesto com uma personalidade enorme.",
+    traits: ["Delicada", "Açucarada", "Afetuosa"],
+    bg: "#ffb5c8",
+  },
+  {
+    id: "berry",
+    name: "Amoras",
+    title: "Pequena.<br>Extraordinária.",
+    line: "INTENSIDADE",
+    description:
+      "Cada pequena esfera guarda um pouco de intensidade. Uma textura que faz você querer olhar mais de perto.",
+    traits: ["Texturizada", "Intensa", "Marcante"],
+    bg: "#d4c1ef",
+  },
+];
+export const moods = {
+  adventure: {
+    name: "Aventureira",
+    universe: "aventureiro",
+    title: "Ousadia em<br>cada mordida.",
+    description: "Contrastes cítricos e uma energia que não fica parada.",
+    color: "#ffb95b",
+    light: "#c9f5da",
+    word: "WOW!",
+    atmosphere: "CÍTRICA / CURIOSA / ELÉTRICA",
+    items: ["worm", "teeth", "berry"],
+    speed: 1.2,
+    seed: 0,
+  },
+  romantic: {
+    name: "Romântica",
+    universe: "romântico",
+    title: "Um carinho<br>em forma de mix.",
+    description:
+      "Tons suaves, luz delicada e movimentos que parecem um abraço.",
+    color: "#ffc7e6",
+    light: "#fff0db",
+    word: "LOVE",
+    atmosphere: "SUAVE / DELICADA / ENVOLVENTE",
+    items: ["kiss", "teeth"],
+    speed: 0.4,
+    seed: 1,
+  },
+  intense: {
+    name: "Intensa",
+    universe: "intenso",
+    title: "Nada de<br>passar despercebida.",
+    description:
+      "Sabor de presença. Contrastes saturados e uma composição dramática.",
+    color: "#aa80ff",
+    light: "#ff66c5",
+    word: "BOLD",
+    atmosphere: "SATURADA / EXPRESSIVA / MAGNÉTICA",
+    items: ["berry", "worm"],
+    speed: 0.9,
+    seed: 2,
+  },
+  solar: {
+    name: "Solar",
+    universe: "solar",
+    title: "Um pouco de sol.<br>Muita alegria.",
+    description: "Iluminação quente e um mix leve para colorir qualquer pausa.",
+    color: "#ffd94a",
+    light: "#ffb375",
+    word: "SUN!",
+    atmosphere: "QUENTE / LEVE / RADIANTE",
+    items: ["worm", "kiss", "teeth"],
+    speed: 0.6,
+    seed: 3,
+  },
+};

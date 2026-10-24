@@ -1,122 +1,297 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Uma experiência digital conceitual, colorida e interativa inspirada no universo Fini, criada pela Montes Developers.">
-  <meta name="theme-color" content="#ff5f9e">
-  <link rel="icon" type="image/png" href="../logomontes.png">
-  <link rel="stylesheet" href="../assets/css/fini.css?v=candyverse-20260829-2">
-  <title>Fini Candyverse — Montes Labs</title>
-</head>
-<body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <div class="cursor-candy" aria-hidden="true" data-cursor></div>
-
-  <header class="candy-header">
-    <a class="labs-brand" href="../index.html" aria-label="Montes Labs — voltar ao portfólio">
-      <img src="../logomontes.png" alt="" width="43" height="34">
-      <span>Montes <strong>Labs</strong></span>
-    </a>
-    <p class="fini-mark" aria-label="Fini concept">fini<span>!</span></p>
-    <a class="back-button" href="../index.html#projetos"><span aria-hidden="true">←</span> Portfólio</a>
-  </header>
-
-  <main id="conteudo">
-    <section class="candy-hero" data-hero>
-      <div class="hero-dots" aria-hidden="true"></div>
-      <span class="floating-shape shape-one" aria-hidden="true"></span>
-      <span class="floating-shape shape-two" aria-hidden="true"></span>
-      <span class="floating-shape shape-three" aria-hidden="true"></span>
-
-      <div class="hero-copy">
-        <p class="eyebrow"><span></span> Concept experience 02</p>
-        <h1>O mundo fica<br><em>mais gostoso</em><br>com cor.</h1>
-        <p class="hero-lead">Uma experiência digital tão divertida quanto abrir um pacote de surpresas — feita para explorar, misturar e sorrir.</p>
-        <div class="hero-actions">
-          <a class="candy-button" href="#misture">Criar meu mix <span>↓</span></a>
-          <span class="sugar-note"><i></i> 100% alto astral</span>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#fff9f3" />
+    <meta
+      name="description"
+      content="Fini Candyverse 3.0. Um universo feito para sentir. Experiência conceitual independente da Montes Developers."
+    />
+    <title>Fini Candyverse 3.0 — Montes Developers</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../assets/candyverse/images/favicon.svg"
+    />
+    <link
+      rel="preload"
+      href="../assets/candyverse/fonts/space.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../assets/candyverse/fonts/dm.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="modulepreload" href="../assets/candyverse/data.js" />
+    <link rel="stylesheet" href="../assets/candyverse/style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+    <header>
+      <a class="montes" href="../index.html"
+        >m<span>↗</span> <b>montes.dev<small>EXPERIMENTAL LAB</small></b></a
+      ><a class="wordmark" href="#inicio" aria-label="Fini Candyverse, início"
+        >fini<span>®</span></a
+      >
+      <nav aria-label="Navegação">
+        <a href="#mixer">Mixer</a><a href="#colecao">Coleção</a
+        ><a class="back" href="../index.html#projetos"
+          >Portfólio ↗</a
+        >
+      </nav>
+    </header>
+    <main id="conteudo" tabindex="-1">
+      <section class="hero" id="inicio">
+        <div class="hero-copy">
+          <p class="eyebrow"><i></i> FINI CANDYVERSE / VOL. 03</p>
+          <h1>UM UNIVERSO<br />DELICIOSAMENTE<br /><em>FORA DO COMUM.</em></h1>
+          <p class="lead">
+            Explore cores, texturas e sabores em uma experiência digital feita
+            para surpreender.
+          </p>
+          <a class="button dark" href="#mixer"
+            >EXPLORAR O CANDYVERSE <span>↗</span></a
+          >
         </div>
-      </div>
-
-      <div class="hero-art" aria-hidden="true">
-        <p class="outline-word">YUM</p>
-        <div class="candy-sun"></div>
-        <img src="../imagens/fini-candy-burst.png" alt="" width="1024" height="1536">
-        <span class="orbit orbit-one">doce · azedo · divertido ·</span>
-        <span class="spark spark-one">✦</span><span class="spark spark-two">✦</span>
-      </div>
-
-      <div class="scroll-note"><span></span> Role para provar</div>
-    </section>
-
-    <section class="marquee" aria-label="Sabores e sensações">
-      <div><span>Explosão de sabor</span><i>✦</i><span>Texturas incríveis</span><i>✦</i><span>Seu mix, suas regras</span><i>✦</i><span aria-hidden="true">Explosão de sabor</span><i aria-hidden="true">✦</i><span aria-hidden="true">Texturas incríveis</span><i aria-hidden="true">✦</i><span aria-hidden="true">Seu mix, suas regras</span><i aria-hidden="true">✦</i></div>
-    </section>
-
-    <section class="mix-section" id="misture">
-      <div class="section-heading">
-        <div><p class="eyebrow"><span></span> Candy mixer</p><h2>Qual é a sua<br><em>vibe hoje?</em></h2></div>
-        <p>Escolha uma energia e transforme todo o universo ao redor. Cada sabor traz uma personalidade.</p>
-      </div>
-
-      <div class="mixer" data-mixer>
-        <div class="mixer-copy">
-          <span class="mix-number" data-number>01</span>
-          <p data-kicker>Azedinho primeiro</p>
-          <h3 data-title>Minhocas<br>Azedinhas</h3>
-          <p class="mix-description" data-description>Um choque de cores, açúcar e acidez para quem gosta de começar a diversão no volume máximo.</p>
-          <div class="taste-meter" aria-label="Perfil de sabor">
-            <span>Doce</span><div><i data-sweet></i></div><span>Azedo</span><div><i data-sour></i></div>
+        <div class="hero-stage stage" data-stage="hero">
+          <div class="stage-ring" aria-hidden="true"></div>
+          <span class="hero-volume" aria-hidden="true">CANDY<br />VERSE.</span>
+          <span class="orbit-label">UM UNIVERSO FEITO PARA SENTIR</span
+          ><span class="hero-star" aria-hidden="true">✳</span
+          ><img
+            class="fallback hero-fallback"
+            width="800"
+            height="800"
+            fetchpriority="high"
+            src="../assets/candyverse/images/hero.webp"
+            alt="Composição colorida de minhoca, dentadura, beijo e amora"
+          />
+          <div class="sticker">
+            100%<br /><b>fora do<br />comum.</b>
+          </div>
+          <span class="stage-foot">MOVA OU TOQUE PARA ENTRAR NO 3D.</span>
+        </div>
+        <div class="hero-bottom">
+          <span>INDEPENDENT BRAND EXPERIENCE</span
+          ><a href="#sentidos">Role para sentir ↓</a><span>01 — 05</span>
+        </div>
+      </section>
+      <section id="sentidos" class="senses">
+        <p class="eyebrow">02 / A EXPLOSÃO DOS SENTIDOS</p>
+        <div class="senses-title">
+          <h2>Pequenos doces.<br /><em>Grandes sensações.</em></h2>
+          <span aria-hidden="true">✳</span>
+        </div>
+        <div class="sensory-notes">
+          <p>
+            <b>01 / TEXTURA</b>O açúcar que arrepia.<br />A gelatina que
+            surpreende.
+          </p>
+          <p>
+            <b>02 / COR</b>Combinações que escapam<br />do óbvio. E do pacote.
+          </p>
+          <p>
+            <b>03 / ENERGIA</b>Um toque de curiosidade.<br />Uma boa dose de
+            diversão.
+          </p>
+        </div>
+      </section>
+      <section id="mixer" class="mixer section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">03 / CANDY MIXER</p>
+            <h2>Seu mood.<br /><em>Seu universo.</em></h2>
+          </div>
+          <p>
+            Um pequeno laboratório de grandes combinações.<br />Escolha sua
+            energia. Depois, faça do seu jeito.
+          </p>
+        </div>
+        <ol class="mix-steps" aria-label="Etapas do Mixer">
+          <li data-step="personality" aria-current="step">
+            01 / PERSONALIDADE
+          </li>
+          <li data-step="ingredients">02 / INGREDIENTES</li>
+          <li data-step="mixing">03 / MISTURA</li>
+          <li data-step="result">04 / SEU UNIVERSO</li>
+        </ol>
+        <div
+          class="mood-controls"
+          role="group"
+          aria-label="Escolha sua personalidade"
+        >
+          <button data-mood="adventure" aria-pressed="true">
+            ↗ Aventureira</button
+          ><button data-mood="romantic" aria-pressed="false">♡ Romântica</button
+          ><button data-mood="intense" aria-pressed="false">✳ Intensa</button
+          ><button data-mood="solar" aria-pressed="false">☀ Solar</button>
+        </div>
+        <div class="lab">
+          <div class="mix-stage stage" data-stage="mixer">
+            <div class="mix-summary" hidden>
+              <p class="eyebrow">CRIADO POR VOCÊ / C—03</p>
+              <h3 id="universe-name"></h3>
+              <p id="universe-description"></p>
+            </div>
+            <span class="mix-word" aria-hidden="true">WOW!</span>
+            <div
+              class="mix-fallback-items"
+              aria-label="Ingredientes do mix"
+            ></div>
+            <div class="bowl-2d" aria-hidden="true"></div>
+            <span class="stage-foot" id="mix-atmosphere"
+              >CÍTRICA / CURIOSA / ELÉTRICA</span
+            >
+          </div>
+          <div class="mix-panel">
+            <p class="eyebrow">A RECEITA É SUA</p>
+            <h3 id="mix-title">Ousadia em<br />cada mordida.</h3>
+            <p id="mood-description">
+              Contrastes cítricos e uma energia que não fica parada.
+            </p>
+            <fieldset>
+              <legend>Adicione ou remova até 4 doces</legend>
+              <div class="ingredients"></div>
+            </fieldset>
+            <div class="mix-meta">
+              <span id="mix-count">3 / 4 ingredientes</span
+              ><button class="text-button" id="clear">Limpar</button>
+            </div>
+            <button class="button dark" id="blend">
+              Misturar meu universo <span>↻</span>
+            </button>
+            <button class="text-button" id="skip-mix" hidden>
+              Pular animação →
+            </button>
+            <div class="result-actions" hidden>
+              <button class="button dark" id="share-mix">Compartilhar ↗</button
+              ><button class="text-button" id="download-mix">
+                Salvar imagem ↓</button
+              ><button class="text-button" id="new-mix">
+                Criar outro universo ↺
+              </button>
+            </div>
+            <label class="share-fallback" hidden
+              >Seu link para copiar<input id="share-url" type="text" readonly
+            /></label>
+            <p class="result" id="mix-result" role="status" aria-live="polite">
+              Seu mix está pronto para ganhar movimento.
+            </p>
+            <button class="text-button" id="reset-mix">
+              ↺ Restaurar receita do mood
+            </button>
           </div>
         </div>
-
-        <div class="mixer-visual" aria-hidden="true">
-          <div class="gummy-stage" data-gummy><span></span><span></span><span></span></div>
-          <p data-big-word>WOW!</p>
+      </section>
+      <section class="collection section" id="colecao">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">04 / THE CANDY COLLECTION</p>
+            <h2>Ícones, de<br /><em>outro ângulo.</em></h2>
+          </div>
+          <p>
+            Quatro personalidades. Nenhuma tímida.<br />Escolha, gire e descubra
+            cada detalhe.
+          </p>
         </div>
-
-        <div class="flavor-switcher" aria-label="Escolha sua vibe">
-          <button class="active" type="button" data-flavor="worms" aria-pressed="true"><i></i><span><small>01</small> Aventureira</span></button>
-          <button type="button" data-flavor="kisses" aria-pressed="false"><i></i><span><small>02</small> Romântica</span></button>
-          <button type="button" data-flavor="berries" aria-pressed="false"><i></i><span><small>03</small> Intensa</span></button>
-          <button type="button" data-flavor="bananas" aria-pressed="false"><i></i><span><small>04</small> Solar</span></button>
+        <div
+          class="product-controls"
+          role="group"
+          aria-label="Escolha um doce"
+        ></div>
+        <div class="product-display">
+          <div class="product-copy">
+            <p class="eyebrow" id="product-index">C—01 / AZEDINHO</p>
+            <h3 id="product-name">Minhocas<br />azedinhas.</h3>
+            <p id="product-description">
+              Curvas inesperadas, duas cores e aquele arrepio bom. A aventura
+              começa na primeira mordida.
+            </p>
+            <div class="product-traits" id="product-traits">
+              <span>Açucarada</span><span>Elástica</span><span>Ousada</span>
+            </div>
+            <button
+              class="text-button"
+              id="berry-variant"
+              hidden
+              aria-pressed="false"
+            >
+              Amora vermelha ↔</button
+            ><button class="text-button" id="spark">↝ Fazer uma onda</button>
+          </div>
+          <div
+            class="product-stage stage"
+            data-stage="product"
+            tabindex="0"
+            role="img"
+            aria-label="Modelo de minhoca. Arraste horizontalmente ou use as setas para girar."
+          >
+            <span class="product-watermark" aria-hidden="true">01</span
+            ><img
+              class="fallback"
+              id="product-fallback"
+              src="../assets/candyverse/images/worm.webp"
+              alt="Minhoca azedinha ilustrada"
+            /><span class="drag-note"
+              >↔ Arraste para explorar · use ← → no teclado</span
+            >
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="classics-section">
-      <div class="classics-intro">
-        <p class="eyebrow"><span></span> Os inesquecíveis</p>
-        <h2>Clássicos com<br>personalidade.</h2>
-        <p>Uma coleção visual inspirada nos formatos que viraram parte da cultura pop brasileira.</p>
-      </div>
-      <div class="classic-grid">
-        <article class="classic-card card-teeth"><span>01</span><div class="candy-icon teeth-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></div><h3>Dentaduras</h3><p>O sorriso mais famoso do pacote.</p></article>
-        <article class="classic-card card-kiss"><span>02</span><div class="candy-icon kiss-icon" aria-hidden="true"></div><h3>Beijos</h3><p>Morango, açúcar e afeto em uma só mordida.</p></article>
-        <article class="classic-card card-berry"><span>03</span><div class="candy-icon berry-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Amoras</h3><p>Pequenas, intensas e impossíveis de ignorar.</p></article>
-      </div>
-    </section>
-
-    <section class="manifesto-section">
-      <p>Mais que doce.</p>
-      <h2>Uma marca que<br><span>brinca sério.</span></h2>
-      <div><p>A experiência traduz o universo de produto em movimento, cor, textura e interação — criando um encontro digital memorável com a marca.</p><a href="../index.html#contato">Quero uma experiência assim <span>↗</span></a></div>
-      <span class="manifesto-sticker" aria-hidden="true">feito para<br><strong>sorrir :)</strong></span>
-    </section>
-
-    <section class="concept-note">
-      <strong>Projeto conceitual independente</strong>
-      <p>Esta experiência não é uma página oficial da Fini. É uma demonstração de direção de arte e desenvolvimento front-end criada pela Montes Developers para fins de portfólio.</p>
-    </section>
-  </main>
-
-  <footer class="candy-footer">
-    <a class="labs-brand" href="../index.html"><img src="../logomontes.png" alt="" width="43" height="34"><span>Montes <strong>Developers</strong></span></a>
-    <p>Concept 02 / Candyverse / 2026</p>
-    <a href="https://www.instagram.com/montes.dev" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-  </footer>
-
-  <script src="../assets/js/fini.js?v=candyverse-20260829-2" defer></script>
-</body>
+        <div class="collection-foot">
+          <div class="render-status">
+            <button id="retry-3d" class="text-button" hidden>
+              Tentar 3D novamente ↻</button
+            ><span id="render-mode">Explore a página para ativar o 3D</span>
+          </div>
+          <button class="text-button" id="reset-view">
+            ↺ Voltar ao ângulo inicial
+          </button>
+        </div>
+      </section>
+      <section class="finale section">
+        <p class="eyebrow">05 / THE SWEET FINALE</p>
+        <h2>
+          Sua marca também<br />pode ser <em>impossível<br />de ignorar.</em>
+        </h2>
+        <div class="finale-bottom">
+          <p>
+            Direção de arte, tecnologia e interação.<br />Experiências feitas
+            para transformar<br />uma visita em uma lembrança.
+          </p>
+          <a
+            class="button cream"
+            href="../index.html#contato"
+            >Criar uma experiência com a Montes <span>↗</span></a
+          >
+        </div>
+        <span class="finale-star" aria-hidden="true">✳</span>
+      </section>
+    </main>
+    <footer>
+      <a class="montes" href="../index.html"
+        >m<span>↗</span> <b>montes.dev<small>DESIGN × DEVELOPMENT</small></b></a
+      >
+      <p>
+        Projeto conceitual independente para portfólio. Sem afiliação, parceria
+        ou vínculo oficial com a Fini. Representações visuais interpretativas.
+      </p>
+      <span>CANDYVERSE 3.0 / 2026</span>
+    </footer>
+    <noscript
+      ><p class="noscript">
+        Explore as ilustrações e o conteúdo. Ative JavaScript para usar o mixer
+        e os controles 3D.
+      </p></noscript
+    >
+    <script type="module" src="../assets/candyverse/app.js"></script>
+  </body>
 </html>
